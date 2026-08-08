@@ -1,7 +1,6 @@
 // Firebase configuration for RentManager.
 // Replace the placeholder values below with the Firebase Web App configuration
 // from Firebase Console → Project settings → Your apps → Web app.
-//
 // Do not add quotes around the file itself; the values must remain strings.
 
  apiKey: "AIzaSyBZdB8odEXTzC9kFP6Ft3PKCeAhd8WTnWU",
