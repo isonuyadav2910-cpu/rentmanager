@@ -1,0 +1,43 @@
+RENTMANAGER — GITHUB PAGES CHECKLIST
+
+1. Firebase
+- Create/open the Firebase project.
+- Register a Web app and copy its firebaseConfig values.
+- Enable Authentication > Sign-in method > Anonymous.
+- Create Firestore Database.
+- Firestore > Rules: paste firestore.rules and Publish.
+
+2. firebase-config.js
+Replace the placeholder strings with the Web app config from Firebase.
+Do not use a Firebase service-account JSON file in this website.
+
+3. GitHub repository ROOT
+Upload these files directly to the repository root:
+- index.html
+- firebase-config.js
+- manifest.webmanifest
+- sw.js
+- icon-192.png
+- icon-512.png
+- .nojekyll
+- firestore.rules (reference copy; GitHub Pages does not execute it)
+
+Do NOT upload the ZIP itself as the website.
+
+4. GitHub Pages
+Repository > Settings > Pages
+Build and deployment > Source: Deploy from a branch
+Branch: main
+Folder: /(root)
+Save.
+
+5. Test
+Open the published site. The status should change from
+"Firebase not configured" to "Firebase connected".
+Add a test room/payment, then open the same site on another device.
+
+IMPORTANT SECURITY NOTE
+The current app uses anonymous authentication and one shared Firestore document.
+Anyone who can access the website can potentially access that shared document.
+For a private personal property-management app, keep the URL private or upgrade
+later to a real sign-in and per-user Firestore rules.
