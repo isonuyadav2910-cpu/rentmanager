@@ -4,8 +4,7 @@
 //
 // Do not add quotes around the file itself; the values must remain strings.
 
-window.FIREBASE_CONFIG = {
-  apiKey: "PASTE_API_KEY_HERE",
+windo apiKey: "PASTE_API_KEY_HERE",
   authDomain: "PASTE_PROJECT_ID.firebaseapp.com",
   projectId: "PASTE_PROJECT_ID",
   storageBucket: "PASTE_STORAGE_BUCKET",
