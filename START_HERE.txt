@@ -1,0 +1,32 @@
+RENTMANAGER — FRESH GITHUB VERSION
+
+IMPORTANT: This version fixes the blank Edit Room popup.
+
+Upload these files directly into the ROOT of your GitHub repository:
+- index.html
+- manifest.webmanifest
+- sw.js
+- icon-192.png
+- icon-512.png
+
+Do NOT upload the ZIP itself to GitHub Pages.
+
+Features:
+- 11 rooms
+- Working Edit Room form
+- Primary tenant name/phone
+- Multiple occupants per room
+- Monthly rent and due date
+- Paid/Due/Overdue status
+- Check-in/check-out
+- Rent reminder SMS and payment received SMS
+- Property expenses: Light Bill, Maintenance, Repair, Water, Other
+- Light bill is NOT linked to tenants
+- Income/expense/net balance
+- Backup/Restore
+- PWA install support
+
+After uploading, GitHub Pages:
+Settings → Pages → Deploy from a branch → main → / (root) → Save.
+
+If the old page is still shown after updating, hard-refresh the browser with Ctrl+F5.

@@ -1,53 +1,283 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<link rel="manifest" href="manifest.webmanifest">
 <title>RentManager • 11 Rooms</title>
-<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2563eb">
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f3f6fa;color:#182230}header{background:#172033;color:#fff;padding:18px 20px;position:sticky;top:0;z-index:5}header h1{margin:0 0 5px;font-size:23px}.wrap{max-width:1200px;margin:auto;padding:18px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}.card{background:#fff;border-radius:14px;padding:16px;box-shadow:0 2px 10px #0000000d;border:1px solid #e4e9f0}.stat{font-size:25px;font-weight:800}.muted{color:#6b7280;font-size:13px}.room h3{margin:0}.badge{display:inline-block;padding:5px 9px;border-radius:99px;font-size:12px;font-weight:700}.paid{background:#dcfce7;color:#166534}.due{background:#fef3c7;color:#92400e}.overdue{background:#fee2e2;color:#991b1b}.vacant{background:#e5e7eb;color:#374151}.btn{border:0;border-radius:9px;padding:9px 12px;cursor:pointer;font-weight:700;margin:3px 2px}.blue{background:#2563eb;color:#fff}.gray{background:#e5e7eb}.green{background:#16a34a;color:#fff}.red{background:#dc2626;color:#fff}.orange{background:#f59e0b;color:#fff}input,select,textarea{width:100%;padding:9px;border:1px solid #d7dde5;border-radius:8px;margin-top:5px;margin-bottom:10px}label{font-size:13px;font-weight:700}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:10px}.section{margin:22px 0}.members{margin:8px 0;padding-left:18px}.actions{margin-top:8px}.topactions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.hidden{display:none}.modal{position:fixed;inset:0;background:#0008;display:flex;align-items:center;justify-content:center;padding:15px;z-index:10}.modalbox{background:#fff;border-radius:14px;padding:18px;max-width:600px;width:100%;max-height:90vh;overflow:auto}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:9px;border-bottom:1px solid #e5e7eb;text-align:left;font-size:13px}
-</style></head><body>
-<header><div class="wrap" style="padding:0"><h1>🏠 RentManager • 11 Rooms</h1><div class="muted" style="color:#cbd5e1">Rent • Tenants • Members • SMS • Expenses • Balance Sheet</div><div class="topactions"><button class="btn blue" onclick="installApp()">📲 Install App</button><button class="btn gray" onclick="notifyPermission()">🔔 Enable Alerts</button><button class="btn gray" onclick="backup()">⬇ Backup</button><button class="btn gray" onclick="restore()">⬆ Restore</button><button class="btn green" onclick="openExpense()">⚡ Add Expense</button></div></div></header>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f6fa;color:#172033}
+header{background:#111827;color:#fff;padding:20px 18px;position:sticky;top:0;z-index:5}
+h1{margin:0 0 5px;font-size:24px}.sub{color:#cbd5e1;font-size:14px}
+.wrap{max-width:1100px;margin:auto;padding:16px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+button{border:0;border-radius:9px;padding:11px 14px;font-weight:700;cursor:pointer;background:#2563eb;color:#fff}
+button.secondary{background:#e5e7eb;color:#111827}button.green{background:#16a34a}button.red{background:#dc2626}button.dark{background:#374151}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:15px;padding:16px;box-shadow:0 2px 8px #0000000b}
+.roomhead{display:flex;justify-content:space-between;gap:8px;align-items:center}.roomtitle{font-size:21px;font-weight:800}
+.badge{padding:5px 9px;border-radius:20px;background:#e5e7eb;font-size:12px;font-weight:800}.paid{background:#dcfce7;color:#166534}.due{background:#fef3c7;color:#92400e}.overdue{background:#fee2e2;color:#991b1b}
+.row{margin:8px 0}.muted{color:#64748b}.members{margin:8px 0;padding-left:20px}.member-count{font-weight:800}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}.stat{background:#fff;padding:14px;border-radius:12px;border:1px solid #e5e7eb}.stat b{display:block;font-size:20px;margin-top:4px}
+.section{margin:22px 0}.section h2{margin:0 0 10px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden}th,td{padding:9px;border-bottom:1px solid #e5e7eb;text-align:left;font-size:14px}
+.modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:15px;z-index:20}.modal.open{display:flex}
+.dialog{background:#fff;border-radius:16px;width:min(650px,100%);max-height:92vh;overflow:auto;padding:18px}
+.dialog h2{margin-top:0}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label{font-weight:700;font-size:13px;display:block;margin:8px 0}input,select,textarea{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px;margin-top:5px;font:inherit}
+textarea{min-height:90px}.full{grid-column:1/-1}.memberline{display:flex;gap:7px;margin:7px 0}.memberline input{margin:0}.memberline button{padding:8px 11px}
+.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:15px}
+.notice{background:#eff6ff;border:1px solid #bfdbfe;padding:12px;border-radius:10px;color:#1e3a8a;font-size:13px}
+@media(max-width:600px){.formgrid{grid-template-columns:1fr}.full{grid-column:auto}header{position:relative}.wrap{padding:12px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>🏠 RentManager • 11 Rooms</h1>
+    <div class="sub">Rent • Tenants • Members • SMS • Expenses • Balance Sheet</div>
+  </div>
+</header>
+
 <main class="wrap">
-<section class="grid">
-<div class="card"><div class="muted">Rent Income</div><div id="income" class="stat">₹0</div></div>
-<div class="card"><div class="muted">Expenses</div><div id="expense" class="stat">₹0</div></div>
-<div class="card"><div class="muted">Net Balance</div><div id="balance" class="stat">₹0</div></div>
-<div class="card"><div class="muted">Occupied Rooms</div><div id="occupied" class="stat">0 / 11</div></div>
-</section>
-<section class="section card"><h2>📊 Accounts</h2><div class="twocol"><label>Year<select id="year" onchange="render()"></select></label><div><div class="muted">This year's income / expense</div><b id="yearSummary"></b></div></div></section>
-<section class="section"><div style="display:flex;justify-content:space-between;align-items:center"><h2>🏠 Rooms</h2><button class="btn blue" onclick="openRoom()">＋ Add / Edit Room</button></div><div id="rooms" class="grid"></div></section>
-<section class="section card"><h2>💸 Expense History</h2><div id="expenses"></div></section>
+  <div class="actions">
+    <button onclick="openRoom(0)">➕ Add / Edit Room</button>
+    <button class="green" onclick="openExpense()">⚡ Add Expense</button>
+    <button class="secondary" onclick="backupData()">⬇ Backup</button>
+    <button class="secondary" onclick="document.getElementById('restoreFile').click()">⬆ Restore</button>
+    <button class="dark" id="installBtn" style="display:none" onclick="installApp()">📲 Install App</button>
+    <button class="secondary" onclick="enableAlerts()">🔔 Enable Alerts</button>
+    <input id="restoreFile" type="file" accept=".json" hidden onchange="restoreData(event)">
+  </div>
+
+  <div class="notice">💡 <b>Light bills are property expenses only.</b> They are never added to tenant rent and are not linked to any room.</div>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="section">
+    <h2>🏠 Rooms</h2>
+    <div class="grid" id="rooms"></div>
+  </div>
+
+  <div class="section">
+    <h2>📊 Income & Expenses</h2>
+    <div id="accounts"></div>
+  </div>
 </main>
-<div id="modal" class="modal hidden"><div class="modalbox" id="modalbox"></div></div>
+
+<div class="modal" id="roomModal">
+  <div class="dialog">
+    <h2 id="roomModalTitle">Edit Room</h2>
+    <div class="formgrid">
+      <label>Room Number
+        <select id="roomNo"></select>
+      </label>
+      <label>Primary Tenant Name
+        <input id="tenant" placeholder="Tenant name">
+      </label>
+      <label>Primary Tenant Phone
+        <input id="phone" inputmode="tel" placeholder="9876543210">
+      </label>
+      <label>Monthly Rent (₹)
+        <input id="rent" type="number" min="0" placeholder="10000">
+      </label>
+      <label>Rent Due Day
+        <input id="dueDay" type="number" min="1" max="31" value="5">
+      </label>
+      <label>Rent Status
+        <select id="rentStatus">
+          <option value="due">Due</option><option value="paid">Paid</option><option value="overdue">Overdue</option>
+        </select>
+      </label>
+      <label>Check-in
+        <input id="checkin" type="date">
+      </label>
+      <label>Check-out
+        <input id="checkout" type="date">
+      </label>
+      <label>Reminder days before due
+        <input id="reminderDays" type="number" min="0" max="15" value="3">
+      </label>
+      <label>Reminder enabled
+        <select id="reminderEnabled"><option value="true">Yes</option><option value="false">No</option></select>
+      </label>
+      <div class="full">
+        <label>👥 Members / Occupants</label>
+        <div class="muted">Add every person living in this room. The primary tenant is also kept as the SMS contact.</div>
+        <div id="memberInputs"></div>
+        <button type="button" class="secondary" onclick="addMemberInput()">➕ Add Member</button>
+      </div>
+      <label class="full">Notes
+        <textarea id="notes" placeholder="Optional notes"></textarea>
+      </label>
+    </div>
+    <div class="modal-actions">
+      <button class="secondary" onclick="closeModal('roomModal')">Cancel</button>
+      <button onclick="saveRoom()">💾 Save Room</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="expenseModal">
+  <div class="dialog">
+    <h2>Add Property Expense</h2>
+    <div class="notice">⚡ This expense is for your balance sheet only. It is not charged to any tenant.</div>
+    <div class="formgrid">
+      <label>Date<input id="expDate" type="date"></label>
+      <label>Amount (₹)<input id="expAmount" type="number" min="0" placeholder="2500"></label>
+      <label>Category<select id="expCategory"><option>Light Bill</option><option>Maintenance</option><option>Repair</option><option>Water</option><option>Other</option></select></label>
+      <label class="full">Description<input id="expDesc" placeholder="Monthly electricity bill"></label>
+    </div>
+    <div class="modal-actions">
+      <button class="secondary" onclick="closeModal('expenseModal')">Cancel</button>
+      <button class="green" onclick="saveExpense()">💾 Save Expense</button>
+    </div>
+  </div>
+</div>
+
 <script>
-const KEY="rentmanager_rebuilt_v1";
-let db=JSON.parse(localStorage.getItem(KEY)||"null");
-const nowY=new Date().getFullYear();
-if(!db) db={rooms:Array.from({length:11},(_,i)=>({id:i+1,room:i+1,tenant:"",phone:"",rent:0,dueDay:5,status:"vacant",checkin:"",checkout:"",members:[],reminderDays:3,reminderEnabled:true,payments:[]})),expenses:[]};
-db.rooms.forEach(r=>{r.members=Array.isArray(r.members)?r.members:[]; if(r.tenant&&!r.members.includes(r.tenant))r.members.unshift(r.tenant); r.payments=r.payments||[];});
-function save(){localStorage.setItem(KEY,JSON.stringify(db));}
+const KEY="rentmanager_11_v4";
+let data=loadData(), editingRoom=1, deferredInstall=null;
+
+function blankRoom(n){return {room:n,tenant:"",phone:"",rent:0,dueDay:5,status:"due",checkin:"",checkout:"",members:[],reminderDays:3,reminderEnabled:true,notes:""}}
+function loadData(){
+  try{
+    const x=JSON.parse(localStorage.getItem(KEY));
+    if(x && Array.isArray(x.rooms) && x.rooms.length===11){
+      x.rooms.forEach((r,i)=>{r.room=i+1;r.members=Array.isArray(r.members)?r.members:[];});
+      x.expenses=Array.isArray(x.expenses)?x.expenses:[];
+      x.payments=Array.isArray(x.payments)?x.payments:[];
+      return x;
+    }
+  }catch(e){}
+  return {rooms:Array.from({length:11},(_,i)=>blankRoom(i+1)),expenses:[],payments:[]};
+}
+function save(){localStorage.setItem(KEY,JSON.stringify(data));render();}
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 function money(n){return "₹"+Number(n||0).toLocaleString("en-IN")}
-function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
-function ym(){let d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")}
-function selectedStatus(r){if(!r.tenant)return "vacant";if(r.status==="paid")return "paid";let today=new Date().getDate();return today>Number(r.dueDay||5)?"overdue":"due"}
-function sms(phone,msg){if(!phone){alert("Add the primary tenant phone number first.");return}location.href="sms:"+phone+"?body="+encodeURIComponent(msg)}
-function rentReminder(r,overdue=false){return overdue?`Dear ${r.tenant}, your monthly rent of ${money(r.rent)} for Room ${r.room} is overdue. Please make the payment at the earliest. Thank you.`:`Dear ${r.tenant}, this is a reminder that your monthly rent of ${money(r.rent)} for Room ${r.room} is due on the ${r.dueDay}th. Please make the payment on time. Thank you.`}
-function paidSms(r){sms(r.phone,`Dear ${r.tenant}, your rent payment of ${money(r.rent)} for Room ${r.room} has been received. Thank you.`)}
-function reminderSms(r){sms(r.phone,rentReminder(r,selectedStatus(r)==="overdue"))}
-function markPaid(id){let r=db.rooms.find(x=>x.id===id);if(!r)return;r.status="paid";r.payments.push({date:new Date().toISOString(),amount:Number(r.rent)||0});save();render();paidSms(r)}
-function openRoom(id){let r=id?db.rooms.find(x=>x.id===id):db.rooms.find(x=>!x.tenant)||db.rooms[0];modal(`<h2>Room ${r.room}</h2><label>Primary Tenant Name<input id="tenant" value="${esc(r.tenant)}"></label><label>Primary Tenant Phone<input id="phone" value="${esc(r.phone)}" placeholder="10 digit mobile"></label><div class="twocol"><label>Monthly Rent<input id="rent" type="number" value="${r.rent||0}"></label><label>Due Day<input id="due" type="number" min="1" max="31" value="${r.dueDay||5}"></label></div><div class="twocol"><label>Check-in<input id="checkin" type="date" value="${r.checkin||""}"></label><label>Check-out<input id="checkout" type="date" value="${r.checkout||""}"></label></div><label>Members / Occupants — one name per line<textarea id="members" rows="5" placeholder="Rahul Sharma&#10;Amit Patel">${esc((r.members||[]).join("\\n"))}</textarea></label><div class="twocol"><label>Reminder days before due<input id="reminder" type="number" min="0" max="15" value="${r.reminderDays??3}"></label><label>Reminder enabled<select id="enabled"><option value="1" ${r.reminderEnabled!==false?"selected":""}>Yes</option><option value="0" ${r.reminderEnabled===false?"selected":""}>No</option></select></label></div><button class="btn blue" onclick="saveRoom(${r.id})">Save Room</button><button class="btn gray" onclick="closeModal()">Cancel</button>`)}
-function saveRoom(id){let r=db.rooms.find(x=>x.id===id);r.tenant=document.getElementById("tenant").value.trim();r.phone=document.getElementById("phone").value.trim();r.rent=Number(document.getElementById("rent").value)||0;r.dueDay=Math.max(1,Math.min(31,Number(document.getElementById("due").value)||5));r.checkin=document.getElementById("checkin").value;r.checkout=document.getElementById("checkout").value;r.members=document.getElementById("members").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);if(r.tenant&&!r.members.includes(r.tenant))r.members.unshift(r.tenant);r.reminderDays=Math.max(0,Math.min(15,Number(document.getElementById("reminder").value)||3));r.reminderEnabled=document.getElementById("enabled").value==="1";r.status=r.tenant?(r.status==="paid"?"paid":"due"):"vacant";save();closeModal();render()}
-function openExpense(){modal(`<h2>Add Property Expense</h2><p class="muted">Light bill is your expense only — it is NOT charged to a tenant.</p><label>Type<select id="etype"><option>Light Bill</option><option>Maintenance</option><option>Repair</option><option>Water</option><option>Other</option></select></label><div class="twocol"><label>Amount<input id="eamt" type="number"></label><label>Date<input id="edate" type="date" value="${new Date().toISOString().slice(0,10)}"></label></div><label>Description<input id="edesc"></label><button class="btn green" onclick="saveExpense()">Save Expense</button><button class="btn gray" onclick="closeModal()">Cancel</button>`)}
-function saveExpense(){db.expenses.push({type:document.getElementById("etype").value,amount:Number(document.getElementById("eamt").value)||0,date:document.getElementById("edate").value,description:document.getElementById("edesc").value});save();closeModal();render()}
-function modal(x){document.getElementById("modalbox").innerHTML=x;document.getElementById("modal").classList.remove("hidden")}
-function closeModal(){document.getElementById("modal").classList.add("hidden")}
-function render(){let y=Number(document.getElementById("year").value||nowY);let income=0,expense=0;db.rooms.forEach(r=>(r.payments||[]).forEach(p=>{if(new Date(p.date).getFullYear()===y)income+=Number(p.amount)||0}));db.expenses.forEach(e=>{if(new Date(e.date).getFullYear()===y)expense+=Number(e.amount)||0});document.getElementById("income").textContent=money(income);document.getElementById("expense").textContent=money(expense);document.getElementById("balance").textContent=money(income-expense);document.getElementById("occupied").textContent=db.rooms.filter(r=>r.tenant).length+" / 11";document.getElementById("yearSummary").textContent=money(income)+" income • "+money(expense)+" expenses • "+money(income-expense)+" net";
-document.getElementById("rooms").innerHTML=db.rooms.map(r=>{let s=selectedStatus(r),mem=r.members||[];return `<div class="card room"><h3>Room ${r.room} <span class="badge ${s}">${s.toUpperCase()}</span></h3><p><b>${esc(r.tenant)||"Vacant"}</b><br>📞 ${esc(r.phone)||"—"}<br>💰 ${money(r.rent)} / month • Due ${r.dueDay}th</p>${mem.length?`<div><b>👥 ${mem.length} member${mem.length>1?"s":""}</b><ul class="members">${mem.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:""}<div class="muted">Check-in: ${r.checkin||"—"} • Check-out: ${r.checkout||"—"}</div><div class="actions"><button class="btn blue" onclick="openRoom(${r.id})">Edit</button>${r.tenant?`<button class="btn orange" onclick="reminderSms(db.rooms.find(x=>x.id===${r.id}))">📱 Rent Reminder</button><button class="btn green" onclick="markPaid(${r.id})">✅ Paid + SMS</button>`:""}</div></div>`}).join("");
-document.getElementById("expenses").innerHTML=db.expenses.length?`<table class="table"><tr><th>Date</th><th>Type</th><th>Description</th><th>Amount</th></tr>${db.expenses.slice().reverse().map((e,i)=>`<tr><td>${esc(e.date)}</td><td>${esc(e.type)}</td><td>${esc(e.description)}</td><td>${money(e.amount)}</td></tr>`).join("")}</table>`:"<p class='muted'>No expenses recorded.</p>"}
-function backup(){let blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="rentmanager-backup.json";a.click()}
-function restore(){let i=document.createElement("input");i.type="file";i.accept=".json";i.onchange=()=>{let f=i.files[0],r=new FileReader();r.onload=()=>{try{db=JSON.parse(r.result);save();location.reload()}catch(e){alert("Invalid backup file")}};r.readAsText(f)};i.click()}
-async function notifyPermission(){if("Notification"in window){let p=await Notification.requestPermission();alert(p==="granted"?"Alerts enabled.":"Notifications not enabled.")}else alert("Notifications are not supported by this browser.")}
-async function installApp(){if(window.deferredPrompt){window.deferredPrompt.prompt();window.deferredPrompt=null}else alert("To install: open this site in Chrome/Edge and choose Install App / Add to Home screen.")}
-window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();window.deferredPrompt=e});
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"));
-let ys=document.getElementById("year");for(let y=nowY-5;y<=nowY+2;y++)ys.innerHTML+=`<option>${y}</option>`;ys.value=nowY;render();
-</script></body></html>
+function today(){return new Date().toISOString().slice(0,10)}
+function monthKey(d){return String(d||today()).slice(0,7)}
+function statusLabel(s){return s==="paid"?"PAID":s==="overdue"?"OVERDUE":"DUE"}
+
+function render(){
+  const rooms=document.getElementById("rooms");
+  rooms.innerHTML=data.rooms.map(r=>{
+    const memberNames=(r.members||[]).filter(Boolean);
+    const names=memberNames.length?memberNames:r.tenant?[r.tenant]:[];
+    return `<div class="card">
+      <div class="roomhead"><div class="roomtitle">Room ${r.room}</div><span class="badge ${r.status}">${statusLabel(r.status)}</span></div>
+      <div class="row"><b>👤 ${esc(r.tenant)||"Vacant"}</b></div>
+      <div class="row">📞 ${esc(r.phone)||"—"}</div>
+      <div class="row">💰 ${money(r.rent)} / month • Due ${r.dueDay}th</div>
+      <div class="row">👥 <span class="member-count">${names.length} member${names.length===1?"":"s"}</span></div>
+      ${names.length?`<ol class="members">${names.map(n=>`<li>${esc(n)}</li>`).join("")}</ol>`:""}
+      <div class="row muted">Check-in: ${esc(r.checkin)||"—"} • Check-out: ${esc(r.checkout)||"—"}</div>
+      <div class="actions">
+        <button onclick="openRoom(${r.room})">✏️ Edit</button>
+        <button class="secondary" onclick="rentSMS(${r.room},false)">📱 Rent Reminder</button>
+        <button class="green" onclick="rentSMS(${r.room},true)">✅ Paid SMS</button>
+      </div>
+    </div>`;
+  }).join("");
+
+  const income=data.rooms.filter(r=>r.status==="paid").reduce((s,r)=>s+Number(r.rent||0),0);
+  const expenses=data.expenses.reduce((s,e)=>s+Number(e.amount||0),0);
+  document.getElementById("stats").innerHTML=`
+    <div class="stat">🏠 Occupied <b>${data.rooms.filter(r=>r.tenant).length}/11</b></div>
+    <div class="stat">💰 Rent Paid <b>${money(income)}</b></div>
+    <div class="stat">⚠️ Rent Due <b>${money(data.rooms.filter(r=>r.status!=="paid").reduce((s,r)=>s+Number(r.rent||0),0))}</b></div>
+    <div class="stat">💸 Expenses <b>${money(expenses)}</b></div>
+    <div class="stat">💵 Net Balance <b>${money(income-expenses)}</b></div>`;
+  document.getElementById("accounts").innerHTML=`
+    <div class="card">
+      <p><b>Income:</b> Rent received = ${money(income)}</p>
+      <p><b>Expenses:</b> ${money(expenses)}</p>
+      <p><b>Net Balance:</b> ${money(income-expenses)}</p>
+      ${data.expenses.length?`<table><tr><th>Date</th><th>Category</th><th>Description</th><th>Amount</th></tr>${data.expenses.slice().reverse().map((e,i)=>`<tr><td>${esc(e.date)}</td><td>${esc(e.category)}</td><td>${esc(e.description)}</td><td>${money(e.amount)}</td></tr>`).join("")}</table>`:"<p class='muted'>No expenses entered yet.</p>"}
+    </div>`;
+}
+
+function openRoom(n){
+  editingRoom=n;
+  const r=data.rooms[n-1];
+  document.getElementById("roomNo").innerHTML=data.rooms.map(x=>`<option value="${x.room}">Room ${x.room}</option>`).join("");
+  document.getElementById("roomNo").value=n;
+  document.getElementById("roomModalTitle").textContent=`Edit Room ${n}`;
+  document.getElementById("tenant").value=r.tenant||"";
+  document.getElementById("phone").value=r.phone||"";
+  document.getElementById("rent").value=r.rent||"";
+  document.getElementById("dueDay").value=r.dueDay||5;
+  document.getElementById("rentStatus").value=r.status||"due";
+  document.getElementById("checkin").value=r.checkin||"";
+  document.getElementById("checkout").value=r.checkout||"";
+  document.getElementById("reminderDays").value=r.reminderDays??3;
+  document.getElementById("reminderEnabled").value=String(r.reminderEnabled!==false);
+  document.getElementById("notes").value=r.notes||"";
+  const members=(r.members&&r.members.length)?r.members:[r.tenant||""];
+  document.getElementById("memberInputs").innerHTML="";
+  members.forEach(m=>addMemberInput(m));
+  document.getElementById("roomModal").classList.add("open");
+}
+function addMemberInput(value=""){
+  const wrap=document.createElement("div");wrap.className="memberline";
+  wrap.innerHTML=`<input class="memberName" placeholder="Member name" value="${esc(value)}"><button type="button" class="red" onclick="this.parentElement.remove()">Remove</button>`;
+  document.getElementById("memberInputs").appendChild(wrap);
+}
+function saveRoom(){
+  const n=Number(document.getElementById("roomNo").value),r=data.rooms[n-1];
+  editingRoom=n;
+  r.tenant=document.getElementById("tenant").value.trim();
+  r.phone=document.getElementById("phone").value.trim();
+  r.rent=Number(document.getElementById("rent").value||0);
+  r.dueDay=Math.min(31,Math.max(1,Number(document.getElementById("dueDay").value||5)));
+  r.status=document.getElementById("rentStatus").value;
+  r.checkin=document.getElementById("checkin").value;
+  r.checkout=document.getElementById("checkout").value;
+  r.reminderDays=Math.min(15,Math.max(0,Number(document.getElementById("reminderDays").value||3)));
+  r.reminderEnabled=document.getElementById("reminderEnabled").value==="true";
+  r.members=[...document.querySelectorAll(".memberName")].map(x=>x.value.trim()).filter(Boolean);
+  if(r.tenant && !r.members.includes(r.tenant)) r.members.unshift(r.tenant);
+  r.notes=document.getElementById("notes").value.trim();
+  closeModal("roomModal");save();alert(`Room ${n} saved.`);
+}
+function openExpense(){
+  document.getElementById("expDate").value=today();
+  document.getElementById("expAmount").value="";
+  document.getElementById("expCategory").value="Light Bill";
+  document.getElementById("expDesc").value="";
+  document.getElementById("expenseModal").classList.add("open");
+}
+function saveExpense(){
+  const amount=Number(document.getElementById("expAmount").value||0);
+  if(amount<=0){alert("Enter an expense amount.");return}
+  data.expenses.push({date:document.getElementById("expDate").value||today(),amount,category:document.getElementById("expCategory").value,description:document.getElementById("expDesc").value.trim()});
+  closeModal("expenseModal");save();alert("Expense saved to your balance sheet.");
+}
+function closeModal(id){document.getElementById(id).classList.remove("open")}
+function rentSMS(n,paid){
+  const r=data.rooms[n-1];
+  if(!r.phone){alert("Please add the primary tenant phone number first.");return}
+  const msg=paid
+    ?`Dear ${r.tenant||"Tenant"}, your rent payment of ${money(r.rent)} for Room ${r.room} has been received. Thank you.`
+    :`Dear ${r.tenant||"Tenant"}, this is a reminder that your monthly rent of ${money(r.rent)} for Room ${r.room} is due on the ${r.dueDay}th. Please make the payment on time. Thank you.`;
+  window.location.href="sms:"+r.phone+"?body="+encodeURIComponent(msg);
+}
+function backupData(){
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="rentmanager-backup.json";a.click();URL.revokeObjectURL(a.href);
+}
+function restoreData(ev){
+  const f=ev.target.files[0];if(!f)return;
+  const reader=new FileReader();reader.onload=()=>{try{const x=JSON.parse(reader.result);if(!x.rooms||x.rooms.length!==11)throw Error();data=x;save();alert("Backup restored.");}catch(e){alert("Invalid backup file.")}};reader.readAsText(f);ev.target.value="";
+}
+async function enableAlerts(){
+  if(!("Notification" in window)){alert("Browser notifications are not supported here.");return}
+  const p=await Notification.requestPermission();alert(p==="granted"?"Alerts enabled.":"Notifications were not enabled.");
+}
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstall=e;document.getElementById("installBtn").style.display="inline-block"});
+async function installApp(){if(deferredInstall){deferredInstall.prompt();deferredInstall=null}else alert("Use Chrome/Edge menu → Install app / Add to Home screen.")}
+if("serviceWorker" in navigator) window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(console.error));
+render();
+</script>
+</body>
+</html>
