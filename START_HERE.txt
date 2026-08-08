@@ -30,3 +30,6 @@ After uploading, GitHub Pages:
 Settings → Pages → Deploy from a branch → main → / (root) → Save.
 
 If the old page is still shown after updating, hard-refresh the browser with Ctrl+F5.
+
+
+FIREBASE: See FIREBASE_SETUP.txt. Fill firebase-config.js before uploading.

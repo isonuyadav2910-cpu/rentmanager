@@ -28,6 +28,13 @@ label{font-weight:700;font-size:13px;display:block;margin:8px 0}input,select,tex
 textarea{min-height:90px}.full{grid-column:1/-1}.memberline{display:flex;gap:7px;margin:7px 0}.memberline input{margin:0}.memberline button{padding:8px 11px}
 .modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:15px}
 .notice{background:#eff6ff;border:1px solid #bfdbfe;padding:12px;border-radius:10px;color:#1e3a8a;font-size:13px}
+
+.payment-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:12px 0}
+.payment-box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:10px}
+.payment-box b{display:block;font-size:18px;margin-top:3px}
+.history-table{min-width:720px}
+.table-scroll{overflow:auto;border-radius:12px}
+.small-btn{padding:8px 10px;font-size:12px}
 @media(max-width:600px){.formgrid{grid-template-columns:1fr}.full{grid-column:auto}header{position:relative}.wrap{padding:12px}}
 </style>
 </head>
@@ -118,6 +125,59 @@ textarea{min-height:90px}.full{grid-column:1/-1}.memberline{display:flex;gap:7px
   </div>
 </div>
 
+
+<div class="modal" id="rentHistoryModal">
+  <div class="dialog">
+    <h2 id="rentHistoryTitle">Room Rent History</h2>
+    <div id="rentHistorySummary"></div>
+    <div class="actions">
+      <button class="green" onclick="openPaymentForm()">➕ Add Monthly Rent</button>
+    </div>
+    <div class="table-scroll">
+      <table class="history-table">
+        <thead><tr><th>Month</th><th>Rent</th><th>Paid Date</th><th>Mode</th><th>Status</th><th>Reference / Note</th><th>Action</th></tr></thead>
+        <tbody id="rentHistoryRows"></tbody>
+      </table>
+    </div>
+    <div class="modal-actions">
+      <button class="secondary" onclick="closeModal('rentHistoryModal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="paymentModal">
+  <div class="dialog">
+    <h2 id="paymentModalTitle">Add Rent Payment</h2>
+    <div class="formgrid">
+      <label>Room
+        <input id="paymentRoom" type="text" readonly>
+      </label>
+      <label>Month
+        <input id="paymentMonth" type="month">
+      </label>
+      <label>Rent Amount (₹)
+        <input id="paymentAmount" type="number" min="0" placeholder="10000">
+      </label>
+      <label>Paid Date
+        <input id="paymentDate" type="date">
+      </label>
+      <label>Payment Mode
+        <select id="paymentMode"><option value="cash">Cash</option><option value="online">Online</option></select>
+      </label>
+      <label>Status
+        <select id="paymentStatus"><option value="paid">Paid</option><option value="pending">Pending</option></select>
+      </label>
+      <label class="full">Reference / Note
+        <input id="paymentNote" placeholder="UPI reference, receipt no., or note">
+      </label>
+    </div>
+    <div class="modal-actions">
+      <button class="secondary" onclick="closeModal('paymentModal')">Cancel</button>
+      <button class="green" onclick="savePayment()">💾 Save Payment</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal" id="expenseModal">
   <div class="dialog">
     <h2>Add Property Expense</h2>
@@ -135,6 +195,78 @@ textarea{min-height:90px}.full{grid-column:1/-1}.memberline{display:flex;gap:7px
   </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script>
+let firebaseReady=false, cloudSyncReady=false, cloudUnsubscribe=null;
+let cloudDocRef=null;
+
+function initFirebaseCloud(){
+  try{
+    if(!window.firebase || !window.FIREBASE_CONFIG || !window.FIREBASE_CONFIG.apiKey ||
+       window.FIREBASE_CONFIG.apiKey === "PASTE_API_KEY_HERE"){
+      showCloudStatus("☁️ Firebase not configured — data is saved on this device only.");
+      return;
+    }
+    firebase.initializeApp(window.FIREBASE_CONFIG);
+    const auth=firebase.auth();
+    auth.signInAnonymously().then(()=>{
+      firebaseReady=true;
+      cloudDocRef=firebase.firestore().collection("rentManager").doc("sharedData");
+      cloudSyncReady=true;
+      cloudUnsubscribe=cloudDocRef.onSnapshot((snap)=>{
+        if(snap.exists){
+          const cloud=snap.data();
+          if(cloud && Array.isArray(cloud.rooms) && cloud.rooms.length===11){
+            cloud.rooms.forEach((r,i)=>{r.room=i+1;r.members=Array.isArray(r.members)?r.members:[];});
+            cloud.expenses=Array.isArray(cloud.expenses)?cloud.expenses:[];
+            cloud.payments=Array.isArray(cloud.payments)?cloud.payments:[];
+            cloud.payments=cloud.payments.map(p=>({...p,room:Number(p.room||0),status:p.status||"paid",mode:p.mode||"cash"}));
+            data=cloud;
+            localStorage.setItem(KEY,JSON.stringify(data));
+            render();
+            showCloudStatus("☁️ Synced — data is shared across your phones.");
+          }
+        }else{
+          cloudDocRef.set(data).catch(console.error);
+          showCloudStatus("☁️ Firebase connected — first data upload complete.");
+        }
+      },(err)=>{
+        console.error(err);
+        showCloudStatus("⚠️ Firebase sync error. Check your Firestore rules.");
+      });
+    }).catch(err=>{
+      console.error(err);
+      showCloudStatus("⚠️ Firebase login failed. Enable Anonymous Authentication.");
+    });
+  }catch(e){
+    console.error(e);
+    showCloudStatus("⚠️ Firebase setup error.");
+  }
+}
+
+function showCloudStatus(msg){
+  let el=document.getElementById("cloudStatus");
+  if(!el){
+    el=document.createElement("div");
+    el.id="cloudStatus";
+    el.style.cssText="position:fixed;bottom:10px;left:10px;right:10px;z-index:50;padding:10px 14px;border-radius:10px;background:#111827;color:#fff;font-size:13px;text-align:center;box-shadow:0 2px 10px #0003";
+    document.body.appendChild(el);
+  }
+  el.textContent=msg;
+}
+
+function saveCloud(){
+  if(firebaseReady && cloudSyncReady && cloudDocRef){
+    cloudDocRef.set(data).catch(err=>{
+      console.error(err);
+      showCloudStatus("⚠️ Could not save to Firebase. Check internet/Firestore rules.");
+    });
+  }
+}
+
 <script>
 const KEY="rentmanager_11_v4";
 let data=loadData(), editingRoom=1, deferredInstall=null;
@@ -147,17 +279,35 @@ function loadData(){
       x.rooms.forEach((r,i)=>{r.room=i+1;r.members=Array.isArray(r.members)?r.members:[];});
       x.expenses=Array.isArray(x.expenses)?x.expenses:[];
       x.payments=Array.isArray(x.payments)?x.payments:[];
+      x.payments=x.payments.map(p=>({...p,room:Number(p.room||0),status:p.status||"paid",mode:p.mode||"cash"}));
       return x;
     }
   }catch(e){}
   return {rooms:Array.from({length:11},(_,i)=>blankRoom(i+1)),expenses:[],payments:[]};
 }
-function save(){localStorage.setItem(KEY,JSON.stringify(data));render();}
+function save(){localStorage.setItem(KEY,JSON.stringify(data));render();saveCloud();}
 function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 function money(n){return "₹"+Number(n||0).toLocaleString("en-IN")}
 function today(){return new Date().toISOString().slice(0,10)}
 function monthKey(d){return String(d||today()).slice(0,7)}
 function statusLabel(s){return s==="paid"?"PAID":s==="overdue"?"OVERDUE":"DUE"}
+
+
+function paymentRecords(room){
+  return (data.payments||[]).filter(p=>Number(p.room)===Number(room));
+}
+function getRoomMonthStatus(room){
+  const key=monthKey();
+  const p=paymentRecords(room).filter(x=>x.month===key).sort((a,b)=>(b.paidDate||"").localeCompare(a.paidDate||""))[0];
+  if(!p) return "Pending";
+  if(p.status==="paid") return `Paid ${p.paidDate||""} • ${p.mode==="online"?"Online":"Cash"}`;
+  return "Pending";
+}
+function monthName(key){
+  const [y,m]=String(key).split("-");
+  return new Date(Number(y),Number(m)-1,1).toLocaleDateString("en-IN",{month:"long",year:"numeric"});
+}
+function escAttr(v){return esc(v).replace(/`/g,"&#096;")}
 
 function render(){
   const rooms=document.getElementById("rooms");
@@ -169,11 +319,13 @@ function render(){
       <div class="row"><b>👤 ${esc(r.tenant)||"Vacant"}</b></div>
       <div class="row">📞 ${esc(r.phone)||"—"}</div>
       <div class="row">💰 ${money(r.rent)} / month • Due ${r.dueDay}th</div>
+      <div class="row muted">📅 Current month: ${getRoomMonthStatus(r.room)}</div>
       <div class="row">👥 <span class="member-count">${names.length} member${names.length===1?"":"s"}</span></div>
       ${names.length?`<ol class="members">${names.map(n=>`<li>${esc(n)}</li>`).join("")}</ol>`:""}
       <div class="row muted">Check-in: ${esc(r.checkin)||"—"} • Check-out: ${esc(r.checkout)||"—"}</div>
       <div class="actions">
         <button onclick="openRoom(${r.room})">✏️ Edit</button>
+        <button class="dark" onclick="openRentHistory(${r.room})">💰 Rent History</button>
         <button class="secondary" onclick="rentSMS(${r.room},false)">📱 Rent Reminder</button>
         <button class="green" onclick="rentSMS(${r.room},true)">✅ Paid SMS</button>
       </div>
@@ -240,6 +392,86 @@ function saveRoom(){
   r.notes=document.getElementById("notes").value.trim();
   closeModal("roomModal");save();alert(`Room ${n} saved.`);
 }
+
+let historyRoom=1, editingPaymentId=null;
+
+function openRentHistory(room){
+  historyRoom=Number(room);
+  document.getElementById("rentHistoryTitle").textContent=`💰 Room ${historyRoom} • Monthly Rent History`;
+  renderRentHistory();
+  document.getElementById("rentHistoryModal").classList.add("open");
+}
+function renderRentHistory(){
+  const r=data.rooms[historyRoom-1];
+  const records=paymentRecords(historyRoom).slice().sort((a,b)=>String(b.month).localeCompare(String(a.month)));
+  const paid=records.filter(p=>p.status==="paid").reduce((s,p)=>s+Number(p.amount||0),0);
+  const pending=records.filter(p=>p.status!=="paid").reduce((s,p)=>s+Number(p.amount||0),0);
+  document.getElementById("rentHistorySummary").innerHTML=`
+    <div class="payment-summary">
+      <div class="payment-box">Monthly Rent<b>${money(r.rent)}</b></div>
+      <div class="payment-box">Total Paid<b>${money(paid)}</b></div>
+      <div class="payment-box">Total Pending<b>${money(pending)}</b></div>
+      <div class="payment-box">Payments<b>${records.length}</b></div>
+    </div>`;
+  document.getElementById("rentHistoryRows").innerHTML=records.length?records.map(p=>`
+    <tr>
+      <td><b>${esc(monthName(p.month))}</b></td>
+      <td>${money(p.amount)}</td>
+      <td>${esc(p.paidDate)||"—"}</td>
+      <td>${p.mode==="online"?"📱 Online":"💵 Cash"}</td>
+      <td><span class="badge ${p.status==="paid"?"paid":"due"}">${p.status==="paid"?"PAID":"PENDING"}</span></td>
+      <td>${esc(p.note)||"—"}</td>
+      <td><button class="small-btn" onclick="editPayment('${escAttr(p.id)}')">✏️ Edit</button></td>
+    </tr>`).join(""):`<tr><td colspan="7" class="muted">No monthly rent records yet. Add the first payment.</td></tr>`;
+}
+function openPaymentForm(payment=null){
+  editingPaymentId=payment?payment.id:null;
+  const r=data.rooms[historyRoom-1];
+  document.getElementById("paymentModalTitle").textContent=payment?"✏️ Edit Rent Payment":"➕ Add Rent Payment";
+  document.getElementById("paymentRoom").value=`Room ${historyRoom}`;
+  document.getElementById("paymentMonth").value=payment?.month||monthKey();
+  document.getElementById("paymentAmount").value=payment?.amount??r.rent??"";
+  document.getElementById("paymentDate").value=payment?.paidDate||(payment?.status==="pending"?"":today());
+  document.getElementById("paymentMode").value=payment?.mode||"cash";
+  document.getElementById("paymentStatus").value=payment?.status||"paid";
+  document.getElementById("paymentNote").value=payment?.note||"";
+  document.getElementById("paymentModal").classList.add("open");
+}
+function editPayment(id){
+  const p=(data.payments||[]).find(x=>String(x.id)===String(id));
+  if(p) openPaymentForm(p);
+}
+function savePayment(){
+  const month=document.getElementById("paymentMonth").value;
+  const amount=Number(document.getElementById("paymentAmount").value||0);
+  const status=document.getElementById("paymentStatus").value;
+  if(!month){alert("Please select the rent month.");return}
+  if(amount<=0){alert("Please enter the rent amount.");return}
+  if(status==="paid" && !document.getElementById("paymentDate").value){alert("Please enter the paid date.");return}
+  const record={
+    id:editingPaymentId||("p_"+Date.now()+"_"+Math.random().toString(36).slice(2,7)),
+    room:historyRoom,month,amount,
+    paidDate:document.getElementById("paymentDate").value,
+    mode:document.getElementById("paymentMode").value,
+    status,note:document.getElementById("paymentNote").value.trim()
+  };
+  if(editingPaymentId){
+    const i=data.payments.findIndex(p=>String(p.id)===String(editingPaymentId));
+    if(i>=0)data.payments[i]=record;
+  }else{
+    // Keep one record per room per month; editing an existing month updates it.
+    const existing=data.payments.findIndex(p=>Number(p.room)===historyRoom&&p.month===month);
+    if(existing>=0)data.payments[existing]=record; else data.payments.push(record);
+  }
+  if(record.month===monthKey()){
+    const rr=data.rooms[historyRoom-1];
+    rr.status=record.status==="paid"?"paid":"due";
+  }
+  closeModal("paymentModal");
+  save();
+  renderRentHistory();
+  document.getElementById("rentHistoryModal").classList.add("open");
+}
 function openExpense(){
   document.getElementById("expDate").value=today();
   document.getElementById("expAmount").value="";
@@ -268,7 +500,7 @@ function backupData(){
 }
 function restoreData(ev){
   const f=ev.target.files[0];if(!f)return;
-  const reader=new FileReader();reader.onload=()=>{try{const x=JSON.parse(reader.result);if(!x.rooms||x.rooms.length!==11)throw Error();data=x;save();alert("Backup restored.");}catch(e){alert("Invalid backup file.")}};reader.readAsText(f);ev.target.value="";
+  const reader=new FileReader();reader.onload=()=>{try{const x=JSON.parse(reader.result);if(!x.rooms||x.rooms.length!==11)throw Error();x.payments=Array.isArray(x.payments)?x.payments:[];x.payments=x.payments.map(p=>({...p,room:Number(p.room||0),status:p.status||"paid",mode:p.mode||"cash"}));data=x;save();alert("Backup restored.");}catch(e){alert("Invalid backup file.")}};reader.readAsText(f);ev.target.value="";
 }
 async function enableAlerts(){
   if(!("Notification" in window)){alert("Browser notifications are not supported here.");return}
@@ -278,6 +510,8 @@ window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredIns
 async function installApp(){if(deferredInstall){deferredInstall.prompt();deferredInstall=null}else alert("Use Chrome/Edge menu → Install app / Add to Home screen.")}
 if("serviceWorker" in navigator) window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(console.error));
 render();
+showCloudStatus("⏳ Connecting to Firebase…");
+initFirebaseCloud();
 </script>
 </body>
 </html>

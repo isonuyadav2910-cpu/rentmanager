@@ -1,0 +1,88 @@
+RENTMANAGER 11 ROOMS — FIREBASE SETUP
+========================================
+
+This ZIP is Firebase-ready. It keeps the existing local backup/restore features and
+adds cloud synchronization so the same rent, tenant, member, payment and expense
+data can appear on different phones.
+
+IMPORTANT:
+The app will NOT sync between phones until you connect it to your Firebase project.
+
+STEP 1 — Create Firebase project
+1. Open https://console.firebase.google.com/
+2. Sign in with your Google account.
+3. Click "Create a project".
+4. Give it a name, for example: rentmanager-11-room
+5. You can disable Google Analytics if you do not need it.
+6. Create the project.
+
+STEP 2 — Add a Web App
+1. Open your Firebase project.
+2. On Project Overview, click the Web icon (</>).
+3. App nickname: RentManager Web
+4. Click Register app.
+5. Firebase will show a firebaseConfig object.
+6. Copy the values into firebase-config.js in this ZIP.
+
+STEP 3 — Enable Anonymous Authentication
+1. Firebase Console → Build → Authentication.
+2. Click Get started.
+3. Open Sign-in method.
+4. Select Anonymous.
+5. Enable it and Save.
+
+STEP 4 — Create Firestore
+1. Firebase Console → Build → Firestore Database.
+2. Click Create database.
+3. Choose Production mode.
+4. Select a nearby/appropriate location.
+5. Create the database.
+
+STEP 5 — Firestore Rules
+Open Firestore Database → Rules and replace the rules with:
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /rentManager/{document} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
+
+Click Publish.
+
+NOTE:
+These rules allow any authenticated user of this web app to read/write the shared
+RentManager document. Because this app uses Anonymous Authentication, keep the
+website link private. If you later want individual accounts/administrator-only
+access, the app can be upgraded to email/password or Google sign-in.
+
+STEP 6 — Put your Firebase config in the ZIP
+Open firebase-config.js and replace:
+PASTE_API_KEY_HERE
+PASTE_PROJECT_ID
+PASTE_STORAGE_BUCKET
+PASTE_MESSAGING_SENDER_ID
+PASTE_APP_ID
+
+with the exact values Firebase gives you.
+
+STEP 7 — Upload to GitHub Pages
+Upload all files from this ZIP to the GitHub repository that hosts your website.
+Do NOT delete firebase-config.js.
+
+STEP 8 — Test
+1. Open the website on Phone 1.
+2. Add/edit a room or payment.
+3. Wait a few seconds with internet connected.
+4. Open the same website on Phone 2.
+5. The same data should appear.
+
+If you see "Firebase not configured", firebase-config.js still contains placeholders.
+If you see "Firebase login failed", enable Anonymous Authentication.
+If you see "Firebase sync error", check the Firestore Rules.
+
+Existing local data:
+The first phone's existing local data is uploaded to Firebase when the Firestore
+document does not already exist. Always keep a Backup JSON before first setup.
