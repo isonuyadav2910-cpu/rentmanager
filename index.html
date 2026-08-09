@@ -67,8 +67,16 @@
 
 <script>
 const KEY="rentmanager_pro_11";let db=JSON.parse(localStorage.getItem(KEY)||"null");
-if(!db){db={rooms:Array.from({length:11},(_,i)=>({id:i+1,room:i+1,tenant:"",phone:"",rent:0,dueDay:5,checkin:"",checkout:"",status:"vacant",notes:""})),payments:[],bills:[],expenses:[]};save();}
+if(!db){db={rooms:Array.from({length:11},(_,i)=>({id:i+1,room:i+1,tenant:"",phone:"",rent:0,dueDay:5,checkin:"",checkout:"",status:"vacant",members:[],reminderDays:3,reminderEnabled:true,notes:""})),payments:[],bills:[],expenses:[]};save();}
 function save(){localStorage.setItem(KEY,JSON.stringify(db));}
+function normalizeData(){
+  if(!db || !Array.isArray(db.rooms)){db={rooms:[],payments:[],bills:[],expenses:[]};}
+  while(db.rooms.length<11){const n=db.rooms.length+1;db.rooms.push({id:n,room:n,tenant:"",phone:"",rent:0,dueDay:5,checkin:"",checkout:"",status:"vacant",members:[],reminderDays:3,reminderEnabled:true,notes:""});}
+  db.rooms.forEach(r=>{if(!Array.isArray(r.members)){r.members=r.members?String(r.members).split(/\r?\n/).map(x=>x.trim()).filter(Boolean):[];} if(!r.reminderDays && r.reminderDays!==0)r.reminderDays=3;if(r.reminderEnabled===undefined)r.reminderEnabled=true;});
+  if(!Array.isArray(db.payments))db.payments=[];if(!Array.isArray(db.bills))db.bills=[];if(!Array.isArray(db.expenses))db.expenses=[];
+}
+normalizeData();
+
 function money(n){return new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0}).format(Number(n)||0)}
 function ym(d=new Date()){return d.toISOString().slice(0,7)}
 function year(){return Number(document.getElementById("year").value)||new Date().getFullYear()}
