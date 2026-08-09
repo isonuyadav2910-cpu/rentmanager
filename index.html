@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RentManager Pro - 11 Rooms</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--ink:#172033;--muted:#687386;--line:#e5e9f0;--blue:#2563eb;--green:#16a34a;--red:#dc2626;--amber:#d97706}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+header{background:#111827;color:#fff;padding:16px 20px;position:sticky;top:0;z-index:20}.head{max-width:1250px;margin:auto;display:flex;justify-content:space-between;gap:12px;align-items:center}.logo{font-size:23px;font-weight:800}.logo b{color:#60a5fa}.sub{font-size:12px;color:#cbd5e1;margin-top:3px}
+.authbox{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.authname{font-size:12px;color:#dbeafe}.wrap{max-width:1250px;margin:auto;padding:20px 15px}.notice{padding:12px 14px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;color:#1e40af;margin-bottom:16px;font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.stat{background:#fff;border:1px solid var(--line);border-radius:13px;padding:15px}.stat small{color:var(--muted)}.stat strong{display:block;font-size:21px;margin-top:7px}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0}.search,.select,input,textarea{border:1px solid var(--line);border-radius:9px;padding:10px;font:inherit}.search{flex:1;min-width:210px}
+button{border:0;border-radius:9px;padding:10px 13px;font-weight:700;cursor:pointer}.blue{background:var(--blue);color:#fff}.green{background:#dcfce7;color:#166534}.red{background:#fee2e2;color:#991b1b}.gray{background:#fff;border:1px solid var(--line);color:#374151}
+.rooms{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.room{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 4px 18px #1720330a}
+.roomhead{display:flex;justify-content:space-between;align-items:center}.room h3{margin:0}.badge{font-size:11px;font-weight:800;border-radius:99px;padding:5px 8px}.paid{background:#dcfce7;color:#166534}.due{background:#fef3c7;color:#92400e}.overdue{background:#fee2e2;color:#991b1b}.vacant{background:#e5e7eb;color:#374151}
+.details{line-height:1.85;font-size:13px;color:#4b5563;margin:12px 0}.details b{color:#111827}.actions{display:flex;flex-wrap:wrap;gap:7px}.actions button{font-size:11px;padding:8px 9px}
+.section{margin-top:25px}.section h2{margin:0 0 12px}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px;overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:700px}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);font-size:12px}th{background:#f8fafc}
+.modalbg{display:none;position:fixed;inset:0;background:#0008;z-index:50;align-items:center;justify-content:center;padding:15px}.modalbg.show{display:flex}.modal{background:#fff;border-radius:15px;padding:20px;width:min(700px,100%);max-height:92vh;overflow:auto}
+.form{display:grid;gap:11px}.form label{font-size:12px;font-weight:700}.form input,.form select,.form textarea{width:100%;margin-top:5px}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:10px}.modalfoot{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+.toast{position:fixed;right:16px;bottom:16px;background:#111827;color:#fff;padding:12px 15px;border-radius:9px;display:none;z-index:100}.toast.show{display:block}
+.empty{text-align:center;color:var(--muted);padding:35px;grid-column:1/-1}.history-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0 15px}.summary-box{border:1px solid var(--line);border-radius:10px;padding:12px;background:#f8fafc;font-size:12px}.summary-box b{display:block;font-size:17px;margin-top:5px}
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}.login-card{width:min(460px,100%);background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px;box-shadow:0 10px 35px #17203312;text-align:center}.login-card h1{margin:0 0 8px}.login-card p{color:var(--muted);font-size:14px;line-height:1.6}.role-pill{display:inline-block;padding:7px 12px;border-radius:99px;background:#eff6ff;color:#1e40af;font-weight:800;font-size:12px;margin:7px 0 15px}.cloud{font-size:12px;margin-top:12px;color:var(--muted)}.hidden{display:none!important}
+.renter-hero{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:18px}.renter-hero h2{margin:0 0 7px}.renter-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.mini{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:13px}.mini small{color:var(--muted)}.mini b{display:block;font-size:18px;margin-top:5px}
+.cloudbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 13px;font-size:12px}
+@media(max-width:1000px){.stats{grid-template-columns:repeat(3,1fr)}.rooms{grid-template-columns:repeat(2,1fr)}.renter-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.stats,.rooms,.renter-grid{grid-template-columns:1fr}.twocol,.history-summary{grid-template-columns:1fr}.logo{font-size:20px}.head{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<div id="loginView" class="login">
+ <div class="login-card">
+  <div style="font-size:48px">🏠</div><h1>RentManager Pro</h1>
+  <p>11-room rental management with Firebase Cloud Sync. Owners manage everything; renters see only their own rent.</p>
+  <button class="blue" id="googleLogin">Continue with Gmail</button>
+  <div class="cloud" id="loginStatus">Cloud login is loading…</div>
+ </div>
+</div>
+
+<div id="ownerView" class="hidden">
+<header><div class="head"><div><div class="logo">Rent<b>Manager</b> Pro 🏠</div><div class="sub">Owner Dashboard • 11 Rooms • Rent • Expenses • Year-wise Accounts</div></div><div class="authbox"><span class="authname" id="ownerEmail"></span><button class="gray" id="signOutBtn">Sign out</button></div></div></header>
+<div class="wrap">
+<div class="cloudbar"><span>☁️ <b>Cloud Sync:</b> <span id="cloudState">Connecting…</span></span><button class="gray" id="syncBtn">↻ Sync now</button></div>
+<div class="notice"><b>Owner access:</b> You can manage all 11 rooms, rental details, rent payments, payment history, and expenses. Light Bill is stored as an Expense. Renters cannot edit or delete your records.</div>
+<div class="stats">
+<div class="stat"><small>Monthly Rent</small><strong id="sRent">₹0</strong></div>
+<div class="stat"><small>Rent Collected</small><strong id="sCollected">₹0</strong></div>
+<div class="stat"><small>Rent Pending</small><strong id="sPending">₹0</strong></div>
+<div class="stat"><small>Year Income</small><strong id="sIncome">₹0</strong></div>
+<div class="stat"><small>Year Expenses</small><strong id="sExpense">₹0</strong></div>
+<div class="stat"><small>Net Balance</small><strong id="sNet">₹0</strong></div>
+</div>
+<div class="toolbar">
+<input class="search" id="search" placeholder="🔎 Search room, tenant or phone">
+<select class="select" id="filter"><option value="all">All Rooms</option><option value="paid">Paid</option><option value="due">Due</option><option value="overdue">Overdue</option><option value="vacant">Vacant</option></select>
+<select class="select" id="year"></select>
+<button class="blue" id="addRoomBtn">＋ Room / Tenant</button>
+<button class="blue" id="addExpenseBtn">＋ Expense</button>
+<button class="gray" id="backupBtn">⬇ Backup</button>
+<button class="gray" id="restoreBtn">⬆ Restore</button>
+<input id="restore" type="file" accept=".json" hidden>
+</div>
+<section class="rooms" id="rooms"></section>
+<section class="section"><h2>💰 Rent Payment History</h2><div class="panel"><table><thead><tr><th>Date</th><th>Room</th><th>Tenant</th><th>Month</th><th>Amount</th><th>Mode</th><th>Status</th><th>Action</th></tr></thead><tbody id="payments"></tbody></table></div></section>
+<section class="section"><h2>💸 Expense History</h2><div class="panel"><table><thead><tr><th>Date</th><th>Category</th><th>Description</th><th>Amount</th><th>Action</th></tr></thead><tbody id="expenses"></tbody></table></div></section>
+<section class="section"><h2>📊 Yearly Accounts</h2><div class="panel"><table><thead><tr><th>Year</th><th>Rent Income</th><th>Light Bill</th><th>Other Expenses</th><th>Total Expenses</th><th>Net</th></tr></thead><tbody id="accounts"></tbody></table></div></section>
+</div>
+</div>
+
+<div id="renterView" class="hidden">
+<header><div class="head"><div><div class="logo">Rent<b>Manager</b> Pro 🏠</div><div class="sub">Renter Dashboard • Read Only</div></div><div class="authbox"><span class="authname" id="renterEmail"></span><button class="gray" id="renterSignOutBtn">Sign out</button></div></div></header>
+<div class="wrap">
+<div class="cloudbar"><span>☁️ <b>Cloud Sync:</b> <span id="renterCloudState">Connected</span></span></div>
+<div id="renterContent"></div>
+</div>
+</div>
+
+<div class="modalbg" id="modalbg"><div class="modal"><h2 id="mtitle">Add</h2><form class="form" id="form"></form></div></div>
+<div class="modalbg" id="historyModal"><div class="modal"><h2 id="historyTitle">💰 Rent History</h2><div id="historySummary"></div><div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:10px"><button class="blue" id="addPaymentBtn">＋ Add Monthly Rent</button><button class="gray" id="closeHistoryBtn">Close</button></div><div class="panel"><table><thead><tr><th>Month</th><th>Amount</th><th>Paid Date</th><th>Mode</th><th>Status</th><th>Note</th><th>Action</th></tr></thead><tbody id="historyRows"></tbody></table></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script>
+"use strict";
+
+/* Firebase config from the user's existing RentManager project. */
+const firebaseConfig={
+ apiKey:"AIzaSyBZdB8odEXTzC9kFP6Ft3PKCeAhd8WTnWU",
+ authDomain:"rent-manager-11-rooms.firebaseapp.com",
+ projectId:"rent-manager-11-rooms",
+ storageBucket:"rent-manager-11-rooms.firebasestorage.app",
+ messagingSenderId:"381338899569",
+ appId:"1:381338899569:web:bc0edbe2660328b677d0",
+ measurementId:"G-3CH0PGPSMB"
+};
+
+/*
+  The Firebase console web config does not always include databaseURL.
+  The app tries the common Realtime Database URLs for this project.
+  If your Realtime Database has a different URL, set it in DB_URLS[0].
+*/
+const DB_URLS=[
+ "https://rent-manager-11-rooms-default-rtdb.firebaseio.com",
+ "https://rent-manager-11-rooms-default-rtdb.asia-southeast1.firebasedatabase.app",
+ "https://rent-manager-11-rooms-default-rtdb.asia-south1.firebasedatabase.app",
+ "https://rent-manager-11-rooms-default-rtdb.asia-south2.firebasedatabase.app"
+];
+
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth();
+let cloudDb=null, cloudRef=null, cloudUrl="";
+let cloudUnsub=null;
+const OWNER_EMAILS=[
+ /* Put the owner's exact Gmail here. Example: "owner@gmail.com" */
+];
+const KEY="rentmanager_11_rooms_v4";
+let db=loadData();
+let historyRoom=1, editingPaymentId=null, editingExpenseId=null, currentRole=null, currentRoom=null;
+
+function defaultRoom(n){return{id:n,room:n,tenant:"",renterEmail:"",phone:"",rent:0,dueDay:5,checkin:"",checkout:"",members:[],notes:""};}
+function loadData(){try{const x=JSON.parse(localStorage.getItem(KEY)||"null");if(x&&typeof x==="object")return x;}catch(e){}return{rooms:[],payments:[],expenses:[]};}
+function normalize(){
+ if(!Array.isArray(db.rooms))db.rooms=[];if(!Array.isArray(db.payments))db.payments=[];if(!Array.isArray(db.expenses))db.expenses=[];
+ for(let n=1;n<=11;n++)if(!db.rooms.some(r=>Number(r.room)===n))db.rooms.push(defaultRoom(n));
+ db.rooms.sort((a,b)=>Number(a.room)-Number(b.room));
+ db.rooms.forEach(r=>{r.id=Number(r.id||r.room);r.room=Number(r.room);r.tenant=String(r.tenant||"");r.renterEmail=String(r.renterEmail||"").toLowerCase().trim();r.phone=String(r.phone||"");r.rent=Number(r.rent||0);r.dueDay=Math.min(31,Math.max(1,Number(r.dueDay||5)));r.members=Array.isArray(r.members)?r.members.map(String):[];r.notes=String(r.notes||"");if(r.tenant&&!r.members.includes(r.tenant))r.members.unshift(r.tenant);});
+}
+function saveLocal(){localStorage.setItem(KEY,JSON.stringify(db));}
+function money(n){return new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0}).format(Number(n)||0);}
+function today(){return new Date().toISOString().slice(0,10);}
+function monthKey(){return today().slice(0,7);}
+function monthLabel(v=monthKey()){const p=String(v).split("-");return new Date(Number(p[0]),Number(p[1])-1,1).toLocaleString("en-IN",{month:"long",year:"numeric"});}
+function esc(x){return String(x??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function status(r){
+ if(!r.tenant)return"vacant";
+ const p=db.payments.find(x=>Number(x.room)===Number(r.room)&&String(x.month)===monthKey()&&x.status==="paid");
+ if(p)return"paid";
+ const d=new Date(),due=new Date(d.getFullYear(),d.getMonth(),Number(r.dueDay||5),23,59,59);
+ return d>due?"overdue":"due";
+}
+function badge(s){return'<span class="badge '+s+'">'+s.toUpperCase()+"</span>";}
+function initYears(){
+ const y=new Date().getFullYear(),a=[];for(let i=y-10;i<=y+10;i++)a.push(i);
+ document.getElementById("year").innerHTML=a.map(x=>"<option>"+x+"</option>").join("");document.getElementById("year").value=y;
+}
+function yearSelected(){return String(document.getElementById("year").value||new Date().getFullYear());}
+function cloudSet(t){document.getElementById("cloudState").textContent=t;}
+function showView(v){["loginView","ownerView","renterView"].forEach(id=>document.getElementById(id).classList.add("hidden"));document.getElementById(v).classList.remove("hidden");}
+function isOwner(user){
+ const email=(user?.email||"").toLowerCase();
+ return OWNER_EMAILS.map(x=>x.toLowerCase().trim()).includes(email);
+}
+function findRenterRoom(user){
+ const email=(user?.email||"").toLowerCase().trim();
+ return db.rooms.find(r=>r.renterEmail&&r.renterEmail===email)||null;
+}
+function updateRole(user){
+ if(!user){currentRole=null;showView("loginView");return;}
+ if(isOwner(user)){currentRole="owner";document.getElementById("ownerEmail").textContent=user.email||"";showView("ownerView");render();startCloudSync();return;}
+ currentRoom=findRenterRoom(user);
+ if(currentRoom){currentRole="renter";document.getElementById("renterEmail").textContent=user.email||"";showView("renterView");renderRenter();startCloudSync();return;}
+ currentRole="unassigned";showView("renterView");document.getElementById("renterEmail").textContent=user.email||"";document.getElementById("renterContent").innerHTML='<div class="renter-hero"><h2>Account not assigned</h2><p>Your Gmail is not assigned to a room yet. Please ask the owner to add this Gmail address to your rental details.</p></div>';startCloudSync();}
+function startCloudSync(){
+ if(cloudUnsub){try{cloudUnsub();}catch(e){}cloudUnsub=null;}
+ if(cloudRef){try{cloudRef.off();}catch(e){}}
+ tryCloudUrl(0);
+}
+function tryCloudUrl(i){
+ if(i>=DB_URLS.length){cloudSet("Offline / check Database URL");document.getElementById("loginStatus").textContent="Gmail works, but Cloud Sync could not connect. Check your Firebase Realtime Database URL.";return;}
+ const url=DB_URLS[i];
+ try{
+  const appName="db_"+i;
+  let app;
+  try{app=firebase.app(appName);}catch(e){app=firebase.initializeApp({...firebaseConfig,databaseURL:url},appName);}
+  const d=app.database();
+  const ref=d.ref("rentManager");
+  ref.once("value").then(snap=>{
+    cloudDb=d;cloudRef=ref;cloudUrl=url;
+    cloudSet("Connected");document.getElementById("loginStatus").textContent="Firebase + Gmail ready";
+    cloudUnsub=ref.on("value",snap=>{
+      const remote=snap.val();
+      if(remote&&typeof remote==="object"){
+        db={rooms:Array.isArray(remote.rooms)?remote.rooms:[],payments:Array.isArray(remote.payments)?remote.payments:[],expenses:Array.isArray(remote.expenses)?remote.expenses:[]};
+        normalize();saveLocal();
+        if(currentRole==="owner")render();else if(currentRole==="renter")renderRenter();
+      }
+    });
+  }).catch(()=>tryCloudUrl(i+1));
+ }catch(e){tryCloudUrl(i+1);}
+}
+function pushCloud(){
+ if(!cloudRef){saveLocal();return Promise.resolve();}
+ return cloudRef.set({rooms:db.rooms,payments:db.payments,expenses:db.expenses,updatedAt:Date.now()})
+  .then(()=>{cloudSet("Synced just now");saveLocal();}).catch(e=>{saveLocal();cloudSet("Local copy saved; cloud error");throw e;});
+}
+async function saveData(){
+ saveLocal();
+ try{await pushCloud();}catch(e){toast("Saved locally, but cloud sync needs checking.");}
+}
+function render(){
+ const q=(document.getElementById("search").value||"").toLowerCase(),f=document.getElementById("filter").value;
+ const rooms=db.rooms.filter(r=>("room "+r.room+" "+r.tenant+" "+r.phone+" "+r.renterEmail+" "+(r.members||[]).join(" ")).toLowerCase().includes(q)).filter(r=>f==="all"||status(r)===f);
+ document.getElementById("rooms").innerHTML=rooms.length?rooms.map(roomCard).join(""):'<div class="empty">No rooms match your search/filter.</div>';
+ renderStats();renderTables();
+}
+function roomCard(r){
+ const s=status(r),tenant=r.tenant||"Vacant";
+ return`<article class="room"><div class="roomhead"><h3>🏠 Room ${r.room}</h3>${badge(s)}</div>
+ <div class="details">👤 <b>${esc(tenant)}</b>${r.members?.length?'<br>👥 '+r.members.length+' member(s): '+r.members.map(esc).join(", "):""}<br>📞 ${esc(r.phone)||"—"}<br>📧 ${esc(r.renterEmail)||"—"}<br>💰 <b>${money(r.rent)}</b> / month<br>📅 Due: ${r.dueDay}th<br>🟢 Check-in: ${esc(r.checkin)||"—"}<br>🔴 Check-out: ${esc(r.checkout)||"—"}${r.notes?'<br>📝 '+esc(r.notes):""}</div>
+ <div class="actions">${s!=="vacant"?`<button class="green" onclick="openPaymentFormForRoom(${r.room})">✓ Monthly Rent</button><button class="gray" onclick="openRentHistory(${r.room})">📋 Rent History</button><button class="gray" onclick="smsDue(${r.id})">📱 Reminder</button><button class="blue" onclick="smsPaid(${r.id})">📱 Paid SMS</button><button class="gray" onclick="editRoom(${r.id})">✎ Edit</button><button class="red" onclick="vacate(${r.id})">Check-out</button>`:`<button class="blue" onclick="editRoom(${r.id})">＋ Check-in</button>`}</div></article>`;
+}
+function renderStats(){
+ const y=yearSelected(),m=monthKey(),active=db.rooms.filter(r=>r.tenant),rent=active.reduce((s,r)=>s+Number(r.rent||0),0);
+ const collected=db.payments.filter(p=>p.month===m&&p.status==="paid").reduce((s,p)=>s+Number(p.amount||0),0),pending=Math.max(0,rent-collected);
+ const income=db.payments.filter(p=>String(p.paidDate||p.date).startsWith(y)&&p.status==="paid").reduce((s,p)=>s+Number(p.amount||0),0);
+ const exp=db.expenses.filter(e=>String(e.date).startsWith(y)).reduce((s,e)=>s+Number(e.amount||0),0);
+ document.getElementById("sRent").textContent=money(rent);document.getElementById("sCollected").textContent=money(collected);document.getElementById("sPending").textContent=money(pending);document.getElementById("sIncome").textContent=money(income);document.getElementById("sExpense").textContent=money(exp);document.getElementById("sNet").textContent=money(income-exp);
+}
+function renderTables(){
+ const y=yearSelected(),ri=db.payments.filter(p=>String(p.paidDate||p.date).startsWith(y)&&p.status==="paid").reduce((s,p)=>s+Number(p.amount||0),0);
+ const light=db.expenses.filter(e=>String(e.date).startsWith(y)&&String(e.category).toLowerCase()==="light bill").reduce((s,e)=>s+Number(e.amount||0),0);
+ const other=db.expenses.filter(e=>String(e.date).startsWith(y)&&String(e.category).toLowerCase()!=="light bill").reduce((s,e)=>s+Number(e.amount||0),0);
+ document.getElementById("accounts").innerHTML=`<tr><td>${y}</td><td>${money(ri)}</td><td>${money(light)}</td><td>${money(other)}</td><td>${money(light+other)}</td><td>${money(ri-light-other)}</td></tr>`;
+ document.getElementById("payments").innerHTML=db.payments.filter(p=>String(p.month||"").startsWith(y)).slice().sort((a,b)=>String(b.month).localeCompare(String(a.month))).map(p=>`<tr><td>${esc(p.paidDate||"—")}</td><td>Room ${p.room}</td><td>${esc(p.tenant)}</td><td>${esc(monthLabel(p.month))}</td><td>${money(p.amount)}</td><td>${p.mode==="online"?"📱 Online":"💵 Cash"}</td><td>${esc(p.status)}</td><td><button class="gray" onclick="openRentHistory(${p.room})">View</button></td></tr>`).join("")||'<tr><td colspan="8">No rent payments for this year.</td></tr>';
+ document.getElementById("expenses").innerHTML=db.expenses.filter(e=>String(e.date).startsWith(y)).slice().sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(e=>`<tr><td>${esc(e.date)}</td><td>${esc(e.category)}</td><td>${esc(e.description)}</td><td>${money(e.amount)}</td><td><button class="gray" onclick="editExpense('${String(e.id).replace(/'/g,"\\'")}')">✏️ Edit</button> <button class="red" onclick="deleteExpense('${String(e.id).replace(/'/g,"\\'")}')">🗑️ Delete</button></td></tr>`).join("")||'<tr><td colspan="5">No expenses for this year.</td></tr>';
+}
+function editRoom(id){
+ const r=db.rooms.find(x=>Number(x.id)===Number(id));if(!r)return;
+ showModal("Room / Tenant Details",`<label>Room<select id="froom">${db.rooms.map(x=>`<option value="${x.id}" ${x.id===r.id?"selected":""}>Room ${x.room}</option>`).join("")}</select></label>
+ <label>Tenant Name<input id="ftenant" value="${esc(r.tenant)}"></label><label>Renter Gmail<input id="frenterEmail" type="email" value="${esc(r.renterEmail)}" placeholder="renter@gmail.com"></label>
+ <label>Members / Occupants<textarea id="fmembers" rows="4">${esc((r.members||[]).join("\n"))}</textarea></label><label>Phone Number<input id="fphone" value="${esc(r.phone)}"></label>
+ <div class="twocol"><label>Monthly Rent (₹)<input id="frent" type="number" min="0" value="${r.rent}"></label><label>Due Day<input id="fdue" type="number" min="1" max="31" value="${r.dueDay}"></label></div>
+ <div class="twocol"><label>Check-in<input id="fcheckin" type="date" value="${esc(r.checkin)}"></label><label>Check-out<input id="fcheckout" type="date" value="${esc(r.checkout)}"></label></div>
+ <label>Notes<textarea id="fnotes">${esc(r.notes)}</textarea><div class="modalfoot"><button type="button" class="gray" onclick="closeModal()">Cancel</button><button type="button" class="blue" onclick="saveRoom(${r.id})">💾 Save Room</button></div>`);
+}
+async function saveRoom(id){
+ const r=db.rooms.find(x=>Number(x.id)===Number(id));if(!r)return;
+ r.tenant=document.getElementById("ftenant").value.trim();r.renterEmail=document.getElementById("frenterEmail").value.trim().toLowerCase();r.members=document.getElementById("fmembers").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);if(r.tenant&&!r.members.includes(r.tenant))r.members.unshift(r.tenant);
+ r.phone=document.getElementById("fphone").value.trim();r.rent=Number(document.getElementById("frent").value||0);r.dueDay=Math.min(31,Math.max(1,Number(document.getElementById("fdue").value||5)));r.checkin=document.getElementById("fcheckin").value;r.checkout=document.getElementById("fcheckout").value;r.notes=document.getElementById("fnotes").value.trim();
+ if(!r.tenant)r.members=[];closeModal();render();await saveData();toast("Room "+r.room+" saved and synced.");
+}
+function paymentRecords(room){return db.payments.filter(p=>Number(p.room)===Number(room));}
+function openPaymentFormForRoom(room){historyRoom=Number(room);openPaymentForm();}
+function openRentHistory(room){historyRoom=Number(room);const r=db.rooms.find(x=>Number(x.room)===historyRoom);if(!r)return;document.getElementById("historyTitle").textContent="💰 Room "+historyRoom+" • Monthly Rent History";renderRentHistory();document.getElementById("historyModal").classList.add("show");}
+function closeHistory(){document.getElementById("historyModal").classList.remove("show");}
+function renderRentHistory(){
+ const r=db.rooms.find(x=>Number(x.room)===historyRoom),records=paymentRecords(historyRoom).slice().sort((a,b)=>String(b.month).localeCompare(String(a.month))),paid=records.filter(p=>p.status==="paid").reduce((s,p)=>s+Number(p.amount||0),0),pending=records.filter(p=>p.status!=="paid").reduce((s,p)=>s+Number(p.amount||0),0);
+ document.getElementById("historySummary").innerHTML=`<div class="history-summary"><div class="summary-box">Monthly Rent<b>${money(r.rent)}</b></div><div class="summary-box">Total Paid<b>${money(paid)}</b></div><div class="summary-box">Total Pending<b>${money(pending)}</b></div><div class="summary-box">Records<b>${records.length}</b></div></div>`;
+ document.getElementById("historyRows").innerHTML=records.map(p=>`<tr><td><b>${esc(monthLabel(p.month))}</b></td><td>${money(p.amount)}</td><td>${esc(p.paidDate)||"—"}</td><td>${p.mode==="online"?"📱 Online":"💵 Cash"}</td><td><span class="badge ${p.status==="paid"?"paid":"due"}">${p.status.toUpperCase()}</span></td><td>${esc(p.note)||"—"}</td><td><button class="gray" onclick="editPayment('${String(p.id).replace(/'/g,"\\'")}')">✏️ Edit</button> <button class="red" onclick="deletePayment('${String(p.id).replace(/'/g,"\\'")}')">🗑️ Delete</button></td></tr>`).join("")||'<tr><td colspan="7" class="empty">No monthly rent records yet.</td></tr>';
+}
+function openPaymentForm(payment=null){
+ editingPaymentId=payment?String(payment.id):null;const r=db.rooms.find(x=>Number(x.room)===historyRoom);if(!r)return;
+ showModal(payment?"Edit Monthly Rent":"Add Monthly Rent",`<label>Room<input value="Room ${historyRoom}" disabled></label><label>Rent Month<input id="paymentMonth" type="month" value="${payment?.month||monthKey()}"></label>
+ <div class="twocol"><label>Amount (₹)<input id="paymentAmount" type="number" min="0" value="${payment?.amount??r.rent}"></label><label>Paid Date<input id="paymentDate" type="date" value="${payment?.paidDate||today()}"></label></div>
+ <label>Payment Mode<select id="paymentMode"><option value="cash" ${payment?.mode!=="online"?"selected":""}>💵 Cash</option><option value="online" ${payment?.mode==="online"?"selected":""}>📱 Online</option></select></label>
+ <label>Status<select id="paymentStatus"><option value="paid" ${payment?.status!=="pending"?"selected":""}>Paid</option><option value="pending" ${payment?.status==="pending"?"selected":""}>Pending / Due</option></select></label><label>Note<textarea id="paymentNote">${esc(payment?.note||"")}</textarea>
+ <div class="modalfoot"><button type="button" class="gray" onclick="closeModal()">Cancel</button><button type="button" class="blue" onclick="savePayment()">💾 Save Payment</button></div>`);
+}
+function editPayment(id){const p=db.payments.find(x=>String(x.id)===String(id));if(p){historyRoom=Number(p.room);openPaymentForm(p);}}
+async function savePayment(){
+ const r=db.rooms.find(x=>Number(x.room)===historyRoom);if(!r)return;const month=document.getElementById("paymentMonth").value,amount=Number(document.getElementById("paymentAmount").value||0),paidDate=document.getElementById("paymentDate").value,statusValue=document.getElementById("paymentStatus").value,mode=document.getElementById("paymentMode").value;
+ if(!month){toast("Select rent month.");return}if(amount<=0){toast("Enter rent amount.");return}if(statusValue==="paid"&&!paidDate){toast("Select paid date.");return}
+ const record={id:editingPaymentId||("p_"+Date.now()),date:paidDate||today(),paidDate:statusValue==="paid"?paidDate:"",room:historyRoom,tenant:r.tenant,phone:r.phone,month,amount,mode,status:statusValue,note:document.getElementById("paymentNote").value.trim()};
+ if(editingPaymentId){const i=db.payments.findIndex(p=>String(p.id)===String(editingPaymentId));if(i>=0)db.payments[i]=record;}else{const i=db.payments.findIndex(p=>Number(p.room)===historyRoom&&String(p.month)===month);if(i>=0)db.payments[i]=record;else db.payments.push(record);}
+ closeModal();render();renderRentHistory();document.getElementById("historyModal").classList.add("show");await saveData();toast("Rent saved and synced.");
+}
+async function deletePayment(id){
+ if(!confirm("Delete this rent payment? This cannot be undone."))return;
+ db.payments=db.payments.filter(p=>String(p.id)!==String(id));await saveData();render();renderRentHistory();toast("Payment deleted.");
+}
+function openExpenseForm(expense=null){
+ editingExpenseId=expense?String(expense.id):null;
+ showModal(expense?"Edit Expense":"Add Expense",`<label>Date<input id="edate" type="date" value="${expense?.date||today()}"></label><label>Category<select id="ecat"><option ${String(expense?.category||"").toLowerCase()==="light bill"?"selected":""}>Light Bill</option><option ${String(expense?.category||"").toLowerCase()==="maintenance"?"selected":""}>Maintenance</option><option ${String(expense?.category||"").toLowerCase()==="repair"?"selected":""}>Repair</option><option ${String(expense?.category||"").toLowerCase()==="other"?"selected":""}>Other</option></select></label><label>Amount (₹)<input id="eamount" type="number" min="0" value="${expense?.amount||""}"></label><label>Description<textarea id="edesc">${esc(expense?.description||"")}</textarea></label><div class="modalfoot"><button type="button" class="gray" onclick="closeModal()">Cancel</button><button type="button" class="blue" onclick="saveExpense()">💾 Save Expense</button></div>`);
+}
+async function saveExpense(){
+ const date=document.getElementById("edate").value,category=document.getElementById("ecat").value,amount=Number(document.getElementById("eamount").value||0),description=document.getElementById("edesc").value.trim();
+ if(!date||amount<=0){toast("Enter date and amount.");return}
+ const e={id:editingExpenseId||("e_"+Date.now()),date,category,amount,description};
+ if(editingExpenseId){const i=db.expenses.findIndex(x=>String(x.id)===String(editingExpenseId));if(i>=0)db.expenses[i]=e;}else db.expenses.push(e);
+ closeModal();render();await saveData();toast("Expense saved and synced.");
+}
+function editExpense(id){const e=db.expenses.find(x=>String(x.id)===String(id));if(e)openExpenseForm(e);}
+async function deleteExpense(id){if(!confirm("Delete this expense?"))return;db.expenses=db.expenses.filter(e=>String(e.id)!==String(id));await saveData();render();toast("Expense deleted.");}
+function vacate(id){const r=db.rooms.find(x=>Number(x.id)===Number(id));if(r&&confirm("Check out "+(r.tenant||"tenant")+" from Room "+r.room+"?")){r.checkout=today();r.tenant="";r.renterEmail="";r.phone="";r.members=[];saveData();render();toast("Tenant checked out.");}}
+function sendSMS(phone,msg){if(!phone){toast("Add tenant phone number first.");return}location.href="sms:"+phone+"?body="+encodeURIComponent(msg);}
+function smsDue(id){const r=db.rooms.find(x=>Number(x.id)===Number(id));if(r)sendSMS(r.phone,"Rent reminder: ₹"+r.rent+" for Room "+r.room+" is due on the "+r.dueDay+"th.");}
+function smsPaid(id){const r=db.rooms.find(x=>Number(x.id)===Number(id));if(r)sendSMS(r.phone,"Payment received: ₹"+r.rent+" rent for Room "+r.room+". Thank you.");}
+function showModal(t,b){document.getElementById("mtitle").textContent=t;document.getElementById("form").innerHTML=b;document.getElementById("modalbg").classList.add("show");}
+function closeModal(){document.getElementById("modalbg").classList.remove("show");}
+function backup(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:"application/json"}));a.download="rentmanager-11-room-backup.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
+function restoreData(e){const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=async()=>{try{db=JSON.parse(rd.result);normalize();render();await saveData();toast("Backup restored and synced.");}catch(x){toast("Invalid backup file.");}};rd.readAsText(f);e.target.value="";}
+function renderRenter(){
+ const user=auth.currentUser;
+ if(!currentRoom){return;}
+ const r=currentRoom,y=String(new Date().getFullYear()),records=db.payments.filter(p=>Number(p.room)===Number(r.room)).slice().sort((a,b)=>String(b.month).localeCompare(String(a.month)));
+ const paid=records.filter(p=>p.status==="paid").reduce((s,p)=>s+Number(p.amount||0),0),due=records.filter(p=>p.status!=="paid").reduce((s,p)=>s+Number(p.amount||0),0);
+ document.getElementById("renterContent").innerHTML=`<div class="renter-hero"><h2>👤 ${esc(r.tenant)} • Room ${r.room}</h2><div class="role-pill">READ ONLY</div><div class="renter-grid"><div class="mini"><small>Monthly Rent</small><b>${money(r.rent)}</b></div><div class="mini"><small>Current Month</small><b>${status(r)==="paid"?"✅ Paid":"🔴 "+status(r).toUpperCase()}</b></div><div class="mini"><small>Due Rent Records</small><b>${money(due)}</b></div></div></div>
+ <section class="section"><h2>📅 My Rent History</h2><div class="toolbar"><select class="select" id="renterYear">${Array.from({length:21},(_,i)=>new Date().getFullYear()-10+i).map(yy=>`<option>${yy}</option>`).join("")}</select></div><div class="panel"><table><thead><tr><th>Month</th><th>Rent</th><th>Paid Date</th><th>Mode</th><th>Status</th></tr></thead><tbody id="renterRows"></tbody></table></div></section>`;
+ const ry=document.getElementById("renterYear");ry.value=new Date().getFullYear();ry.addEventListener("change",()=>renderRenterRows(Number(ry.value),r.room));renderRenterRows(Number(ry.value),r.room);
+}
+function renderRenterRows(year,room){
+ const rows=db.payments.filter(p=>Number(p.room)===Number(room)&&String(p.month).startsWith(String(year))).sort((a,b)=>String(a.month).localeCompare(String(b.month)));
+ document.getElementById("renterRows").innerHTML=rows.map(p=>`<tr><td>${esc(monthLabel(p.month))}</td><td>${money(p.amount)}</td><td>${esc(p.paidDate)||"—"}</td><td>${p.mode==="online"?"📱 Online":"💵 Cash"}</td><td><span class="badge ${p.status==="paid"?"paid":"due"}">${esc(p.status).toUpperCase()}</span></td></tr>`).join("")||'<tr><td colspan="5">No rent records for this year.</td></tr>';
+}
+function toast(t){const x=document.getElementById("toast");x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),2800);}
+
+document.getElementById("googleLogin").addEventListener("click",async()=>{
+ try{const provider=new firebase.auth.GoogleAuthProvider();await auth.signInWithPopup(provider);}
+ catch(e){try{const provider=new firebase.auth.GoogleAuthProvider();await auth.signInWithRedirect(provider);}catch(x){document.getElementById("loginStatus").textContent="Gmail login error: "+(x.message||x);}}
+});
+document.getElementById("signOutBtn").addEventListener("click",()=>auth.signOut());
+document.getElementById("renterSignOutBtn").addEventListener("click",()=>auth.signOut());
+document.getElementById("syncBtn").addEventListener("click",()=>{if(cloudRef)cloudRef.once("value").then(s=>{const remote=s.val();if(remote){db={rooms:remote.rooms||[],payments:remote.payments||[],expenses:remote.expenses||[]};normalize();saveLocal();render();toast("Cloud data refreshed.");}});});
+document.getElementById("search").addEventListener("input",render);document.getElementById("filter").addEventListener("change",render);document.getElementById("year").addEventListener("change",render);
+document.getElementById("addRoomBtn").addEventListener("click",()=>editRoom(1));document.getElementById("addExpenseBtn").addEventListener("click",()=>openExpenseForm());document.getElementById("backupBtn").addEventListener("click",backup);document.getElementById("restoreBtn").addEventListener("click",()=>document.getElementById("restore").click());document.getElementById("restore").addEventListener("change",restoreData);
+document.getElementById("addPaymentBtn").addEventListener("click",()=>openPaymentForm());document.getElementById("closeHistoryBtn").addEventListener("click",closeHistory);
+document.getElementById("modalbg").addEventListener("click",e=>{if(e.target.id==="modalbg")closeModal();});document.getElementById("historyModal").addEventListener("click",e=>{if(e.target.id==="historyModal")closeHistory();});document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();closeHistory();}});
+auth.onAuthStateChanged(updateRole);
+normalize();initYears();showView("loginView");
+</script>
+</body>
+</html>
