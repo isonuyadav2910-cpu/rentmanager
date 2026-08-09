@@ -76,8 +76,7 @@ function normalizeData(){
   if(!Array.isArray(db.payments))db.payments=[];if(!Array.isArray(db.bills))db.bills=[];if(!Array.isArray(db.expenses))db.expenses=[];
 }
 normalizeData();
-
-function money(n){return new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0}).format(Number(n)||0)}
+  function money(n){return new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0}).format(Number(n)||0)}
 function ym(d=new Date()){return d.toISOString().slice(0,7)}
 function year(){return Number(document.getElementById("year").value)||new Date().getFullYear()}
 function monthLabel(v=ym()){let [y,m]=v.split("-");return new Date(y,m-1,1).toLocaleString("en-IN",{month:"long",year:"numeric"})}
@@ -106,11 +105,16 @@ function renderTables(){
 }
 function openRoom(id){editRoom(id||1)}
 function editRoom(id){
- let r=db.rooms.find(x=>x.id===id);showModal("Room / Tenant Details",`<label>Room<select id="froom">${db.rooms.map(x=>`<option value="${x.id}" ${x.id===r.id?"selected":""}>Room ${x.room}</option>`).join("")}</select></label><label>Tenant Name<input id="ftenant" value="${esc(r.tenant)}"></label><label>Phone Number<input id="fphone" type="tel" value="${esc(r.phone)}" placeholder="10-digit number"></label><div class="twocol"><label>Monthly Rent (₹)<input id="frent" type="number" value="${r.rent}"></label><label>Due Day<input id="fdue" type="number" min="1" max="31" value="${r.dueDay}"></label></div><div class="twocol"><label>Check-in<input id="fcheckin" type="date" value="${r.checkin}"></label><label>Check-out<input id="fcheckout" type="date" value="${r.checkout}"></label></div><label>Notes<textarea id="fnotes">${esc(r.notes)}</textarea></label><div class="modalfoot"><button type="button" class="gray" onclick="closeModal()">Cancel</button><button class="blue" type="button" onclick="saveRoom()">Save</button></div>`,true);
- document.getElementById("froom").onchange=()=>editRoom(Number(document.getElementById("froom").value));
- window._editId=id;
+ let r=db.rooms.find(x=>Number(x.id)===Number(id));
+ if(!r){toast("Room not found.");return;}
+ const members=Array.isArray(r.members)?r.members:[];
+ const body=`<label>Room<select id="froom">${db.rooms.map(x=>`<option value="${x.id}" ${x.id===r.id?"selected":""}>Room ${x.room}</option>`).join("")}</select></label><label>Tenant Name<input id="ftenant" value="${esc(r.tenant)}"></label><label>Members / Occupants (one name per line)<textarea id="fmembers" rows="4" placeholder="Rahul Sharma&#10;Amit Patel">${esc(members.join("\n"))}</textarea></label><label>Phone Number<input id="fphone" type="tel" value="${esc(r.phone)}" placeholder="10-digit number"></label><div class="twocol"><label>Monthly Rent (₹)<input id="frent" type="number" value="${r.rent}"></label><label>Due Day<input id="fdue" type="number" min="1" max="31" value="${r.dueDay}"></label></div><div class="twocol"><label>Check-in<input id="fcheckin" type="date" value="${r.checkin}"></label><label>Check-out<input id="fcheckout" type="date" value="${r.checkout}"></label></div><div class="twocol"><label>Reminder days before due<input id="freminder" type="number" min="0" max="15" value="${r.reminderDays ?? 3}"></label><label>Reminder enabled<select id="freminderEnabled"><option value="true" ${r.reminderEnabled!==false?"selected":""}>Yes</option><option value="false" ${r.reminderEnabled===false?"selected":""}>No</option></select></label></div><label>Notes<textarea id="fnotes">${esc(r.notes)}</textarea></label><div class="modalfoot"><button type="button" class="gray" onclick="closeModal()">Cancel</button><button class="blue" type="button" onclick="saveRoom()">Save</button></div>`;
+ window._editId=Number(id);
+ showModal("Room / Tenant Details",body);
+ const sel=document.getElementById("froom"); if(sel)sel.onchange=()=>editRoom(Number(sel.value));
 }
-function saveRoom(){let r=db.rooms.find(x=>x.id===window._editId),old=r.tenant;r.tenant=document.getElementById("ftenant").value.trim();r.phone=document.getElementById("fphone").value.trim();r.rent=Number(document.getElementById("frent").value||0);r.dueDay=Math.min(31,Math.max(1,Number(document.getElementById("fdue").value||5)));r.checkin=document.getElementById("fcheckin").value;r.checkout=document.getElementById("fcheckout").value;r.notes=document.getElementById("fnotes").value.trim();r.status=r.tenant?(old?"due":"due"):"vacant";save();closeModal();render();toast("Room saved.");}
+
+function saveRoom(){let r=db.rooms.find(x=>x.id===window._editId),old=r.tenant;r.tenant=document.getElementById("ftenant").value.trim();r.members=document.getElementById("fmembers").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);r.phone=document.getElementById("fphone").value.trim();r.rent=Number(document.getElementById("frent").value||0);r.dueDay=Math.min(31,Math.max(1,Number(document.getElementById("fdue").value||5)));r.checkin=document.getElementById("fcheckin").value;r.checkout=document.getElementById("fcheckout").value;r.reminderDays=Math.min(15,Math.max(0,Number(document.getElementById("freminder").value||3)));r.reminderEnabled=document.getElementById("freminderEnabled").value==="true";r.notes=document.getElementById("fnotes").value.trim();r.status=r.tenant?(old?"due":"due"):"vacant";save();closeModal();render();toast("Room saved.");}
 function vacate(id){let r=db.rooms.find(x=>x.id===id);if(confirm(`Check out ${r.tenant||"tenant"} from Room ${r.room}?`)){r.checkout=new Date().toISOString().slice(0,10);r.tenant="";r.phone="";r.status="vacant";save();render();toast("Tenant checked out.");}}
 function paid(id){let r=db.rooms.find(x=>x.id===id),m=ym();if(!r)return;if(!db.payments.some(x=>x.room===r.room&&x.month===m)){let sms=`Payment received: ₹${r.rent} rent for Room ${r.room} (${monthLabel(m)}). Thank you.`;db.payments.push({date:new Date().toLocaleDateString("en-IN"),room:r.room,tenant:r.tenant,phone:r.phone,month:m,monthLabel:monthLabel(m),amount:r.rent,sms});}r.status="paid";save();render();toast("Rent marked paid. SMS is ready.");}
 function smsDue(id){let r=db.rooms.find(x=>x.id===id);sendSMS(r.phone,`Rent due reminder: ₹${r.rent} for Room ${r.room} is due on the ${r.dueDay}th. Please make payment on time.`)}
@@ -124,12 +128,54 @@ function openExpense(){showModal("Add Expense",`<label>Date<input id="edate" typ
 function saveExpense(){db.expenses.push({date:document.getElementById("edate").value,category:document.getElementById("ecat").value,description:document.getElementById("edesc").value,amount:Number(document.getElementById("eamt").value||0)});save();closeModal();render();toast("Expense saved.");}
 function showModal(title,body){document.getElementById("mtitle").textContent=title;document.getElementById("form").innerHTML=body;document.getElementById("modalbg").classList.add("show")}
 function closeModal(){document.getElementById("modalbg").classList.remove("show")}
+document.addEventListener("click",e=>{if(e.target&&e.target.id==="modalbg")closeModal()});document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
 function enableNotifications(){if(!("Notification"in window)){toast("Browser notifications not supported.");return}Notification.requestPermission().then(p=>toast(p==="granted"?"Alerts enabled.":"Permission not granted."))}
+
+function rentReminderText(r, overdue=false){
+  return overdue
+    ? `Dear ${r.tenant}, your monthly rent of ₹${r.rent} for Room ${r.room} is overdue. Please make the payment at the earliest. Thank you.`
+    : `Dear ${r.tenant}, this is a reminder that your monthly rent of ₹${r.rent} for Room ${r.room} is due on the ${r.dueDay}th. Please make the payment on time. Thank you.`;
+}
+function setReminder(id){
+  const r=db.rooms.find(x=>x.id===id);
+  if(!r)return;
+  r.reminderEnabled = r.reminderEnabled===false;
+  save(); render();
+  toast(r.reminderEnabled ? "Rent reminder enabled." : "Rent reminder disabled.");
+}
+function checkRentReminders(){
+  if(!("Notification" in window) || Notification.permission!=="granted") return;
+  const now=new Date(), today=now.getDate();
+  db.rooms.forEach(r=>{
+    if(!r.tenant || r.status==="paid" || r.reminderEnabled===false) return;
+    const due=Number(r.dueDay||5), lead=Number(r.reminderDays ?? 3);
+    const dueDate=new Date(now.getFullYear(),now.getMonth(),due);
+    const diff=Math.ceil((dueDate-now)/86400000);
+    const overdue=today>due;
+    if((!overdue && diff===lead) || overdue){
+      const key=`rent_sms_notice_${r.id}_${ym()}_${overdue?"overdue":"before"}_${due}`;
+      if(!localStorage.getItem(key)){
+        new Notification(overdue?`Rent overdue - Room ${r.room}`:`Rent due soon - Room ${r.room}`,{body:rentReminderText(r,overdue)});
+        localStorage.setItem(key,"1");
+      }
+    }
+  });
+}
+
 function checkAlerts(){let d=new Date(),today=d.getDate();db.rooms.forEach(r=>{if(r.tenant&&status(r)!=="paid"&&today>=Number(r.dueDay||5)&&Notification.permission==="granted")new Notification(`Rent ${status(r)} - Room ${r.room}`,{body:`${r.tenant}: ₹${r.rent} rent is ${status(r)}.`})})}
 function backup(){let b=new Blob([JSON.stringify(db,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="rentmanager-backup.json";a.click();}
 function restore(e){let f=e.target.files[0];if(!f)return;let rd=new FileReader();rd.onload=()=>{try{let x=JSON.parse(rd.result);if(!x.rooms)throw 0;db=x;save();render();toast("Backup restored.");}catch{toast("Invalid backup.");}};rd.readAsText(f);e.target.value=""}
 function toast(t){let x=document.getElementById("toast");x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),2800)}
-initYears();render();setTimeout(checkAlerts,1200);
+
+db.rooms.forEach(r=>{
+  if(!Array.isArray(r.members)){
+    r.members = r.tenant ? [r.tenant] : [];
+  }
+  if(r.tenant && !r.members.includes(r.tenant)) r.members.unshift(r.tenant);
+});
+save();
+
+initYears();render();setTimeout(checkAlerts,1200);setTimeout(checkRentReminders,1600);setInterval(checkRentReminders,60*60*1000);
 </script>
 
 <script>
