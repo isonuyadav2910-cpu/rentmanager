@@ -172,5 +172,29 @@ window.cloudDownload=async()=>{
 const oldSave=window.save;
 window.save=function(){oldSave(); if(cloudUser) window.cloudUpload();};
 </script>
+
+<button id="installAppBtn" style="display:none;position:fixed;right:20px;bottom:20px;z-index:9999;padding:12px 18px;border:0;border-radius:10px;background:#2563eb;color:white;font-weight:700;cursor:pointer;">
+  📱 Install App
+</button>
+
+<script>
+let deferredInstallPrompt = null;
+
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  const btn = document.getElementById("installAppBtn");
+  if (btn) btn.style.display = "block";
+});
+
+document.getElementById("installAppBtn")?.addEventListener("click", async () => {
+  if (!deferredInstallPrompt) return;
+  deferredInstallPrompt.prompt();
+  await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt = null;
+  document.getElementById("installAppBtn").style.display = "none";
+});
+</script>
+  
 </body>
 </html>
