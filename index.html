@@ -252,5 +252,3926 @@ style="color:#dc2626;margin-bottom:10px">
 
 <input
 id="ownerEmail"
-t 
+type="email"
+placeholder="Owner Gmail">
+
+<label style="margin-top:10px">
+Password
+</label>
+
+<input
+id="ownerPassword"
+type="password"
+placeholder="Password">
+
+</div>
+
+<!-- RENTER LOGIN -->
+
+<div id="renterLoginFields"
+class="hidden">
+
+<label>Room Number</label>
+
+<select id="renterRoom"></select>
+
+<label style="margin-top:10px">
+Password
+</label>
+
+<input
+id="renterPassword"
+type="password"
+placeholder="Renter password">
+
+</div>
+
+<button
+class="primary"
+style="width:100%;margin-top:15px"
+onclick="loginUser()">
+
+Login
+
+</button>
+
+</div>
+</div>
+
+
+<!-- ================= APP ================= -->
+
+<div id="app" class="hidden">
+
+<header>
+
+<div class="sectionhead" style="margin:0">
+
+<div>
+
+<h1>RentManager Pro</h1>
+
+<small>
+11 Rooms • Rental Management
+</small>
+
+</div>
+
+<div>
+
+<span id="userLabel"></span>
+
+<button
+class="secondary"
+onclick="logout()">
+Logout
+</button>
+
+</div>
+
+</div>
+
+</header>
+
+
+<!-- OWNER NAV -->
+
+<nav id="ownerNav">
+
+<button class="navbtn active"
+onclick="showView('dashboard',this)">
+Dashboard
+</button>
+
+<button class="navbtn"
+onclick="showView('rooms',this)">
+Rooms
+</button>
+
+<button class="navbtn"
+onclick="showView('rent',this)">
+Rent History
+</button>
+
+<button class="navbtn"
+onclick="showView('income',this)">
+Income
+</button>
+
+<button class="navbtn"
+onclick="showView('expenses',this)">
+Expenses
+</button>
+
+<button class="navbtn"
+onclick="showView('electricity',this)">
+Electricity
+</button>
+
+<button class="navbtn"
+onclick="showView('history',this)">
+Check-In / Check-Out
+</button>
+
+<button class="navbtn"
+onclick="showView('renterAccounts',this)">
+Renter Accounts
+</button>
+
+</nav>
+
+
+<main>
+
+<!-- ================= DASHBOARD ================= -->
+
+<section id="dashboard" class="view active">
+
+<div class="savebar">
+
+<button
+class="success"
+onclick="saveData()">
+
+💾 Save Data
+
+</button>
+
+<span id="saveMessage">
+Data Saved Successfully
+</span>
+
+</div>
+
+
+<div class="sectionhead">
+
+<div>
+
+<h2>Owner Dashboard</h2>
+
+<div class="muted">
+Year-wise rental information
+</div>
+
+</div>
+
+<select
+id="dashboardYear"
+onchange="renderOwnerDashboard()"
+style="width:auto">
+</select>
+
+</div>
+
+
+<div id="dashboardStats"
+class="grid">
+</div>
+
+
+<h3>All 11 Rooms</h3>
+
+<div id="ownerRooms"
+class="grid">
+</div>
+
+</section>
+
+
+<!-- ================= ROOMS ================= -->
+
+<section id="rooms" class="view">
+
+<div class="sectionhead">
+
+<div>
+
+<h2>Room Management</h2>
+
+<div class="muted">
+Maximum 5 members per room.
+</div>
+
+</div>
+
+</div>
+
+<div id="roomsTable"></div>
+
+</section>
+
+
+<!-- ================= RENT ================= -->
+
+<section id="rent" class="view">
+
+<div class="sectionhead">
+
+<div>
+
+<h2>Rental History</h2>
+
+<div class="muted">
+Paid, due and remaining rent.
+</div>
+
+</div>
+
+<button
+class="primary"
+onclick="openRentModal()">
+Add Rent
+</button>
+
+</div>
+
+<div id="rentTable"></div>
+
+</section>
+
+
+<!-- ================= INCOME ================= -->
+
+<section id="income" class="view">
+
+<div class="sectionhead">
+
+<h2>Income</h2>
+
+<button
+class="success"
+onclick="openIncomeModal()">
+Add Income
+</button>
+
+</div>
+
+<div id="incomeTable"></div>
+
+</section>
+
+
+<!-- ================= EXPENSES ================= -->
+
+<section id="expenses" class="view">
+
+<div class="sectionhead">
+
+<h2>Expenses</h2>
+
+<button
+class="danger"
+onclick="openExpenseModal()">
+Add Expense
+</button>
+
+</div>
+
+<div id="expenseTable"></div>
+
+</section>
+
+
+<!-- ================= ELECTRICITY ================= -->
+
+<section id="electricity" class="view">
+
+<div class="sectionhead">
+
+<div>
+
+<h2>Electricity Bills</h2>
+
+<div class="muted">
+Electricity tracked separately.
+</div>
+
+</div>
+
+<button
+class="orange"
+onclick="openElectricityModal()">
+Add Electricity Bill
+</button>
+
+</div>
+
+<div id="electricityTable"></div>
+
+</section>
+
+
+<!-- ================= CHECK IN / OUT ================= -->
+
+<section id="history" class="view">
+
+<div class="sectionhead">
+
+<h2>Renter History</h2>
+
+<select
+id="historyYear"
+onchange="renderHistory()"
+style="width:auto">
+</select>
+
+</div>
+
+
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+
+<button
+id="checkinTab"
+class="primary"
+onclick="setHistoryTab('checkin')">
+Check-In History
+</button>
+
+<button
+id="checkoutTab"
+class="secondary"
+onclick="setHistoryTab('checkout')">
+Check-Out History
+</button>
+
+</div>
+
+
+<div style="margin-top:15px">
+
+<button
+id="checkinAction"
+class="success"
+onclick="openCheckinModal()">
+Add Check-In
+</button>
+
+<button
+id="checkoutAction"
+class="danger hidden"
+onclick="openCheckoutModal()">
+Add Check-Out
+</button>
+
+</div>
+
+
+<div
+id="historyTable"
+style="margin-top:15px">
+</div>
+
+</section>
+
+
+<!-- ================= RENTER ACCOUNTS ================= -->
+
+<section id="renterAccounts" class="view">
+
+<div class="sectionhead">
+
+<div>
+
+<h2>Renter Accounts</h2>
+
+<div class="muted">
+Create or deactivate renter access.
+</div>
+
+</div>
+
+<button
+class="primary"
+onclick="openRenterAccountModal()">
+Add Renter
+</button>
+
+</div>
+
+<div id="renterAccountsTable"></div>
+
+</section>
+
+
+<!-- ================= RENTER DASHBOARD ================= -->
+
+<section id="renterDashboard" class="view">
+
+<h2>Rental Dashboard</h2>
+
+<div class="notice">
+
+You can see only your own room information.
+
+</div>
+
+<div id="renterOwnDashboard"></div>
+
+</section>
+
+</main>
+
+</div>
+
+
+<!-- ================= MODAL ================= -->
+
+<div id="modal" class="modal">
+
+<div class="modalbox">
+
+<div class="sectionhead">
+
+<h2 id="modalTitle"></h2>
+
+<button
+class="secondary"
+onclick="closeModal()">
+Close
+</button>
+
+</div>
+
+<div id="modalBody"></div>
+
+</div>
+
+</div>
+
+
+<!-- ================= FIREBASE ================= -->
+
+<script type="module">
+
+/*
+====================================================
+IMPORTANT
+====================================================
+
+REPLACE THE VALUES BELOW WITH YOUR FIREBASE WEB APP
+CONFIGURATION.
+
+Firebase Console:
+Project Settings
+→ General
+→ Your apps
+→ Web App
+→ SDK setup and configuration
+→ Config
+
+====================================================
+*/
+
+import {
+ initializeApp
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+ getAuth,
+ signInWithEmailAndPassword,
+ signOut
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+import {
+ getFirestore,
+ collection,
+ addDoc,
+ setDoc,
+ doc,
+ getDoc,
+ getDocs,
+ updateDoc,
+ query,
+ where
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* ================================================
+   PASTE YOUR FIREBASE CONFIG HERE
+================================================ */
+
+const firebaseConfig = {
+
+apiKey:
+"PASTE_YOUR_API_KEY",
+
+authDomain:
+"PASTE_YOUR_PROJECT.firebaseapp.com",
+
+projectId:
+"PASTE_YOUR_PROJECT_ID",
+
+storageBucket:
+"PASTE_YOUR_STORAGE_BUCKET",
+
+messagingSenderId:
+"PASTE_YOUR_MESSAGING_SENDER_ID",
+
+appId:
+"PASTE_YOUR_APP_ID"
+
+};
+
+
+/* ================================================
+   FIREBASE INITIALIZATION
+================================================ */
+
+const firebaseApp =
+initializeApp(firebaseConfig);
+
+const auth =
+getAuth(firebaseApp);
+
+const db =
+getFirestore(firebaseApp);
+
+
+/* ================================================
+   VARIABLES
+================================================ */
+
+let currentUser = null;
+
+let currentRole = null;
+
+let currentRenterRoomId = null;
+
+let loginType = "owner";
+
+let historyTab = "checkin";
+
+let rooms = [];
+
+let rents = [];
+
+let incomes = [];
+
+let expenses = [];
+
+let electricity = [];
+
+let checkins = [];
+
+let checkouts = [];
+
+let renters = [];
+
+
+/* ================================================
+   LOGIN TYPE
+================================================ */
+
+window.setLoginType = function(type){
+
+loginType = type;
+
+ownerTab.className =
+type === "owner"
+? "primary"
+: "secondary";
+
+renterTab.className =
+type === "renter"
+? "primary"
+: "secondary";
+
+ownerLoginFields.classList.toggle(
+"hidden",
+type !== "owner"
+);
+
+renterLoginFields.classList.toggle(
+"hidden",
+type !== "renter"
+);
+
+loginError.textContent = "";
+
+};
+
+
+/* ================================================
+   LOAD RENTER ROOM LIST
+================================================ */
+
+async function fillRenterRooms(){
+
+try{
+
+const snap =
+await getDocs(
+collection(db,"rooms")
+);
+
+const data =
+snap.docs
+.map(x => ({
+id:x.id,
+...x.data()
+}))
+.sort(
+(a,b)=>
+Number(a.number || 0) -
+Number(b.number || 0)
+);
+
+renterRoom.innerHTML =
+data.map(r =>
+
+`<option value="${r.id}">
+${escapeHTML(r.name || ("Room "+r.number))}
+</option>`
+
+).join("");
+
+}catch(e){
+
+console.error(e);
+
+}
+
+}
+
+
+/* ================================================
+   LOGIN
+================================================ */
+
+window.loginUser =
+async function(){
+
+loginError.textContent = "";
+
+try{
+
+/* OWNER */
+
+if(loginType === "owner"){
+
+const email =
+ownerEmail.value.trim();
+
+const password =
+ownerPassword.value;
+
+if(!email || !password){
+
+throw new Error(
+"Enter owner Gmail and password."
+);
+
+}
+
+const result =
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+currentUser =
+result.user;
+
+currentRole =
+"owner";
+
+loginPage.classList.add(
+"hidden"
+);
+
+app.classList.remove(
+"hidden"
+);
+
+ownerNav.classList.remove(
+"hidden"
+);
+
+userLabel.textContent =
+currentUser.email;
+
+await loadOwnerData();
+
+}
+
+
+/* RENTER */
+
+else{
+
+const roomId =
+renterRoom.value;
+
+const password =
+renterPassword.value;
+
+if(!roomId || !password){
+
+throw new Error(
+"Select room and enter password."
+);
+
+}
+
+
+/*
+Renter login is intentionally Room + Password.
+The password is stored for the renter account.
+*/
+
+const q =
+query(
+collection(db,"renterAccounts"),
+where("roomId","==",roomId),
+where("active","==",true)
+);
+
+const snapshot =
+await getDocs(q);
+
+if(snapshot.empty){
+
+throw new Error(
+"No active renter account for this room."
+);
+
+}
+
+const accountDoc =
+snapshot.docs[0];
+
+const account =
+accountDoc.data();
+
+
+if(password !== account.password){
+
+throw new Error(
+"Wrong renter password."
+);
+
+}
+
+
+currentRole =
+"renter";
+
+currentRenterRoomId =
+roomId;
+
+currentUser = {
+
+uid:accountDoc.id,
+
+email:
+"Renter - " +
+(roomId)
+
+};
+
+
+loginPage.classList.add(
+"hidden"
+);
+
+app.classList.remove(
+"hidden"
+);
+
+ownerNav.classList.add(
+"hidden"
+);
+
+userLabel.textContent =
+"Renter - " +
+(roomId);
+
+showOnlyRenterDashboard();
+
+await loadRenterData();
+
+}
+
+}catch(error){
+
+console.error(error);
+
+loginError.textContent =
+error.message ||
+"Login failed.";
+
+}
+
+};
+
+
+/* ================================================
+   OWNER FIREBASE AUTH STATE
+================================================ */
+
+auth.onAuthStateChanged(
+async user => {
+
+if(!user){
+
+return;
+
+}
+
+currentUser =
+user;
+
+currentRole =
+"owner";
+
+loginPage.classList.add(
+"hidden"
+);
+
+app.classList.remove(
+"hidden"
+);
+
+ownerNav.classList.remove(
+"hidden"
+);
+
+userLabel.textContent =
+user.email;
+
+try{
+
+await loadOwnerData();
+
+}catch(e){
+
+console.error(e);
+
+}
+
+});
+
+
+/* ================================================
+   GET COLLECTION
+================================================ */
+
+async function getCollection(name){
+
+const snapshot =
+await getDocs(
+collection(db,name)
+);
+
+return snapshot.docs.map(
+x => ({
+id:x.id,
+...x.data()
+})
+);
+
+}
+
+
+/* ================================================
+   CREATE 11 ROOMS
+================================================ */
+
+async function ensure11Rooms(){
+
+for(
+let i=1;
+i<=11;
+i++
+){
+
+const roomRef =
+doc(
+db,
+"rooms",
+"room"+i
+);
+
+const snapshot =
+await getDoc(roomRef);
+
+if(!snapshot.exists()){
+
+await setDoc(
+roomRef,
+{
+
+number:i,
+
+name:
+"Room "+i,
+
+rent:0,
+
+members:[],
+
+createdAt:
+Date.now()
+
+}
+);
+
+}
+
+}
+
+}
+
+
+/* ================================================
+   LOAD OWNER DATA
+================================================ */
+
+async function loadOwnerData(){
+
+await ensure11Rooms();
+
+rooms =
+await getCollection("rooms");
+
+rents =
+await getCollection("rents");
+
+incomes =
+await getCollection("incomes");
+
+expenses =
+await getCollection("expenses");
+
+electricity =
+await getCollection("electricity");
+
+checkins =
+await getCollection("checkins");
+
+checkouts =
+await getCollection("checkouts");
+
+renters =
+await getCollection("renterAccounts");
+
+renderEverything();
+
+await fillRenterRooms();
+
+}
+
+
+/* ================================================
+   RENDER EVERYTHING
+================================================ */
+
+function renderEverything(){
+
+renderYearSelector();
+
+renderHistoryYear();
+
+renderOwnerDashboard();
+
+renderRooms();
+
+renderRent();
+
+renderIncome();
+
+renderExpenses();
+
+renderElectricity();
+
+renderHistory();
+
+renderRenterAccounts();
+
+}
+
+
+/* ================================================
+   YEAR LIST
+================================================ */
+
+function getAllYears(){
+
+const years =
+new Set([
+new Date().getFullYear()
+]);
+
+[
+...rents,
+...incomes,
+...expenses,
+...electricity,
+...checkins,
+...checkouts
+].forEach(x => {
+
+if(x.year){
+
+years.add(
+Number(x.year)
+);
+
+}
+
+});
+
+return [...years]
+.sort(
+(a,b)=>b-a
+);
+
+}
+
+
+function renderYearSelector(){
+
+const years =
+getAllYears();
+
+const current =
+Number(
+dashboardYear.value
+) ||
+new Date().getFullYear();
+
+dashboardYear.innerHTML =
+years.map(y =>
+
+`<option value="${y}"
+${y===current?"selected":""}>
+${y}
+</option>`
+
+).join("");
+
+}
+
+
+function renderHistoryYear(){
+
+const years =
+getAllYears();
+
+const current =
+Number(
+historyYear.value
+) ||
+new Date().getFullYear();
+
+historyYear.innerHTML =
+years.map(y =>
+
+`<option value="${y}"
+${y===current?"selected":""}>
+${y}
+</option>`
+
+).join("");
+
+}
+
+
+/* ================================================
+   SAVE DATA BUTTON
+================================================ */
+
+window.saveData =
+async function(){
+
+const message =
+document.getElementById(
+"saveMessage"
+);
+
+try{
+
+/*
+Save all edited room data.
+*/
+
+for(
+const room of rooms
+){
+
+await setDoc(
+doc(
+db,
+"rooms",
+room.id
+),
+room,
+{merge:true}
+);
+
+}
+
+
+message.textContent =
+"Data Saved Successfully";
+
+message.style.display =
+"inline";
+
+setTimeout(
+()=>{
+message.style.display =
+"none";
+},
+2500
+);
+
+}catch(error){
+
+alert(
+"Save failed: "+
+error.message
+);
+
+}
+
+};
+
+
+/* ================================================
+   OWNER DASHBOARD
+================================================ */
+
+function renderOwnerDashboard(){
+
+const year =
+Number(
+dashboardYear.value
+) ||
+new Date().getFullYear();
+
+
+const yearRents =
+rents.filter(
+x =>
+Number(x.year) === year
+);
+
+
+const paid =
+yearRents
+.filter(
+x =>
+x.status === "Paid"
+)
+.reduce(
+(a,x)=>
+a+
+Number(x.amount||0),
+0
+);
+
+
+const due =
+yearRents
+.filter(
+x =>
+x.status === "Due"
+)
+.reduce(
+(a,x)=>
+a+
+Number(x.amount||0),
+0
+);
+
+
+const income =
+incomes
+.filter(
+x =>
+Number(x.year) === year
+)
+.reduce(
+(a,x)=>
+a+
+Number(x.amount||0),
+0
+);
+
+
+const expense =
+expenses
+.filter(
+x =>
+Number(x.year) === year
+)
+.reduce(
+(a,x)=>
+a+
+Number(x.amount||0),
+0
+);
+
+
+const electric =
+electricity
+.filter(
+x =>
+Number(x.year) === year
+)
+.reduce(
+(a,x)=>
+a+
+Number(x.amount||0),
+0
+);
+
+
+dashboardStats.innerHTML = [
+
+["Rooms",rooms.length],
+
+[
+"Occupied",
+rooms.filter(
+x =>
+(x.members||[]).length>0
+).length
+],
+
+["Rent Paid",money(paid)],
+
+["Rent Baki",money(due)],
+
+["Income",money(income)],
+
+["Expenses",money(expense)],
+
+["Electricity",money(electric)],
+
+[
+"Net Balance",
+money(
+paid+
+income-
+expense-
+electric
+)
+]
+
+].map(
+x =>
+
+`<div class="card">
+
+<div class="muted">
+${x[0]}
+</div>
+
+<div class="stat">
+${x[1]}
+</div>
+
+</div>`
+
+).join("");
+
+
+ownerRooms.innerHTML =
+rooms.map(room => {
+
+const remaining =
+calculateRemaining(
+room.id
+);
+
+return `
+
+<div class="card room-card">
+
+<h3>
+${escapeHTML(room.name)}
+</h3>
+
+<span class="badge ${
+(room.members||[]).length
+? ""
+: "red"
+}">
+
+${
+(room.members||[]).length
+? "Occupied"
+: "Vacant"
+}
+
+</span>
+
+<p>
+<b>Members:</b>
+${(room.members||[]).length}/5
+</p>
+
+<p>
+<b>Monthly Rent:</b>
+${money(room.rent)}
+</p>
+
+<p>
+<b>Rent Baki:</b>
+${remaining.months}
+month(s)
+</p>
+
+<p>
+<b>Total Baki:</b>
+${money(remaining.amount)}
+</p>
+
+<div class="actions">
+
+<button
+class="primary"
+onclick="openRoomModal('${room.id}')">
+Edit
+</button>
+
+<button
+class="secondary"
+onclick="openRentModal('${room.id}')">
+Rent
+</button>
+
+<button
+class="orange"
+onclick="sendDueSMS('${room.id}')">
+Due SMS
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}).join("");
+
+}
+
+
+/* ================================================
+   REMAINING RENT
+================================================ */
+
+function calculateRemaining(roomId){
+
+const room =
+rooms.find(
+x=>x.id===roomId
+);
+
+const monthly =
+Number(
+room?.rent||0
+);
+
+const due =
+rents.filter(
+x =>
+x.roomId === roomId &&
+x.status === "Due"
+);
+
+return {
+
+months:due.length,
+
+amount:
+due.reduce(
+(a,x)=>
+a+
+Number(
+x.amount ||
+monthly
+),
+0
+)
+
+};
+
+}
+
+
+/* ================================================
+   ROOM TABLE
+================================================ */
+
+function renderRooms(){
+
+roomsTable.innerHTML = `
+
+<table>
+
+<tr>
+
+<th>Room</th>
+
+<th>Members</th>
+
+<th>Monthly Rent</th>
+
+<th>Rent Baki</th>
+
+<th>Action</th>
+
+</tr>
+
+${rooms.map(room => {
+
+const remaining =
+calculateRemaining(
+room.id
+);
+
+return `
+
+<tr>
+
+<td>
+${escapeHTML(room.name)}
+</td>
+
+<td>
+
+${(room.members||[]).length}/5
+
+<br>
+
+${escapeHTML(
+(room.members||[]).join(", ")
+)}
+
+</td>
+
+<td>
+${money(room.rent)}
+</td>
+
+<td>
+
+${remaining.months}
+month(s)
+
+<br>
+
+${money(
+remaining.amount
+)}
+
+</td>
+
+<td>
+
+<button
+class="primary"
+onclick="openRoomModal('${room.id}')">
+
+Edit
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+}).join("")}
+
+</table>
+
+`;
+
+}
+
+
+/* ================================================
+   ROOM EDIT
+================================================ */
+
+window.openRoomModal =
+function(id){
+
+const room =
+rooms.find(
+x=>x.id===id
+);
+
+modalTitle.textContent =
+"Room Details";
+
+modalBody.innerHTML = `
+
+<div class="formgrid">
+
+<div>
+
+<label>
+Room Name
+</label>
+
+<input
+id="roomName"
+value="${escapeHTML(room.name)}">
+
+</div>
+
+
+<div>
+
+<label>
+Monthly Rent
+</label>
+
+<input
+id="roomRent"
+type="number"
+value="${room.rent||0}">
+
+</div>
+
+
+<div style="grid-column:1/-1">
+
+<label>
+Members - Maximum 5
+</label>
+
+<textarea
+id="roomMembers"
+rows="5"
+placeholder="One member per line">${escapeHTML(
+(room.members||[]).join("\n")
+)}</textarea>
+
+</div>
+
+</div>
+
+
+<button
+class="success"
+onclick="saveRoom('${id}')"
+style="margin-top:12px">
+
+Save Room
+
+</button>
+
+`;
+
+modal.classList.add(
+"show"
+);
+
+};
+
+
+window.saveRoom =
+async function(id){
+
+const members =
+roomMembers.value
+.split("\n")
+.map(
+x=>x.trim()
+)
+.filter(Boolean);
+
+if(
+members.length > 5
+){
+
+alert(
+"Maximum 5 members allowed."
+);
+
+return;
+
+}
+
+
+await updateDoc(
+doc(db,"rooms",id),
+{
+
+name:
+roomName.value.trim(),
+
+rent:
+Number(
+roomRent.value||0
+),
+
+members
+
+}
+);
+
+
+rooms =
+await getCollection(
+"rooms"
+);
+
+closeModal();
+
+renderEverything();
+
+alert(
+"Room saved successfully."
+);
+
+};
+
+
+/* ================================================
+   RENT TABLE
+================================================ */
+
+function renderRent(){
+
+rentTable.innerHTML = `
+
+<table>
+
+<tr>
+
+<th>Room</th>
+<th>Month</th>
+<th>Year</th>
+<th>Renter</th>
+<th>Amount</th>
+<th>Status</th>
+<th>Method</th>
+<th>Date</th>
+<th>SMS</th>
+
+</tr>
+
+${rents.map(r => `
+
+<tr>
+
+<td>
+${escapeHTML(
+roomName(r.roomId)
+)}
+</td>
+
+<td>
+${escapeHTML(r.month)}
+</td>
+
+<td>
+${r.year}
+</td>
+
+<td>
+${escapeHTML(r.renter)}
+</td>
+
+<td>
+${money(r.amount)}
+</td>
+
+<td>
+
+<span class="badge ${
+r.status==="Paid"
+? ""
+: "red"
+}">
+
+${escapeHTML(r.status)}
+
+</span>
+
+</td>
+
+<td>
+${escapeHTML(
+r.method||""
+)}
+</td>
+
+<td>
+${escapeHTML(
+r.date||""
+)}
+</td>
+
+<td>
+
+<button
+class="${
+r.status==="Paid"
+? "success"
+: "orange"
+}"
+onclick="${
+r.status==="Paid"
+? `sendPaidSMS('${r.roomId}')`
+: `sendDueSMS('${r.roomId}')`
+}">
+
+${
+r.status==="Paid"
+? "Paid SMS"
+: "Due SMS"
+}
+
+</button>
+
+</td>
+
+</tr>
+
+`).join("")}
+
+</table>
+
+`;
+
+
+}
+
+
+/* ================================================
+   ADD RENT
+================================================ */
+
+window.openRentModal =
+function(roomId){
+
+modalTitle.textContent =
+"Add Rent";
+
+modalBody.innerHTML = `
+
+<div class="formgrid">
+
+<div>
+
+<label>
+Room
+</label>
+
+<select id="rentRoom">
+
+${rooms.map(r => `
+
+<option
+value="${r.id}"
+${
+r.id===roomId
+? "selected"
+: ""
+}>
+
+${escapeHTML(r.name)}
+
+</option>
+
+`).join("")}
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>
+Renter
+</label>
+
+<input
+id="rentRenter">
+
+</div>
+
+
+<div>
+
+<label>
+Month
+</label>
+
+<select id="rentMonth">
+
+${[
+"January",
+"February",
+"March",
+"April",
+"May",
+"June",
+"July",
+"August",
+"September",
+"October",
+"November",
+"December"
+].map(
+m =>
+`<option>${m}</option>`
+).join("")}
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>
+Year
+</label>
+
+<input
+id="rentYear"
+type="number"
+value="${new Date().getFullYear()}">
+
+</div>
+
+
+<div>
+
+<label>
+Amount
+</label>
+
+<input
+id="rentAmount"
+type="number">
+
+</div>
+
+
+<div>
+
+<label>
+Status
+</label>
+
+<select id="rentStatus">
+
+<option>
+Paid
+</option>
+
+<option>
+Due
+</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>
+Payment Method
+</label>
+
+<select id="rentMethod">
+
+<option>
+Cash
+</option>
+
+<option>
+Online
+</option>
+
+<option>
+Bank Transfer
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<button
+class="success"
+onclick="saveRent()"
+style="margin-top:12px">
+
+Save Rent
+
+</button>
+
+`;
+
+modal.classList.add(
+"show"
+);
+
+};
+
+
+window.saveRent =
+async function(){
+
+const room =
+rooms.find(
+x =>
+x.id === rentRoom.value
+);
+
+await addDoc(
+collection(db,"rents"),
+{
+
+roomId:
+rentRoom.value,
+
+renter:
+rentRenter.value,
+
+month:
+rentMonth.value,
+
+year:
+Number(
+rentYear.value
+),
+
+amount:
+Number(
+rentAmount.value ||
+room?.rent ||
+0
+),
+
+status:
+rentStatus.value,
+
+method:
+rentMethod.value,
+
+date:
+new Date()
+.toISOString()
+.slice(0,10),
+
+createdAt:
+Date.now()
+
+}
+);
+
+
+rents =
+await getCollection(
+"rents"
+);
+
+closeModal();
+
+renderEverything();
+
+alert(
+"Rent saved successfully."
+);
+
+};
+
+
+/* ================================================
+   INCOME
+================================================ */
+
+function renderIncome(){
+
+incomeTable.innerHTML = `
+
+<table>
+
+<tr>
+
+<th>Date</th>
+<th>Year</th>
+<th>Description</th>
+<th>Amount</th>
+
+</tr>
+
+${incomes.map(x => `
+
+<tr>
+
+<td>${x.date}</td>
+
+<td>${x.year}</td>
+
+<td>
+${escapeHTML(x.description)}
+</td>
+
+<td>
+${money(x.amount)}
+</td>
+
+</tr>
+
+`).join("")}
+
+</table>
+
+`;
+
+}
+
+
+window.openIncomeModal =
+function(){
+
+modalTitle.textContent =
+"Add Income";
+
+modalBody.innerHTML = `
+
+<div class="formgrid">
+
+<div>
+
+<label>
+Description
+</label>
+
+<input
+id="incomeDescription">
+
+</div>
+
+
+<div>
+
+<label>
+Amount
+</label>
+
+<input
+id="incomeAmount"
+type="number">
+
+</div>
+
+
+<div>
+
+<label>
+Year
+</label>
+
+<input
+id="incomeYear"
+type="number"
+value="${new Date().getFullYear()}">
+
+</div>
+
+</div>
+
+
+<button
+class="success"
+onclick="saveIncome()"
+style="margin-top:12px">
+
+Save Income
+
+</button>
+
+`;
+
+modal.classList.add(
+"show"
+);
+
+};
+
+
+window.saveIncome =
+async function(){
+
+await addDoc(
+collection(db,"incomes"),
+{
+
+description:
+incomeDescription.value,
+
+amount:
+Number(
+incomeAmount.value
+),
+
+year:
+Number(
+incomeYear.value
+),
+
+date:
+new Date()
+.toISOString()
+.slice(0,10)
+
+}
+);
+
+incomes =
+await getCollection(
+"incomes"
+);
+
+closeModal();
+
+renderEverything();
+
+};
+
+
+/* ================================================
+   EXPENSES
+================================================ */
+
+function renderExpenses(){
+
+expenseTable.innerHTML = `
+
+<table>
+
+<tr>
+
+<th>Date</th>
+<th>Year</th>
+<th>Description</th>
+<th>Amount</th>
+
+</tr>
+
+${expenses.map(x => `
+
+<tr>
+
+<td>${x.date}</td>
+
+<td>${x.year}</td>
+
+<td>
+${escapeHTML(x.description)}
+</td>
+
+<td>
+${money(x.amount)}
+</td>
+
+</tr>
+
+`).join("")}
+
+</table>
+
+`;
+
+}
+
+
+window.openExpenseModal =
+function(){
+
+modalTitle.textContent =
+"Add Expense";
+
+modalBody.innerHTML = `
+
+<div class="formgrid">
+
+<div>
+
+<label>
+Description
+</label>
+
+<input
+id="expenseDescription">
+
+</div>
+
+
+<div>
+
+<label>
+Amount
+</label>
+
+<input
+id="expenseAmount"
+type="number">
+
+</div>
+
+
+<div>
+
+<label>
+Year
+</label>
+
+<input
+id="expenseYear"
+type="number"
+value="${new Date().getFullYear()}">
+
+</div>
+
+</div>
+
+
+<button
+class="danger"
+onclick="saveExpense()"
+style="margin-top:12px">
+
+Save Expense
+
+</button>
+
+`;
+
+modal.classList.add(
+"show"
+);
+
+};
+
+
+window.saveExpense =
+async function(){
+
+await addDoc(
+collection(db,"expenses"),
+{
+
+description:
+expenseDescription.value,
+
+amount:
+Number(
+expenseAmount.value
+),
+
+year:
+Number(
+expenseYear.value
+),
+
+date:
+new Date()
+.toISOString()
+.slice(0,10)
+
+}
+);
+
+expenses =
+await getCollection(
+"expenses"
+);
+
+closeModal();
+
+renderEverything();
+
+};
+
+
+/* ================================================
+   ELECTRICITY
+================================================ */
+
+function renderElectricity(){
+
+electricityTable.innerHTML = `
+
+<table>
+
+<tr>
+
+<th>Date</th>
+<th>Year</th>
+<th>Description</th>
+<th>Amount</th>
+
+</tr>
+
+${electricity.map(x => `
+
+<tr>
+
+<td>${x.date}</td>
+
+<td>${x.year}</td>
+
+<td>
+${escapeHTML(x.description)}
+</td>
+
+<td>
+${money(x.amount)}
+</td>
+
+</tr>
+
+`).join("")}
+
+</table>
+
+`;
+
+}
+
+
+window.openElectricityModal =
+function(){
+
+modalTitle.textContent =
+"Add Electricity Bill";
+
+modalBody.innerHTML = `
+
+<div class="formgrid">
+
+<div>
+
+<label>
+Description
+</label>
+
+<input
+id="electricDescription"
+value="Electricity Bill">
+
+</div>
+
+
+<div>
+
+<label>
+Amount
+</label>
+
+<input
+id="electricAmount"
+type="number">
+
+</div>
+
+
+<div>
+
+<label>
+Year
+</label>
+
+<input
+id="electricYear"
+type="number"
+value="${new Date().getFullYear()}">
+
+</div>
+
+</div>
+
+
+<button
+class="orange"
+onclick="saveElectricity()"
+style="margin-top:12px">
+
+Save Electricity
+
+</button>
+
+`;
+
+modal.classList.add(
+"show"
+);
+
+};
+
+
+window.saveElectricity =
+async function(){
+
+await addDoc(
+collection(db,"electricity"),
+{
+
+description:
+electricDescription.value,
+
+amount:
+Number(
+electricAmount.value
+),
+
+year:
+Number(
+electricYear.value
+),
+
+date:
+new Date()
+.toISOString()
+.slice(0,10)
+
+}
+);
+
+electricity =
+await getCollection(
+"electricity"
+);
+
+closeModal();
+
+renderEverything();
+
+};
+
+
+/* ================================================
+   CHECK-IN / CHECK-OUT
+================================================ */
+
+window.setHistoryTab =
+function(tab){
+
+historyTab =
+tab;
+
+checkinTab.className =
+tab==="checkin"
+? "primary"
+: "secondary";
+
+checkoutTab.className =
+tab==="checkout"
+? "primary"
+: "secondary";
+
+checkinAction.classList.toggle(
+"hidden",
+tab!=="checkin"
+);
+
+checkoutAction.classList.toggle(
+"hidden",
+tab!=="checkout"
+);
+
+renderHistory();
+
+};
+
+
+function renderHistory(){
+
+const year =
+Number(
+historyYear.value
+) ||
+new Date().getFullYear();
+
+
+if(historyTab==="checkin"){
+
+const data =
+checkins.filter(
+x =>
+Number(x.year) === year
+);
+
+
+historyTable.innerHTML = `
+
+<table>
+
+<tr>
+
+<th>Room</th>
+<th>Renter</th>
+<th>Members</th>
+<th>Check-In</th>
+<th>Rent</th>
+<th>Deposit</th>
+<th>Phone</th>
+
+</tr>
+
+${data.map(x => `
+
+<tr>
+
+<td>
+${escapeHTML(
+roomName(x.roomId)
+)}
+</td>
+
+<td>
+${escapeHTML(x.renter)}
+</td>
+
+<td>
+${escapeHTML(
+(x.members||[]).join(", ")
+)}
+</td>
+
+<td>
+${x.checkinDate}
+</td>
+
+<td>
+${money(x.rent)}
+</td>
+
+<td>
+${money(x.deposit)}
+</td>
+
+<td>
+${escapeHTML(
+x.phone||""
+)}
+</td>
+
+</tr>
+
+`).join("")}
+
+</table>
+
+`;
+
+}else{
+
+const data =
+checkouts.filter(
+x =>
+Number(x.year) === year
+);
+
+
+historyTable.innerHTML = `
+
+<table>
+
+<tr>
+
+<th>Room</th>
+<th>Renter</th>
+<th>Check-In</th>
+<th>Check-Out</th>
+<th>Rent Paid</th>
+<th>Rent Baki</th>
+<th>Deposit</th>
+
+</tr>
+
+${data.map(x => `
+
+<tr>
+
+<td>
+${escapeHTML(
+roomName(x.roomId)
+)}
+</td>
+
+<td>
+${escapeHTML(x.renter)}
+</td>
+
+<td>
+${x.checkinDate||""}
+</td>
+
+<td>
+${x.checkoutDate}
+</td>
+
+<td>
+${money(x.totalPaid)}
+</td>
+
+<td>
+${money(x.rentBaki)}
+</td>
+
+<td>
+${money(x.deposit)}
+</td>
+
+</tr>
+
+`).join("")}
+
+</table>
+
+`;
+
+}
+
+}
+
+
+/* ================================================
+   CHECK-IN
+================================================ */
+
+window.openCheckinModal =
+function(){
+
+modalTitle.textContent =
+"New Renter Check-In";
+
+modalBody.innerHTML = `
+
+<div class="formgrid">
+
+<div>
+
+<label>
+Room
+</label>
+
+<select id="ciRoom">
+
+${rooms.map(r => `
+
+<option value="${r.id}">
+
+${escapeHTML(r.name)}
+
+</option>
+
+`).join("")}
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>
+Renter Name
+</label>
+
+<input id="ciRenter">
+
+</div>
+
+
+<div>
+
+<label>
+Phone
+</label>
+
+<input
+id="ciPhone"
+type="tel">
+
+</div>
+
+
+<div>
+
+<label>
+Check-In Date
+</label>
+
+<input
+id="ciDate"
+type="date"
+value="${
+new Date()
+.toISOString()
+.slice(0,10)
+}">
+
+</div>
+
+
+<div>
+
+<label>
+Monthly Rent
+</label>
+
+<input
+id="ciRent"
+type="number">
+
+</div>
+
+
+<div>
+
+<label>
+Deposit
+</label>
+
+<input
+id="ciDeposit"
+type="number"
+value="0">
+
+</div>
+
+
+<div style="grid-column:1/-1">
+
+<label>
+Members - Maximum 5
+</label>
+
+<textarea
+id="ciMembers"
+rows="5"></textarea>
+
+</div>
+
+</div>
+
+
+<button
+class="success"
+onclick="saveCheckin()"
+style="margin-top:12px">
+
+Save Check-In
+
+</button>
+
+`;
+
+modal.classList.add(
+"show"
+);
+
+};
+
+
+window.saveCheckin =
+async function(){
+
+const members =
+ciMembers.value
+.split("\n")
+.map(
+x=>x.trim()
+)
+.filter(Boolean);
+
+
+if(members.length>5){
+
+alert(
+"Maximum 5 members allowed."
+);
+
+return;
+
+}
+
+
+await addDoc(
+collection(db,"checkins"),
+{
+
+roomId:
+ciRoom.value,
+
+renter:
+ciRenter.value,
+
+phone:
+ciPhone.value,
+
+members,
+
+checkinDate:
+ciDate.value,
+
+rent:
+Number(
+ciRent.value||0
+),
+
+deposit:
+Number(
+ciDeposit.value||0
+),
+
+year:
+new Date(
+ciDate.value
+).getFullYear(),
+
+createdAt:
+Date.now()
+
+}
+);
+
+
+await updateDoc(
+doc(
+db,
+"rooms",
+ciRoom.value
+),
+{
+
+members,
+
+rent:
+Number(
+ciRent.value||0
+)
+
+}
+);
+
+
+checkins =
+await getCollection(
+"checkins"
+);
+
+rooms =
+await getCollection(
+"rooms"
+);
+
+closeModal();
+
+renderEverything();
+
+alert(
+"Check-In saved."
+);
+
+};
+
+
+/* ================================================
+   CHECK-OUT
+================================================ */
+
+window.openCheckoutModal =
+function(){
+
+modalTitle.textContent =
+"Renter Check-Out";
+
+modalBody.innerHTML = `
+
+<div class="formgrid">
+
+<div>
+
+<label>
+Room
+</label>
+
+<select id="coRoom">
+
+${rooms.map(r => `
+
+<option value="${r.id}">
+
+${escapeHTML(r.name)}
+
+</option>
+
+`).join("")}
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>
+Renter Name
+</label>
+
+<input id="coRenter">
+
+</div>
+
+
+<div>
+
+<label>
+Check-In Date
+</label>
+
+<input
+id="coCheckin"
+type="date">
+
+</div>
+
+
+<div>
+
+<label>
+Check-Out Date
+</label>
+
+<input
+id="coDate"
+type="date"
+value="${
+new Date()
+.toISOString()
+.slice(0,10)
+}">
+
+</div>
+
+
+<div>
+
+<label>
+Total Rent Paid
+</label>
+
+<input
+id="coPaid"
+type="number"
+value="0">
+
+</div>
+
+
+<div>
+
+<label>
+Rent Baki
+</label>
+
+<input
+id="coBaki"
+type="number"
+value="0">
+
+</div>
+
+
+<div>
+
+<label>
+Deposit
+</label>
+
+<input
+id="coDeposit"
+type="number"
+value="0">
+
+</div>
+
+</div>
+
+
+<button
+class="danger"
+onclick="saveCheckout()"
+style="margin-top:12px">
+
+Save Check-Out & Deactivate Login
+
+</button>
+
+`;
+
+modal.classList.add(
+"show"
+);
+
+};
+
+
+window.saveCheckout =
+async function(){
+
+const roomId =
+coRoom.value;
+
+const date =
+coDate.value;
+
+
+await addDoc(
+collection(db,"checkouts"),
+{
+
+roomId,
+
+renter:
+coRenter.value,
+
+checkinDate:
+coCheckin.value,
+
+checkoutDate:
+date,
+
+totalPaid:
+Number(
+coPaid.value||0
+),
+
+rentBaki:
+Number(
+coBaki.value||0
+),
+
+deposit:
+Number(
+coDeposit.value||0
+),
+
+year:
+new Date(
+date
+).getFullYear(),
+
+createdAt:
+Date.now()
+
+}
+);
+
+
+/*
+DEACTIVATE RENTER LOGIN
+*/
+
+const accountQuery =
+query(
+collection(db,"renterAccounts"),
+where(
+"roomId",
+"==",
+roomId
+),
+where(
+"active",
+"==",
+true
+)
+);
+
+const snapshot =
+await getDocs(
+accountQuery
+);
+
+
+for(
+const account
+of snapshot.docs
+){
+
+await updateDoc(
+doc(
+db,
+"renterAccounts",
+account.id
+),
+{
+
+active:false,
+
+checkedOutAt:
+date
+
+}
+);
+
+}
+
+
+/*
+VACATE ROOM
+*/
+
+await updateDoc(
+doc(
+db,
+"rooms",
+roomId
+),
+{
+
+members:[],
+rent:0
+
+}
+);
+
+
+checkouts =
+await getCollection(
+"checkouts"
+);
+
+rooms =
+await getCollection(
+"rooms"
+);
+
+renters =
+await getCollection(
+"renterAccounts"
+);
+
+closeModal();
+
+renderEverything();
+
+await fillRenterRooms();
+
+alert(
+"Check-Out saved. Renter login has been deactivated."
+);
+
+};
+
+
+/* ================================================
+   RENTER ACCOUNTS
+================================================ */
+
+function renderRenterAccounts(){
+
+renterAccountsTable.innerHTML = `
+
+<table>
+
+<tr>
+
+<th>Name</th>
+<th>Room</th>
+<th>Status</th>
+<th>Action</th>
+
+</tr>
+
+${renters.map(x => `
+
+<tr>
+
+<td>
+${escapeHTML(x.name)}
+</td>
+
+<td>
+${escapeHTML(
+roomName(x.roomId)
+)}
+</td>
+
+<td>
+
+<span class="badge ${
+x.active
+? ""
+: "red"
+}">
+
+${
+x.active
+? "Active"
+: "Deactivated"
+}
+
+</span>
+
+</td>
+
+<td>
+
+${
+x.active
+
+?
+
+`<button
+class="danger"
+onclick="deactivateRenter('${x.id}')">
+
+Deactivate
+
+</button>`
+
+:
+
+"-"
+
+}
+
+</td>
+
+</tr>
+
+`).join("")}
+
+</table>
+
+`;
+
+}
+
+
+/* ================================================
+   CREATE RENTER ACCOUNT
+================================================ */
+
+window.openRenterAccountModal =
+function(){
+
+modalTitle.textContent =
+"Create Renter Login";
+
+modalBody.innerHTML = `
+
+<div class="formgrid">
+
+<div>
+
+<label>
+Renter Name
+</label>
+
+<input
+id="raName">
+
+</div>
+
+
+<div>
+
+<label>
+Room
+</label>
+
+<select id="raRoom">
+
+${rooms.map(r => `
+
+<option value="${r.id}">
+
+${escapeHTML(r.name)}
+
+</option>
+
+`).join("")}
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>
+Password
+</label>
+
+<input
+id="raPassword"
+type="password">
+
+</div>
+
+</div>
+
+
+<div class="notice">
+
+Renter logs in using:
+
+<br>
+
+<b>
+Room Number + Password
+</b>
+
+<br>
+
+No Gmail is required.
+
+</div>
+
+
+<button
+class="success"
+onclick="createRenterAccount()"
+style="margin-top:12px">
+
+Save Renter Account
+
+</button>
+
+`;
+
+modal.classList.add(
+"show"
+);
+
+};
+
+
+window.createRenterAccount =
+async function(){
+
+const roomId =
+raRoom.value;
+
+const password =
+raPassword.value.trim();
+
+
+if(!password){
+
+alert(
+"Enter a password."
+);
+
+return;
+
+}
+
+
+const q =
+query(
+collection(db,"renterAccounts"),
+where(
+"roomId",
+"==",
+roomId
+),
+where(
+"active",
+"==",
+true
+)
+);
+
+
+const snapshot =
+await getDocs(q);
+
+
+if(!snapshot.empty){
+
+alert(
+"This room already has an active renter account."
+);
+
+return;
+
+}
+
+
+await addDoc(
+collection(db,"renterAccounts"),
+{
+
+name:
+raName.value.trim(),
+
+roomId,
+
+password,
+
+active:true,
+
+createdAt:
+Date.now()
+
+}
+);
+
+
+renters =
+await getCollection(
+"renterAccounts"
+);
+
+closeModal();
+
+renderRenterAccounts();
+
+alert(
+"Renter login saved."
+);
+
+};
+
+
+/* ================================================
+   DEACTIVATE
+================================================ */
+
+window.deactivateRenter =
+async function(id){
+
+if(
+!confirm(
+"Deactivate this renter login?"
+)
+){
+
+return;
+
+}
+
+
+await updateDoc(
+doc(
+db,
+"renterAccounts",
+id
+),
+{
+
+active:false,
+
+checkedOutAt:
+new Date()
+.toISOString()
+.slice(0,10)
+
+}
+);
+
+
+renters =
+await getCollection(
+"renterAccounts"
+);
+
+renderRenterAccounts();
+
+};
+
+
+/* ================================================
+   RENTER DASHBOARD
+================================================ */
+
+async function loadRenterData(){
+
+const room =
+rooms.find(
+x =>
+x.id ===
+currentRenterRoomId
+);
+
+
+if(!room){
+
+alert(
+"Room information not found."
+);
+
+return;
+
+}
+
+
+const snapshot =
+await getDocs(
+query(
+collection(db,"rents"),
+where(
+"roomId",
+"==",
+currentRenterRoomId
+)
+)
+);
+
+
+const roomRents =
+snapshot.docs.map(
+x=>x.data()
+);
+
+
+const due =
+roomRents.filter(
+x =>
+x.status === "Due"
+);
+
+
+const baki =
+due.reduce(
+(a,x)=>
+a+
+Number(
+x.amount||0
+),
+0
+);
+
+
+renterOwnDashboard.innerHTML = `
+
+<div class="grid">
+
+<div class="card">
+
+<div class="muted">
+Room
+</div>
+
+<div class="stat">
+${escapeHTML(room.name)}
+</div>
+
+<p>
+
+<b>
+Members:
+</b>
+
+${(room.members||[]).length}/5
+
+</p>
+
+<p>
+
+${escapeHTML(
+(room.members||[]).join(", ")
+)}
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="muted">
+Monthly Rent
+</div>
+
+<div class="stat">
+
+${money(room.rent)}
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="muted">
+Rent Baki
+</div>
+
+<div class="stat">
+
+${due.length}
+month(s)
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="muted">
+Total Baki
+</div>
+
+<div class="stat">
+
+${money(baki)}
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card"
+style="margin-top:15px">
+
+<h3>
+My Rent History
+</h3>
+
+<table>
+
+<tr>
+
+<th>Month</th>
+<th>Year</th>
+<th>Amount</th>
+<th>Status</th>
+<th>Date</th>
+
+</tr>
+
+${roomRents.map(x => `
+
+<tr>
+
+<td>
+${escapeHTML(x.month)}
+</td>
+
+<td>
+${x.year}
+</td>
+
+<td>
+${money(x.amount)}
+</td>
+
+<td>
+
+<span class="badge ${
+x.status==="Paid"
+? ""
+: "red"
+}">
+
+${escapeHTML(x.status)}
+
+</span>
+
+</td>
+
+<td>
+${escapeHTML(x.date||"")}
+</td>
+
+</tr>
+
+`).join("")}
+
+</table>
+
+</div>
+
+`;
+
+}
+
+
+/* ================================================
+   RENTER VIEW
+================================================ */
+
+function showOnlyRenterDashboard(){
+
+document
+.querySelectorAll(".view")
+.forEach(
+v =>
+v.classList.remove("active")
+);
+
+renterDashboard.classList.add(
+"active"
+);
+
+}
+
+
+/* ================================================
+   NAVIGATION
+================================================ */
+
+window.showView =
+function(id,button){
+
+document
+.querySelectorAll(".view")
+.forEach(
+v =>
+v.classList.remove("active")
+);
+
+document
+.getElementById(id)
+.classList.add("active");
+
+
+document
+.querySelectorAll(".navbtn")
+.forEach(
+x =>
+x.classList.remove("active")
+);
+
+if(button){
+
+button.classList.add(
+"active"
+);
+
+}
+
+renderEverything();
+
+};
+
+
+/* ================================================
+   SMS BUTTONS
+================================================ */
+
+window.sendDueSMS =
+function(roomId){
+
+alert(
+"Due SMS button is ready. Connect your SMS provider/backend to send the actual SMS."
+);
+
+};
+
+
+window.sendPaidSMS =
+function(roomId){
+
+alert(
+"Paid SMS button is ready. Connect your SMS provider/backend to send the actual SMS."
+);
+
+};
+
+
+/* ================================================
+   LOGOUT
+================================================ */
+
+window.logout =
+async function(){
+
+try{
+
+if(currentRole==="owner"){
+
+await signOut(auth);
+
+}
+
+}catch(e){
+
+console.error(e);
+
+}
+
+currentUser =
+null;
+
+currentRole =
+null;
+
+currentRenterRoomId =
+null;
+
+app.classList.add(
+"hidden"
+);
+
+loginPage.classList.remove(
+"hidden"
+);
+
+setLoginType(
+"owner"
+);
+
+};
+
+
+/* ================================================
+   HELPERS
+================================================ */
+
+function roomName(id){
+
+const room =
+rooms.find(
+x=>x.id===id
+);
+
+return room
+? room.name
+: "Room";
+
+}
+
+
+function money(value){
+
+return "₹"+
+Number(
+value||0
+).toLocaleString(
+"en-IN"
+);
+
+}
+
+
+function escapeHTML(value){
+
+return String(
+value ?? ""
+)
+.replace(
+/[&<>"']/g,
+char =>
+({
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+
+}[char])
+);
+
+}
+
+
+window.closeModal =
+function(){
+
+modal.classList.remove(
+"show"
+);
+
+};
+
+
+/* ================================================
+   START
+================================================ */
+
+fillRenterRooms();
+
+</script>
+
+</body>
+</html>
 
