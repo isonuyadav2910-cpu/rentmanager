@@ -7,26 +7,14 @@
 
 <style>
 *{box-sizing:border-box}
+
 body{
   margin:0;
-  font-family:Arial,sans-serif;
+  font-family:Arial,Helvetica,sans-serif;
   background:#f4f7fb;
   color:#172033;
 }
-header{
-  background:#172033;
-  color:white;
-  padding:16px 20px;
-}
-header h1{margin:0;font-size:22px}
-nav{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  padding:12px;
-  background:white;
-  border-bottom:1px solid #ddd;
-}
+
 button{
   border:0;
   border-radius:8px;
@@ -34,88 +22,198 @@ button{
   cursor:pointer;
   font-size:14px;
 }
+
+input,select,textarea{
+  width:100%;
+  padding:11px;
+  border:1px solid #cbd5e1;
+  border-radius:8px;
+  font-size:14px;
+  background:white;
+}
+
+label{
+  display:block;
+  margin-bottom:6px;
+  color:#64748b;
+  font-size:13px;
+}
+
 .primary{background:#2563eb;color:white}
 .success{background:#16a34a;color:white}
 .danger{background:#dc2626;color:white}
 .orange{background:#ea580c;color:white}
 .secondary{background:#e5e7eb;color:#111}
-.navbtn{background:#eef2ff;color:#1e3a8a}
-.navbtn.active{background:#2563eb;color:white}
 
-main{max-width:1300px;margin:auto;padding:18px}
-.view{display:none}
-.view.active{display:block}
+.hidden{display:none!important}
+
+#loginPage{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.loginBox{
+  width:100%;
+  max-width:420px;
+  background:white;
+  padding:25px;
+  border-radius:18px;
+  box-shadow:0 10px 40px #0002;
+}
+
+.loginBox h1{
+  margin-top:0;
+  text-align:center;
+}
+
+.loginTabs{
+  display:flex;
+  gap:8px;
+  margin:20px 0;
+}
+
+.loginTabs button{
+  flex:1;
+}
+
+.loginError{
+  color:#dc2626;
+  margin-bottom:12px;
+  font-size:14px;
+}
+
+header{
+  background:#172033;
+  color:white;
+  padding:15px 20px;
+}
+
+.headerInside{
+  max-width:1400px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+header h1{
+  margin:0;
+  font-size:22px;
+}
+
+nav{
+  background:white;
+  border-bottom:1px solid #e5e7eb;
+  padding:10px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+nav button{
+  background:#eef2ff;
+  color:#1e3a8a;
+}
+
+nav button.active{
+  background:#2563eb;
+  color:white;
+}
+
+main{
+  max-width:1400px;
+  margin:auto;
+  padding:18px;
+}
+
+.view{
+  display:none;
+}
+
+.view.active{
+  display:block;
+}
+
+.sectionHead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:15px;
+}
+
+.sectionHead h2{
+  margin:0;
+}
 
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
   gap:14px;
 }
+
 .card{
   background:white;
-  border:1px solid #e5e9f0;
+  border:1px solid #e5e7eb;
   border-radius:14px;
   padding:16px;
   box-shadow:0 2px 8px #00000008;
 }
+
 .stat{
-  font-size:24px;
+  font-size:25px;
   font-weight:bold;
-  margin-top:6px;
-}
-.muted{
-  color:#687386;
-  font-size:13px;
-}
-.sectionhead{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-bottom:15px;
+  margin-top:5px;
 }
 
-.formgrid{
+.muted{
+  color:#64748b;
+  font-size:13px;
+}
+
+.formGrid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
   gap:12px;
 }
-label{
-  display:block;
-  font-size:13px;
-  color:#687386;
-  margin-bottom:5px;
-}
-input,select,textarea{
-  width:100%;
-  padding:10px;
-  border:1px solid #ccd3df;
-  border-radius:8px;
-  font:inherit;
+
+.tableWrap{
+  overflow-x:auto;
+  background:white;
+  border-radius:12px;
 }
 
 table{
   width:100%;
   border-collapse:collapse;
-  background:white;
+  min-width:700px;
 }
+
 th,td{
   padding:10px;
-  border-bottom:1px solid #e5e9f0;
+  border-bottom:1px solid #e5e7eb;
   text-align:left;
   font-size:14px;
 }
-th{background:#f8fafc}
+
+th{
+  background:#f8fafc;
+}
 
 .badge{
   display:inline-block;
-  padding:4px 8px;
-  border-radius:99px;
-  font-size:12px;
+  padding:4px 9px;
+  border-radius:30px;
   background:#dcfce7;
   color:#166534;
+  font-size:12px;
 }
+
 .badge.red{
   background:#fee2e2;
   color:#991b1b;
@@ -123,70 +221,24 @@ th{background:#f8fafc}
 
 .actions{
   display:flex;
-  gap:8px;
   flex-wrap:wrap;
+  gap:7px;
   margin-top:12px;
 }
 
-.room-card h3{margin-top:0}
-
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:#0008;
-  z-index:50;
-  padding:15px;
-  overflow:auto;
-}
-.modal.show{display:block}
-.modalbox{
-  max-width:850px;
-  margin:30px auto;
-  background:white;
-  border-radius:16px;
-  padding:20px;
-}
-
-.login{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:20px;
-}
-.loginbox{
-  width:100%;
-  max-width:420px;
-  background:white;
-  padding:25px;
-  border-radius:18px;
-  box-shadow:0 8px 30px #0002;
-}
-.login-tabs{
-  display:flex;
-  gap:8px;
-  margin-bottom:15px;
-}
-.login-tabs button{flex:1}
-
-.hidden{display:none!important}
-
 .notice{
-  padding:12px;
   background:#eff6ff;
   border-radius:10px;
+  padding:12px;
   margin-bottom:15px;
+  color:#1e40af;
 }
 
-.savebar{
-  position:sticky;
-  top:0;
-  z-index:5;
+.saveBar{
   background:white;
   padding:10px;
-  border-bottom:1px solid #ddd;
-  margin:-18px -18px 18px;
+  border-radius:12px;
+  margin-bottom:15px;
   display:flex;
   justify-content:flex-end;
   align-items:center;
@@ -199,137 +251,179 @@ th{background:#f8fafc}
   display:none;
 }
 
+.modal{
+  position:fixed;
+  inset:0;
+  background:#0008;
+  display:none;
+  z-index:100;
+  padding:15px;
+  overflow:auto;
+}
+
+.modal.show{
+  display:block;
+}
+
+.modalBox{
+  max-width:800px;
+  background:white;
+  margin:30px auto;
+  padding:20px;
+  border-radius:16px;
+}
+
+.modalHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.modalHeader h2{
+  margin:0;
+}
+
 @media(max-width:600px){
   main{padding:10px}
   .grid{grid-template-columns:1fr}
-  table{
-    display:block;
-    overflow-x:auto;
-  }
+  .headerInside{align-items:flex-start;flex-direction:column}
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= LOGIN ================= -->
+<!-- =====================================================
+LOGIN
+===================================================== -->
 
-<div id="loginPage" class="login">
+<div id="loginPage">
 
-<div class="loginbox">
+  <div class="loginBox">
 
-<h1 style="text-align:center">RentManager</h1>
+    <h1>🏠 RentManager</h1>
 
-<p class="muted" style="text-align:center">
-11 Room Rental Management
-</p>
+    <p style="text-align:center;color:#64748b">
+      11 Room Rental Management
+    </p>
 
-<div class="login-tabs">
+    <div class="loginTabs">
 
-<button id="ownerTab"
-class="primary"
-onclick="setLoginType('owner')">
-Owner Login
-</button>
+      <button
+        id="ownerTab"
+        class="primary"
+        onclick="switchLogin('owner')">
+        Owner Login
+      </button>
 
-<button id="renterTab"
-class="secondary"
-onclick="setLoginType('renter')">
-Renter Login
-</button>
+      <button
+        id="renterTab"
+        class="secondary"
+        onclick="switchLogin('renter')">
+        Renter Login
+      </button>
+
+    </div>
+
+    <div id="loginError" class="loginError"></div>
+
+    <!-- OWNER -->
+
+    <div id="ownerFields">
+
+      <label>Owner Gmail</label>
+
+      <input
+        id="ownerEmail"
+        type="email"
+        placeholder="Enter owner Gmail"
+        autocomplete="email">
+
+      <label style="margin-top:12px">
+        Password
+      </label>
+
+      <input
+        id="ownerPassword"
+        type="password"
+        placeholder="Enter password"
+        autocomplete="current-password">
+
+    </div>
+
+
+    <!-- RENTER -->
+
+    <div id="renterFields" class="hidden">
+
+      <label>Room</label>
+
+      <select id="renterRoom">
+        <option value="">Loading rooms...</option>
+      </select>
+
+      <label style="margin-top:12px">
+        Password
+      </label>
+
+      <input
+        id="renterPassword"
+        type="password"
+        placeholder="Enter renter password">
+
+      <p
+        style="font-size:12px;color:#64748b;margin-top:10px">
+        Renter login uses Room Number + Password.
+      </p>
+
+    </div>
+
+
+    <button
+      id="loginButton"
+      class="primary"
+      style="width:100%;margin-top:18px"
+      onclick="login()">
+
+      Login
+
+    </button>
+
+  </div>
 
 </div>
 
-<div id="loginError"
-style="color:#dc2626;margin-bottom:10px">
-</div>
 
-<!-- OWNER LOGIN -->
-
-<div id="ownerLoginFields">
-
-<label>Owner Gmail</label>
-
-<input
-id="ownerEmail"
-type="email"
-placeholder="Owner Gmail">
-
-<label style="margin-top:10px">
-Password
-</label>
-
-<input
-id="ownerPassword"
-type="password"
-placeholder="Password">
-
-</div>
-
-<!-- RENTER LOGIN -->
-
-<div id="renterLoginFields"
-class="hidden">
-
-<label>Room Number</label>
-
-<select id="renterRoom"></select>
-
-<label style="margin-top:10px">
-Password
-</label>
-
-<input
-id="renterPassword"
-type="password"
-placeholder="Renter password">
-
-</div>
-
-<button
-class="primary"
-style="width:100%;margin-top:15px"
-onclick="loginUser()">
-
-Login
-
-</button>
-
-</div>
-</div>
-
-
-<!-- ================= APP ================= -->
+<!-- =====================================================
+APPLICATION
+===================================================== -->
 
 <div id="app" class="hidden">
 
 <header>
 
-<div class="sectionhead" style="margin:0">
+  <div class="headerInside">
 
-<div>
+    <div>
+      <h1>RentManager Pro</h1>
+      <small>11 Rooms</small>
+    </div>
 
-<h1>RentManager Pro</h1>
+    <div>
+      <span id="loggedUser"></span>
 
-<small>
-11 Rooms • Rental Management
-</small>
+      <button
+        class="secondary"
+        onclick="logout()"
+        style="margin-left:8px">
 
-</div>
+        Logout
 
-<div>
+      </button>
+    </div>
 
-<span id="userLabel"></span>
-
-<button
-class="secondary"
-onclick="logout()">
-Logout
-</button>
-
-</div>
-
-</div>
+  </div>
 
 </header>
 
@@ -338,44 +432,45 @@ Logout
 
 <nav id="ownerNav">
 
-<button class="navbtn active"
-onclick="showView('dashboard',this)">
-Dashboard
+<button
+  class="active"
+  onclick="showView('dashboard',this)">
+  Dashboard
 </button>
 
-<button class="navbtn"
-onclick="showView('rooms',this)">
-Rooms
+<button
+  onclick="showView('rooms',this)">
+  Rooms
 </button>
 
-<button class="navbtn"
-onclick="showView('rent',this)">
-Rent History
+<button
+  onclick="showView('rentHistory',this)">
+  Rent History
 </button>
 
-<button class="navbtn"
-onclick="showView('income',this)">
-Income
+<button
+  onclick="showView('income',this)">
+  Income
 </button>
 
-<button class="navbtn"
-onclick="showView('expenses',this)">
-Expenses
+<button
+  onclick="showView('expenses',this)">
+  Expenses
 </button>
 
-<button class="navbtn"
-onclick="showView('electricity',this)">
-Electricity
+<button
+  onclick="showView('electricity',this)">
+  Electricity
 </button>
 
-<button class="navbtn"
-onclick="showView('history',this)">
-Check-In / Check-Out
+<button
+  onclick="showView('checkHistory',this)">
+  Check-In / Check-Out
 </button>
 
-<button class="navbtn"
-onclick="showView('renterAccounts',this)">
-Renter Accounts
+<button
+  onclick="showView('renterAccounts',this)">
+  Renter Accounts
 </button>
 
 </nav>
@@ -383,77 +478,71 @@ Renter Accounts
 
 <main>
 
-<!-- ================= DASHBOARD ================= -->
+<!-- =====================================================
+DASHBOARD
+===================================================== -->
 
 <section id="dashboard" class="view active">
 
-<div class="savebar">
+<div class="saveBar">
 
-<button
-class="success"
-onclick="saveData()">
+  <select
+    id="dashboardYear"
+    onchange="renderDashboard()"
+    style="width:auto">
+  </select>
 
-💾 Save Data
+  <button
+    class="success"
+    onclick="saveAllData()">
 
-</button>
+    💾 Save Data
 
-<span id="saveMessage">
-Data Saved Successfully
-</span>
+  </button>
+
+  <span id="saveMessage">
+    Saved
+  </span>
 
 </div>
 
-
-<div class="sectionhead">
+<div class="sectionHead">
 
 <div>
-
-<h2>Owner Dashboard</h2>
-
-<div class="muted">
-Year-wise rental information
+<h2>Dashboard</h2>
+<p class="muted">
+Select any year to see historical data.
+</p>
 </div>
 
 </div>
 
-<select
-id="dashboardYear"
-onchange="renderOwnerDashboard()"
-style="width:auto">
-</select>
-
+<div
+  id="dashboardStats"
+  class="grid">
 </div>
 
+<h3 style="margin-top:25px">
+All Rooms
+</h3>
 
-<div id="dashboardStats"
-class="grid">
-</div>
-
-
-<h3>All 11 Rooms</h3>
-
-<div id="ownerRooms"
-class="grid">
+<div
+  id="dashboardRooms"
+  class="grid">
 </div>
 
 </section>
 
 
-<!-- ================= ROOMS ================= -->
+<!-- =====================================================
+ROOMS
+===================================================== -->
 
 <section id="rooms" class="view">
 
-<div class="sectionhead">
+<div class="sectionHead">
 
-<div>
-
-<h2>Room Management</h2>
-
-<div class="muted">
-Maximum 5 members per room.
-</div>
-
-</div>
+<h2>Room Details</h2>
 
 </div>
 
@@ -462,26 +551,25 @@ Maximum 5 members per room.
 </section>
 
 
-<!-- ================= RENT ================= -->
+<!-- =====================================================
+RENT HISTORY
+===================================================== -->
 
-<section id="rent" class="view">
+<section id="rentHistory" class="view">
 
-<div class="sectionhead">
+<div class="sectionHead">
 
 <div>
-
 <h2>Rental History</h2>
-
-<div class="muted">
-Paid, due and remaining rent.
-</div>
-
+<p class="muted">
+All rent records and remaining rent.
+</p>
 </div>
 
 <button
-class="primary"
-onclick="openRentModal()">
-Add Rent
+  class="primary"
+  onclick="openRentModal()">
+  + Add Rent
 </button>
 
 </div>
@@ -491,18 +579,20 @@ Add Rent
 </section>
 
 
-<!-- ================= INCOME ================= -->
+<!-- =====================================================
+INCOME
+===================================================== -->
 
 <section id="income" class="view">
 
-<div class="sectionhead">
+<div class="sectionHead">
 
 <h2>Income</h2>
 
 <button
-class="success"
-onclick="openIncomeModal()">
-Add Income
+  class="success"
+  onclick="openIncomeModal()">
+  + Add Income
 </button>
 
 </div>
@@ -512,18 +602,20 @@ Add Income
 </section>
 
 
-<!-- ================= EXPENSES ================= -->
+<!-- =====================================================
+EXPENSES
+===================================================== -->
 
 <section id="expenses" class="view">
 
-<div class="sectionhead">
+<div class="sectionHead">
 
 <h2>Expenses</h2>
 
 <button
-class="danger"
-onclick="openExpenseModal()">
-Add Expense
+  class="danger"
+  onclick="openExpenseModal()">
+  + Add Expense
 </button>
 
 </div>
@@ -533,26 +625,25 @@ Add Expense
 </section>
 
 
-<!-- ================= ELECTRICITY ================= -->
+<!-- =====================================================
+ELECTRICITY
+===================================================== -->
 
 <section id="electricity" class="view">
 
-<div class="sectionhead">
+<div class="sectionHead">
 
 <div>
-
 <h2>Electricity Bills</h2>
-
-<div class="muted">
-Electricity tracked separately.
-</div>
-
+<p class="muted">
+Electricity is tracked separately.
+</p>
 </div>
 
 <button
-class="orange"
-onclick="openElectricityModal()">
-Add Electricity Bill
+  class="orange"
+  onclick="openElectricityModal()">
+  + Add Electricity
 </button>
 
 </div>
@@ -562,89 +653,96 @@ Add Electricity Bill
 </section>
 
 
-<!-- ================= CHECK IN / OUT ================= -->
+<!-- =====================================================
+CHECK HISTORY
+===================================================== -->
 
-<section id="history" class="view">
+<section id="checkHistory" class="view">
 
-<div class="sectionhead">
+<div class="sectionHead">
 
-<h2>Renter History</h2>
+<div>
+<h2>Check-In / Check-Out History</h2>
+</div>
 
 <select
-id="historyYear"
-onchange="renderHistory()"
-style="width:auto">
+  id="historyYear"
+  onchange="renderCheckHistory()"
+  style="width:auto">
 </select>
 
 </div>
 
 
-<div style="display:flex;gap:8px;flex-wrap:wrap">
+<div class="actions">
 
 <button
-id="checkinTab"
-class="primary"
-onclick="setHistoryTab('checkin')">
+  id="checkinTab"
+  class="primary"
+  onclick="historyMode='checkin';renderCheckHistory()">
+
 Check-In History
+
 </button>
 
 <button
-id="checkoutTab"
-class="secondary"
-onclick="setHistoryTab('checkout')">
+  id="checkoutTab"
+  class="secondary"
+  onclick="historyMode='checkout';renderCheckHistory()">
+
 Check-Out History
-</button>
 
-</div>
-
-
-<div style="margin-top:15px">
-
-<button
-id="checkinAction"
-class="success"
-onclick="openCheckinModal()">
-Add Check-In
 </button>
 
 <button
-id="checkoutAction"
-class="danger hidden"
-onclick="openCheckoutModal()">
-Add Check-Out
+  id="addCheckinButton"
+  class="success"
+  onclick="openCheckinModal()">
+
++ Check-In
+
+</button>
+
+<button
+  id="addCheckoutButton"
+  class="danger"
+  onclick="openCheckoutModal()">
+
++ Check-Out
+
 </button>
 
 </div>
-
 
 <div
-id="historyTable"
-style="margin-top:15px">
+  id="checkHistoryTable"
+  style="margin-top:15px">
 </div>
 
 </section>
 
 
-<!-- ================= RENTER ACCOUNTS ================= -->
+<!-- =====================================================
+RENTER ACCOUNTS
+===================================================== -->
 
 <section id="renterAccounts" class="view">
 
-<div class="sectionhead">
+<div class="sectionHead">
 
 <div>
-
 <h2>Renter Accounts</h2>
-
-<div class="muted">
-Create or deactivate renter access.
-</div>
-
+<p class="muted">
+Create, view and deactivate renter access.
+</p>
 </div>
 
 <button
-class="primary"
-onclick="openRenterAccountModal()">
-Add Renter
+  class="primary"
+  onclick="openRenterModal()">
+
++ Add Renter
+
 </button>
 
 </div>
@@ -654,19 +752,25 @@ Add Renter
 </section>
 
 
-<!-- ================= RENTER DASHBOARD ================= -->
+<!-- =====================================================
+RENTER DASHBOARD
+===================================================== -->
 
 <section id="renterDashboard" class="view">
 
-<h2>Rental Dashboard</h2>
+<div class="sectionHead">
 
-<div class="notice">
-
-You can see only your own room information.
+<h2>My Room</h2>
 
 </div>
 
-<div id="renterOwnDashboard"></div>
+<div class="notice">
+
+You can only see information belonging to your room.
+
+</div>
+
+<div id="renterDashboardContent"></div>
 
 </section>
 
@@ -675,111 +779,97 @@ You can see only your own room information.
 </div>
 
 
-<!-- ================= MODAL ================= -->
+<!-- =====================================================
+MODAL
+===================================================== -->
 
 <div id="modal" class="modal">
 
-<div class="modalbox">
+<div class="modalBox">
 
-<div class="sectionhead">
+<div class="modalHeader">
 
-<h2 id="modalTitle"></h2>
+<h2 id="modalTitle">
+</h2>
 
 <button
-class="secondary"
-onclick="closeModal()">
-Close
+  class="secondary"
+  onclick="closeModal()">
+  Close
 </button>
 
 </div>
 
-<div id="modalBody"></div>
+<div id="modalContent"></div>
 
 </div>
 
 </div>
 
 
-<!-- ================= FIREBASE ================= -->
+<!-- =====================================================
+FIREBASE
+===================================================== -->
 
 <script type="module">
 
-/*
-====================================================
-IMPORTANT
-====================================================
-
-REPLACE THE VALUES BELOW WITH YOUR FIREBASE WEB APP
-CONFIGURATION.
-
-Firebase Console:
-Project Settings
-→ General
-→ Your apps
-→ Web App
-→ SDK setup and configuration
-→ Config
-
-====================================================
-*/
-
 import {
- initializeApp
+  initializeApp
 } from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 import {
- getAuth,
- signInWithEmailAndPassword,
- signOut
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
 } from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 import {
- getFirestore,
- collection,
- addDoc,
- setDoc,
- doc,
- getDoc,
- getDocs,
- updateDoc,
- query,
- where
+  getFirestore,
+  collection,
+  getDocs,
+  getDoc,
+  setDoc,
+  addDoc,
+  updateDoc,
+  doc,
+  query,
+  where
 } from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-/* ================================================
-   PASTE YOUR FIREBASE CONFIG HERE
-================================================ */
+/* =====================================================
+YOUR EXACT FIREBASE CONFIG
+===================================================== */
 
 const firebaseConfig = {
 
-apiKey:
-"PASTE_YOUR_API_KEY",
+  apiKey:
+  "AIzaSyBZdB8odEXTzC9kFP6Ft3PKCeAhd8WTnWU",
 
-authDomain:
-"PASTE_YOUR_PROJECT.firebaseapp.com",
+  authDomain:
+  "rent-manager-11-rooms.firebaseapp.com",
 
-projectId:
-"PASTE_YOUR_PROJECT_ID",
+  projectId:
+  "rent-manager-11-rooms",
 
-storageBucket:
-"PASTE_YOUR_STORAGE_BUCKET",
+  storageBucket:
+  "rent-manager-11-rooms.firebasestorage.app",
 
-messagingSenderId:
-"PASTE_YOUR_MESSAGING_SENDER_ID",
+  messagingSenderId:
+  "381338899569",
 
-appId:
-"PASTE_YOUR_APP_ID"
+  appId:
+  "1:381338899569:web:bc0edbe266032d28b677d0",
+
+  measurementId:
+  "G-3CH0PGPSMB"
 
 };
 
-
-/* ================================================
-   FIREBASE INITIALIZATION
-================================================ */
 
 const firebaseApp =
 initializeApp(firebaseConfig);
@@ -791,3384 +881,2802 @@ const db =
 getFirestore(firebaseApp);
 
 
-/* ================================================
-   VARIABLES
-================================================ */
+/* =====================================================
+DATA
+===================================================== */
 
-let currentUser = null;
+let rooms=[];
+let rents=[];
+let incomes=[];
+let expenses=[];
+let electricity=[];
+let checkins=[];
+let checkouts=[];
+let renterAccounts=[];
 
-let currentRole = null;
+let currentRole=null;
+let currentRenterRoom=null;
 
-let currentRenterRoomId = null;
-
-let loginType = "owner";
-
-let historyTab = "checkin";
-
-let rooms = [];
-
-let rents = [];
-
-let incomes = [];
-
-let expenses = [];
-
-let electricity = [];
-
-let checkins = [];
-
-let checkouts = [];
-
-let renters = [];
+let historyMode="checkin";
 
 
-/* ================================================
-   LOGIN TYPE
-================================================ */
+/* =====================================================
+LOGIN MODE
+===================================================== */
 
-window.setLoginType = function(type){
+window.switchLogin=function(type){
 
-loginType = type;
+  loginError.textContent="";
 
-ownerTab.className =
-type === "owner"
-? "primary"
-: "secondary";
+  if(type==="owner"){
 
-renterTab.className =
-type === "renter"
-? "primary"
-: "secondary";
+    ownerFields.classList.remove("hidden");
+    renterFields.classList.add("hidden");
 
-ownerLoginFields.classList.toggle(
-"hidden",
-type !== "owner"
-);
+    ownerTab.className="primary";
+    renterTab.className="secondary";
 
-renterLoginFields.classList.toggle(
-"hidden",
-type !== "renter"
-);
+  }else{
 
-loginError.textContent = "";
+    ownerFields.classList.add("hidden");
+    renterFields.classList.remove("hidden");
+
+    ownerTab.className="secondary";
+    renterTab.className="primary";
+
+    loadRenterRooms();
+
+  }
 
 };
 
 
-/* ================================================
-   LOAD RENTER ROOM LIST
-================================================ */
+/* =====================================================
+LOGIN
+===================================================== */
 
-async function fillRenterRooms(){
+window.login=async function(){
 
-try{
+  loginError.textContent="";
 
-const snap =
-await getDocs(
-collection(db,"rooms")
-);
+  const button=
+    document.getElementById("loginButton");
 
-const data =
-snap.docs
-.map(x => ({
-id:x.id,
-...x.data()
-}))
-.sort(
-(a,b)=>
-Number(a.number || 0) -
-Number(b.number || 0)
-);
+  button.disabled=true;
+  button.textContent="Logging in...";
 
-renterRoom.innerHTML =
-data.map(r =>
+  try{
 
-`<option value="${r.id}">
-${escapeHTML(r.name || ("Room "+r.number))}
-</option>`
+    /* OWNER LOGIN */
 
-).join("");
+    if(!ownerFields.classList.contains("hidden")){
 
-}catch(e){
+      const email=
+        document.getElementById("ownerEmail")
+        .value.trim();
 
-console.error(e);
+      const password=
+        document.getElementById("ownerPassword")
+        .value;
 
-}
+      if(!email || !password){
 
-}
+        throw new Error(
+          "Enter owner Gmail and password."
+        );
 
+      }
 
-/* ================================================
-   LOGIN
-================================================ */
+      const result=
+        await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
 
-window.loginUser =
-async function(){
+      currentRole="owner";
 
-loginError.textContent = "";
+      currentRenterRoom=null;
 
-try{
+      showApplication();
 
-/* OWNER */
+      loggedUser.textContent=
+        result.user.email;
 
-if(loginType === "owner"){
+      await loadAllOwnerData();
 
-const email =
-ownerEmail.value.trim();
+      return;
 
-const password =
-ownerPassword.value;
-
-if(!email || !password){
-
-throw new Error(
-"Enter owner Gmail and password."
-);
-
-}
-
-const result =
-await signInWithEmailAndPassword(
-auth,
-email,
-password
-);
-
-currentUser =
-result.user;
-
-currentRole =
-"owner";
-
-loginPage.classList.add(
-"hidden"
-);
-
-app.classList.remove(
-"hidden"
-);
-
-ownerNav.classList.remove(
-"hidden"
-);
-
-userLabel.textContent =
-currentUser.email;
-
-await loadOwnerData();
-
-}
+    }
 
 
-/* RENTER */
+    /* RENTER LOGIN */
 
-else{
+    const roomId=
+      document.getElementById("renterRoom")
+      .value;
 
-const roomId =
-renterRoom.value;
+    const password=
+      document.getElementById("renterPassword")
+      .value;
 
-const password =
-renterPassword.value;
+    if(!roomId){
 
-if(!roomId || !password){
+      throw new Error(
+        "Select a room."
+      );
 
-throw new Error(
-"Select room and enter password."
-);
+    }
 
-}
+    if(!password){
 
+      throw new Error(
+        "Enter renter password."
+      );
 
-/*
-Renter login is intentionally Room + Password.
-The password is stored for the renter account.
-*/
-
-const q =
-query(
-collection(db,"renterAccounts"),
-where("roomId","==",roomId),
-where("active","==",true)
-);
-
-const snapshot =
-await getDocs(q);
-
-if(snapshot.empty){
-
-throw new Error(
-"No active renter account for this room."
-);
-
-}
-
-const accountDoc =
-snapshot.docs[0];
-
-const account =
-accountDoc.data();
+    }
 
 
-if(password !== account.password){
+    const q=
+      query(
+        collection(db,"renterAccounts"),
+        where("roomId","==",roomId),
+        where("active","==",true)
+      );
 
-throw new Error(
-"Wrong renter password."
-);
 
-}
+    const result=
+      await getDocs(q);
 
 
-currentRole =
-"renter";
+    if(result.empty){
 
-currentRenterRoomId =
-roomId;
+      throw new Error(
+        "No active renter account exists for this room."
+      );
 
-currentUser = {
+    }
 
-uid:accountDoc.id,
 
-email:
-"Renter - " +
-(roomId)
+    const accountDoc=
+      result.docs[0];
+
+    const account=
+      accountDoc.data();
+
+
+    if(String(account.password)!==
+       String(password)){
+
+      throw new Error(
+        "Incorrect renter password."
+      );
+
+    }
+
+
+    currentRole="renter";
+
+    currentRenterRoom=roomId;
+
+    showApplication();
+
+    loggedUser.textContent=
+      "Renter • "+
+      roomName(roomId);
+
+    ownerNav.classList.add("hidden");
+
+    document
+      .querySelectorAll(".view")
+      .forEach(v=>
+        v.classList.remove("active")
+      );
+
+    renterDashboard.classList.add("active");
+
+    await loadRenterDashboard();
+
+  }catch(error){
+
+    console.error(error);
+
+    loginError.textContent=
+      friendlyFirebaseError(error);
+
+  }finally{
+
+    button.disabled=false;
+    button.textContent="Login";
+
+  }
 
 };
 
 
-loginPage.classList.add(
-"hidden"
-);
+/* =====================================================
+FIREBASE ERROR
+===================================================== */
 
-app.classList.remove(
-"hidden"
-);
+function friendlyFirebaseError(error){
 
-ownerNav.classList.add(
-"hidden"
-);
+  const code=
+    error?.code||"";
 
-userLabel.textContent =
-"Renter - " +
-(roomId);
+  if(code==="auth/invalid-credential"){
+    return "Wrong Gmail or password.";
+  }
 
-showOnlyRenterDashboard();
+  if(code==="auth/user-not-found"){
+    return "Owner account was not found.";
+  }
 
-await loadRenterData();
+  if(code==="auth/wrong-password"){
+    return "Wrong owner password.";
+  }
+
+  if(code==="auth/invalid-email"){
+    return "Enter a valid Gmail address.";
+  }
+
+  if(code==="auth/too-many-requests"){
+    return "Too many login attempts. Try again later.";
+  }
+
+  if(code==="auth/network-request-failed"){
+    return "Internet connection problem.";
+  }
+
+  if(code==="permission-denied"){
+    return "Firebase permission denied. Check Firestore Security Rules.";
+  }
+
+  return error.message||"Login failed.";
 
 }
 
-}catch(error){
 
-console.error(error);
+/* =====================================================
+SHOW APP
+===================================================== */
 
-loginError.textContent =
-error.message ||
-"Login failed.";
+function showApplication(){
+
+  loginPage.classList.add("hidden");
+
+  app.classList.remove("hidden");
 
 }
+
+
+/* =====================================================
+LOGOUT
+===================================================== */
+
+window.logout=async function(){
+
+  try{
+
+    if(currentRole==="owner"){
+
+      await signOut(auth);
+
+    }
+
+  }catch(e){
+
+    console.error(e);
+
+  }
+
+  currentRole=null;
+  currentRenterRoom=null;
+
+  app.classList.add("hidden");
+
+  loginPage.classList.remove("hidden");
+
+  ownerNav.classList.remove("hidden");
+
+  switchLogin("owner");
 
 };
 
 
-/* ================================================
-   OWNER FIREBASE AUTH STATE
-================================================ */
+/* =====================================================
+AUTH STATE
+===================================================== */
 
-auth.onAuthStateChanged(
-async user => {
+onAuthStateChanged(
+  auth,
+  async user=>{
 
-if(!user){
+    if(user && !currentRole){
 
-return;
+      currentRole="owner";
 
-}
+      showApplication();
 
-currentUser =
-user;
+      loggedUser.textContent=
+        user.email;
 
-currentRole =
-"owner";
+      try{
 
-loginPage.classList.add(
-"hidden"
+        await loadAllOwnerData();
+
+      }catch(error){
+
+        console.error(error);
+
+      }
+
+    }
+
+  }
 );
 
-app.classList.remove(
-"hidden"
-);
 
-ownerNav.classList.remove(
-"hidden"
-);
-
-userLabel.textContent =
-user.email;
-
-try{
-
-await loadOwnerData();
-
-}catch(e){
-
-console.error(e);
-
-}
-
-});
-
-
-/* ================================================
-   GET COLLECTION
-================================================ */
+/* =====================================================
+GET COLLECTION
+===================================================== */
 
 async function getCollection(name){
 
-const snapshot =
-await getDocs(
-collection(db,name)
-);
+  const snap=
+    await getDocs(
+      collection(db,name)
+    );
 
-return snapshot.docs.map(
-x => ({
-id:x.id,
-...x.data()
-})
-);
-
-}
-
-
-/* ================================================
-   CREATE 11 ROOMS
-================================================ */
-
-async function ensure11Rooms(){
-
-for(
-let i=1;
-i<=11;
-i++
-){
-
-const roomRef =
-doc(
-db,
-"rooms",
-"room"+i
-);
-
-const snapshot =
-await getDoc(roomRef);
-
-if(!snapshot.exists()){
-
-await setDoc(
-roomRef,
-{
-
-number:i,
-
-name:
-"Room "+i,
-
-rent:0,
-
-members:[],
-
-createdAt:
-Date.now()
-
-}
-);
-
-}
-
-}
+  return snap.docs.map(
+    d=>({
+      id:d.id,
+      ...d.data()
+    })
+  );
 
 }
 
 
-/* ================================================
-   LOAD OWNER DATA
-================================================ */
+/* =====================================================
+CREATE 11 ROOMS
+===================================================== */
 
-async function loadOwnerData(){
+async function ensureRooms(){
 
-await ensure11Rooms();
+  for(let i=1;i<=11;i++){
 
-rooms =
-await getCollection("rooms");
+    const id="room"+i;
 
-rents =
-await getCollection("rents");
+    const ref=
+      doc(db,"rooms",id);
 
-incomes =
-await getCollection("incomes");
+    const existing=
+      await getDoc(ref);
 
-expenses =
-await getCollection("expenses");
+    if(!existing.exists()){
 
-electricity =
-await getCollection("electricity");
+      await setDoc(
+        ref,
+        {
+          number:i,
+          name:"Room "+i,
+          rent:0,
+          members:[],
+          createdAt:Date.now()
+        }
+      );
 
-checkins =
-await getCollection("checkins");
+    }
 
-checkouts =
-await getCollection("checkouts");
-
-renters =
-await getCollection("renterAccounts");
-
-renderEverything();
-
-await fillRenterRooms();
+  }
 
 }
 
 
-/* ================================================
-   RENDER EVERYTHING
-================================================ */
+/* =====================================================
+LOAD OWNER DATA
+===================================================== */
+
+async function loadAllOwnerData(){
+
+  await ensureRooms();
+
+  rooms=
+    await getCollection("rooms");
+
+  rents=
+    await getCollection("rents");
+
+  incomes=
+    await getCollection("incomes");
+
+  expenses=
+    await getCollection("expenses");
+
+  electricity=
+    await getCollection("electricity");
+
+  checkins=
+    await getCollection("checkins");
+
+  checkouts=
+    await getCollection("checkouts");
+
+  renterAccounts=
+    await getCollection("renterAccounts");
+
+  populateYears();
+
+  renderEverything();
+
+  await loadRenterRooms();
+
+}
+
+
+/* =====================================================
+LOAD RENTER ROOMS
+===================================================== */
+
+async function loadRenterRooms(){
+
+  try{
+
+    await ensureRooms();
+
+    const data=
+      await getCollection("rooms");
+
+    renterRoom.innerHTML=
+      data
+      .sort(
+        (a,b)=>
+          Number(a.number)-Number(b.number)
+      )
+      .map(
+        r=>
+        `<option value="${r.id}">
+          ${escapeHTML(r.name)}
+        </option>`
+      )
+      .join("");
+
+  }catch(error){
+
+    console.error(error);
+
+    renterRoom.innerHTML=
+      `<option value="">
+        Unable to load rooms
+      </option>`;
+
+  }
+
+}
+
+
+/* =====================================================
+YEARS
+===================================================== */
+
+function allYears(){
+
+  const set=
+    new Set([
+      new Date().getFullYear()
+    ]);
+
+  [
+    ...rents,
+    ...incomes,
+    ...expenses,
+    ...electricity,
+    ...checkins,
+    ...checkouts
+  ].forEach(x=>{
+
+    if(x.year){
+
+      set.add(
+        Number(x.year)
+      );
+
+    }
+
+  });
+
+  return [...set]
+    .sort((a,b)=>b-a);
+
+}
+
+
+function populateYears(){
+
+  const years=
+    allYears();
+
+  dashboardYear.innerHTML=
+    years.map(
+      y=>
+      `<option value="${y}">
+        ${y}
+      </option>`
+    ).join("");
+
+  historyYear.innerHTML=
+    years.map(
+      y=>
+      `<option value="${y}">
+        ${y}
+      </option>`
+    ).join("");
+
+}
+
+
+/* =====================================================
+RENDER EVERYTHING
+===================================================== */
 
 function renderEverything(){
 
-renderYearSelector();
-
-renderHistoryYear();
-
-renderOwnerDashboard();
-
-renderRooms();
-
-renderRent();
-
-renderIncome();
-
-renderExpenses();
-
-renderElectricity();
-
-renderHistory();
-
-renderRenterAccounts();
+  renderDashboard();
+  renderRooms();
+  renderRent();
+  renderIncome();
+  renderExpenses();
+  renderElectricity();
+  renderCheckHistory();
+  renderRenterAccounts();
 
 }
 
 
-/* ================================================
-   YEAR LIST
-================================================ */
+/* =====================================================
+DASHBOARD
+===================================================== */
 
-function getAllYears(){
+function renderDashboard(){
 
-const years =
-new Set([
-new Date().getFullYear()
-]);
+  const year=
+    Number(dashboardYear.value) ||
+    new Date().getFullYear();
 
-[
-...rents,
-...incomes,
-...expenses,
-...electricity,
-...checkins,
-...checkouts
-].forEach(x => {
 
-if(x.year){
+  const yrRents=
+    rents.filter(
+      x=>Number(x.year)===year
+    );
 
-years.add(
-Number(x.year)
-);
 
-}
+  const paid=
+    yrRents
+    .filter(x=>x.status==="Paid")
+    .reduce(
+      (a,x)=>a+Number(x.amount||0),
+      0
+    );
 
-});
 
-return [...years]
-.sort(
-(a,b)=>b-a
-);
+  const due=
+    yrRents
+    .filter(x=>x.status==="Due")
+    .reduce(
+      (a,x)=>a+Number(x.amount||0),
+      0
+    );
 
-}
 
+  const income=
+    incomes
+    .filter(x=>Number(x.year)===year)
+    .reduce(
+      (a,x)=>a+Number(x.amount||0),
+      0
+    );
 
-function renderYearSelector(){
 
-const years =
-getAllYears();
+  const expense=
+    expenses
+    .filter(x=>Number(x.year)===year)
+    .reduce(
+      (a,x)=>a+Number(x.amount||0),
+      0
+    );
 
-const current =
-Number(
-dashboardYear.value
-) ||
-new Date().getFullYear();
 
-dashboardYear.innerHTML =
-years.map(y =>
+  const electric=
+    electricity
+    .filter(x=>Number(x.year)===year)
+    .reduce(
+      (a,x)=>a+Number(x.amount||0),
+      0
+    );
 
-`<option value="${y}"
-${y===current?"selected":""}>
-${y}
-</option>`
 
-).join("");
+  dashboardStats.innerHTML=[
 
-}
+    ["Rooms",rooms.length],
+
+    [
+      "Occupied",
+      rooms.filter(
+        r=>
+          (r.members||[]).length>0
+      ).length
+    ],
+
+    ["Rent Paid",money(paid)],
 
+    ["Rent Baki",money(due)],
 
-function renderHistoryYear(){
+    ["Income",money(income)],
 
-const years =
-getAllYears();
+    ["Expenses",money(expense)],
 
-const current =
-Number(
-historyYear.value
-) ||
-new Date().getFullYear();
+    ["Electricity",money(electric)],
 
-historyYear.innerHTML =
-years.map(y =>
+    [
+      "Net Balance",
+      money(
+        paid+
+        income-
+        expense-
+        electric
+      )
+    ]
 
-`<option value="${y}"
-${y===current?"selected":""}>
-${y}
-</option>`
+  ].map(
+    x=>
+    `<div class="card">
+      <div class="muted">${x[0]}</div>
+      <div class="stat">${x[1]}</div>
+    </div>`
+  ).join("");
 
-).join("");
 
-}
+  dashboardRooms.innerHTML=
+    rooms.map(
+      room=>{
 
+        const baki=
+          remainingRent(room.id);
 
-/* ================================================
-   SAVE DATA BUTTON
-================================================ */
+        return `
 
-window.saveData =
-async function(){
+        <div class="card">
 
-const message =
-document.getElementById(
-"saveMessage"
-);
+          <h3>
+            ${escapeHTML(room.name)}
+          </h3>
 
-try{
+          <span class="badge ${
+            (room.members||[]).length
+              ? ""
+              : "red"
+          }">
 
-/*
-Save all edited room data.
-*/
-
-for(
-const room of rooms
-){
-
-await setDoc(
-doc(
-db,
-"rooms",
-room.id
-),
-room,
-{merge:true}
-);
-
-}
-
-
-message.textContent =
-"Data Saved Successfully";
-
-message.style.display =
-"inline";
-
-setTimeout(
-()=>{
-message.style.display =
-"none";
-},
-2500
-);
-
-}catch(error){
-
-alert(
-"Save failed: "+
-error.message
-);
-
-}
-
-};
-
-
-/* ================================================
-   OWNER DASHBOARD
-================================================ */
-
-function renderOwnerDashboard(){
-
-const year =
-Number(
-dashboardYear.value
-) ||
-new Date().getFullYear();
-
-
-const yearRents =
-rents.filter(
-x =>
-Number(x.year) === year
-);
-
-
-const paid =
-yearRents
-.filter(
-x =>
-x.status === "Paid"
-)
-.reduce(
-(a,x)=>
-a+
-Number(x.amount||0),
-0
-);
-
-
-const due =
-yearRents
-.filter(
-x =>
-x.status === "Due"
-)
-.reduce(
-(a,x)=>
-a+
-Number(x.amount||0),
-0
-);
-
-
-const income =
-incomes
-.filter(
-x =>
-Number(x.year) === year
-)
-.reduce(
-(a,x)=>
-a+
-Number(x.amount||0),
-0
-);
-
-
-const expense =
-expenses
-.filter(
-x =>
-Number(x.year) === year
-)
-.reduce(
-(a,x)=>
-a+
-Number(x.amount||0),
-0
-);
-
-
-const electric =
-electricity
-.filter(
-x =>
-Number(x.year) === year
-)
-.reduce(
-(a,x)=>
-a+
-Number(x.amount||0),
-0
-);
-
-
-dashboardStats.innerHTML = [
-
-["Rooms",rooms.length],
-
-[
-"Occupied",
-rooms.filter(
-x =>
-(x.members||[]).length>0
-).length
-],
-
-["Rent Paid",money(paid)],
-
-["Rent Baki",money(due)],
-
-["Income",money(income)],
-
-["Expenses",money(expense)],
-
-["Electricity",money(electric)],
-
-[
-"Net Balance",
-money(
-paid+
-income-
-expense-
-electric
-)
-]
-
-].map(
-x =>
-
-`<div class="card">
-
-<div class="muted">
-${x[0]}
-</div>
-
-<div class="stat">
-${x[1]}
-</div>
-
-</div>`
-
-).join("");
-
-
-ownerRooms.innerHTML =
-rooms.map(room => {
-
-const remaining =
-calculateRemaining(
-room.id
-);
-
-return `
-
-<div class="card room-card">
-
-<h3>
-${escapeHTML(room.name)}
-</h3>
-
-<span class="badge ${
-(room.members||[]).length
-? ""
-: "red"
-}">
-
-${
-(room.members||[]).length
-? "Occupied"
-: "Vacant"
-}
-
-</span>
-
-<p>
-<b>Members:</b>
-${(room.members||[]).length}/5
-</p>
-
-<p>
-<b>Monthly Rent:</b>
-${money(room.rent)}
-</p>
-
-<p>
-<b>Rent Baki:</b>
-${remaining.months}
-month(s)
-</p>
-
-<p>
-<b>Total Baki:</b>
-${money(remaining.amount)}
-</p>
-
-<div class="actions">
-
-<button
-class="primary"
-onclick="openRoomModal('${room.id}')">
-Edit
-</button>
-
-<button
-class="secondary"
-onclick="openRentModal('${room.id}')">
-Rent
-</button>
-
-<button
-class="orange"
-onclick="sendDueSMS('${room.id}')">
-Due SMS
-</button>
-
-</div>
-
-</div>
-
-`;
-
-}).join("");
+          ${
+            (room.members||[]).length
+              ? "Occupied"
+              : "Vacant"
+          }
+
+          </span>
+
+          <p>
+            <b>Members:</b>
+            ${(room.members||[]).length}/5
+          </p>
+
+          <p>
+            <b>Monthly Rent:</b>
+            ${money(room.rent)}
+          </p>
+
+          <p>
+            <b>Rent Baki:</b>
+            ${baki.months} month(s)
+          </p>
+
+          <p>
+            <b>Total Baki:</b>
+            ${money(baki.amount)}
+          </p>
+
+          <div class="actions">
+
+            <button
+              class="primary"
+              onclick="openRoomModal('${room.id}')">
+              Edit Room
+            </button>
+
+            <button
+              class="secondary"
+              onclick="openRentModal('${room.id}')">
+              Add Rent
+            </button>
+
+            <button
+              class="orange"
+              onclick="sendSMS('due','${room.id}')">
+              Due SMS
+            </button>
+
+          </div>
+
+        </div>
+
+        `;
+
+      }
+    ).join("");
 
 }
 
 
-/* ================================================
-   REMAINING RENT
-================================================ */
+/* =====================================================
+REMAINING RENT
+===================================================== */
 
-function calculateRemaining(roomId){
+function remainingRent(roomId){
 
-const room =
-rooms.find(
-x=>x.id===roomId
-);
+  const due=
+    rents.filter(
+      x=>
+        x.roomId===roomId &&
+        x.status==="Due"
+    );
 
-const monthly =
-Number(
-room?.rent||0
-);
+  return {
 
-const due =
-rents.filter(
-x =>
-x.roomId === roomId &&
-x.status === "Due"
-);
+    months:due.length,
 
-return {
+    amount:
+      due.reduce(
+        (a,x)=>
+          a+
+          Number(x.amount||0),
+        0
+      )
 
-months:due.length,
-
-amount:
-due.reduce(
-(a,x)=>
-a+
-Number(
-x.amount ||
-monthly
-),
-0
-)
-
-};
+  };
 
 }
 
 
-/* ================================================
-   ROOM TABLE
-================================================ */
+/* =====================================================
+ROOM TABLE
+===================================================== */
 
 function renderRooms(){
 
-roomsTable.innerHTML = `
+  roomsTable.innerHTML=
+  `<div class="tableWrap">
 
-<table>
+  <table>
 
-<tr>
+  <tr>
+    <th>Room</th>
+    <th>Members</th>
+    <th>Monthly Rent</th>
+    <th>Rent Baki</th>
+    <th>Action</th>
+  </tr>
 
-<th>Room</th>
+  ${
+    rooms.map(
+      room=>{
 
-<th>Members</th>
+        const baki=
+          remainingRent(room.id);
 
-<th>Monthly Rent</th>
+        return `
 
-<th>Rent Baki</th>
+        <tr>
 
-<th>Action</th>
+          <td>
+            ${escapeHTML(room.name)}
+          </td>
 
-</tr>
+          <td>
+            ${(room.members||[]).length}/5
+            <br>
+            ${escapeHTML(
+              (room.members||[]).join(", ")
+            )}
+          </td>
 
-${rooms.map(room => {
+          <td>
+            ${money(room.rent)}
+          </td>
 
-const remaining =
-calculateRemaining(
-room.id
-);
+          <td>
+            ${baki.months} month(s)
+            <br>
+            ${money(baki.amount)}
+          </td>
 
-return `
+          <td>
 
-<tr>
+            <button
+              class="primary"
+              onclick="openRoomModal('${room.id}')">
+              Edit
+            </button>
 
-<td>
-${escapeHTML(room.name)}
-</td>
+          </td>
 
-<td>
+        </tr>
 
-${(room.members||[]).length}/5
+        `;
 
-<br>
+      }
+    ).join("")
+  }
 
-${escapeHTML(
-(room.members||[]).join(", ")
-)}
-
-</td>
-
-<td>
-${money(room.rent)}
-</td>
-
-<td>
-
-${remaining.months}
-month(s)
-
-<br>
-
-${money(
-remaining.amount
-)}
-
-</td>
-
-<td>
-
-<button
-class="primary"
-onclick="openRoomModal('${room.id}')">
-
-Edit
-
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-}).join("")}
-
-</table>
-
-`;
+  </table>
+  </div>`;
 
 }
 
 
-/* ================================================
-   ROOM EDIT
-================================================ */
+/* =====================================================
+ROOM MODAL
+===================================================== */
 
-window.openRoomModal =
-function(id){
+window.openRoomModal=function(id){
 
-const room =
-rooms.find(
-x=>x.id===id
-);
+  const room=
+    rooms.find(
+      r=>r.id===id
+    );
 
-modalTitle.textContent =
-"Room Details";
+  modalTitle.textContent=
+    "Edit Room";
 
-modalBody.innerHTML = `
+  modalContent.innerHTML=`
 
-<div class="formgrid">
+  <div class="formGrid">
 
-<div>
+    <div>
+      <label>Room Name</label>
 
-<label>
-Room Name
-</label>
+      <input
+        id="editRoomName"
+        value="${escapeHTML(room.name)}">
+    </div>
 
-<input
-id="roomName"
-value="${escapeHTML(room.name)}">
+    <div>
+      <label>Monthly Rent</label>
 
-</div>
+      <input
+        id="editRoomRent"
+        type="number"
+        value="${Number(room.rent||0)}">
+    </div>
 
+    <div style="grid-column:1/-1">
 
-<div>
+      <label>
+        Members - Maximum 5
+      </label>
 
-<label>
-Monthly Rent
-</label>
+      <textarea
+        id="editMembers"
+        rows="5">${escapeHTML(
+          (room.members||[]).join("\n")
+        )}</textarea>
 
-<input
-id="roomRent"
-type="number"
-value="${room.rent||0}">
+    </div>
 
-</div>
+  </div>
 
+  <button
+    class="success"
+    style="margin-top:15px"
+    onclick="saveRoom('${id}')">
 
-<div style="grid-column:1/-1">
+    Save Room
 
-<label>
-Members - Maximum 5
-</label>
+  </button>
 
-<textarea
-id="roomMembers"
-rows="5"
-placeholder="One member per line">${escapeHTML(
-(room.members||[]).join("\n")
-)}</textarea>
+  `;
 
-</div>
-
-</div>
-
-
-<button
-class="success"
-onclick="saveRoom('${id}')"
-style="margin-top:12px">
-
-Save Room
-
-</button>
-
-`;
-
-modal.classList.add(
-"show"
-);
+  modal.classList.add("show");
 
 };
 
 
-window.saveRoom =
-async function(id){
+window.saveRoom=async function(id){
 
-const members =
-roomMembers.value
-.split("\n")
-.map(
-x=>x.trim()
-)
-.filter(Boolean);
+  const members=
+    editMembers.value
+    .split("\n")
+    .map(x=>x.trim())
+    .filter(Boolean);
 
-if(
-members.length > 5
-){
+  if(members.length>5){
 
-alert(
-"Maximum 5 members allowed."
-);
+    alert(
+      "Maximum 5 members are allowed."
+    );
 
-return;
+    return;
 
-}
+  }
 
 
-await updateDoc(
-doc(db,"rooms",id),
-{
+  await updateDoc(
+    doc(db,"rooms",id),
+    {
+      name:
+        editRoomName.value.trim(),
 
-name:
-roomName.value.trim(),
+      rent:
+        Number(
+          editRoomRent.value||0
+        ),
 
-rent:
-Number(
-roomRent.value||0
-),
-
-members
-
-}
-);
+      members
+    }
+  );
 
 
-rooms =
-await getCollection(
-"rooms"
-);
+  rooms=
+    await getCollection("rooms");
 
-closeModal();
+  closeModal();
 
-renderEverything();
-
-alert(
-"Room saved successfully."
-);
+  renderEverything();
 
 };
 
 
-/* ================================================
-   RENT TABLE
-================================================ */
+/* =====================================================
+RENT
+===================================================== */
 
 function renderRent(){
 
-rentTable.innerHTML = `
+  rentTable.innerHTML=
+  `<div class="tableWrap">
 
-<table>
+  <table>
 
-<tr>
+  <tr>
+    <th>Room</th>
+    <th>Month</th>
+    <th>Year</th>
+    <th>Renter</th>
+    <th>Amount</th>
+    <th>Status</th>
+    <th>Method</th>
+    <th>Date</th>
+    <th>SMS</th>
+  </tr>
 
-<th>Room</th>
-<th>Month</th>
-<th>Year</th>
-<th>Renter</th>
-<th>Amount</th>
-<th>Status</th>
-<th>Method</th>
-<th>Date</th>
-<th>SMS</th>
+  ${
+    rents.map(
+      r=>`
 
-</tr>
+      <tr>
 
-${rents.map(r => `
+        <td>
+          ${escapeHTML(roomName(r.roomId))}
+        </td>
 
-<tr>
+        <td>
+          ${escapeHTML(r.month||"")}
+        </td>
 
-<td>
-${escapeHTML(
-roomName(r.roomId)
-)}
-</td>
+        <td>${r.year||""}</td>
 
-<td>
-${escapeHTML(r.month)}
-</td>
+        <td>
+          ${escapeHTML(r.renter||"")}
+        </td>
 
-<td>
-${r.year}
-</td>
+        <td>
+          ${money(r.amount)}
+        </td>
 
-<td>
-${escapeHTML(r.renter)}
-</td>
+        <td>
 
-<td>
-${money(r.amount)}
-</td>
+          <span class="badge ${
+            r.status==="Paid"
+              ? ""
+              : "red"
+          }">
 
-<td>
+          ${escapeHTML(r.status||"")}
 
-<span class="badge ${
-r.status==="Paid"
-? ""
-: "red"
-}">
+          </span>
 
-${escapeHTML(r.status)}
+        </td>
 
-</span>
+        <td>
+          ${escapeHTML(r.method||"")}
+        </td>
 
-</td>
+        <td>
+          ${escapeHTML(r.date||"")}
+        </td>
 
-<td>
-${escapeHTML(
-r.method||""
-)}
-</td>
+        <td>
 
-<td>
-${escapeHTML(
-r.date||""
-)}
-</td>
+          <button
+            class="${
+              r.status==="Paid"
+                ? "success"
+                : "orange"
+            }"
+            onclick="sendSMS(
+              '${r.status==="Paid"?"paid":"due"}',
+              '${r.roomId}'
+            )">
 
-<td>
+            ${
+              r.status==="Paid"
+                ? "Paid SMS"
+                : "Due SMS"
+            }
 
-<button
-class="${
-r.status==="Paid"
-? "success"
-: "orange"
-}"
-onclick="${
-r.status==="Paid"
-? `sendPaidSMS('${r.roomId}')`
-: `sendDueSMS('${r.roomId}')`
-}">
+          </button>
 
-${
-r.status==="Paid"
-? "Paid SMS"
-: "Due SMS"
-}
+        </td>
 
-</button>
+      </tr>
 
-</td>
+      `
+    ).join("")
+  }
 
-</tr>
-
-`).join("")}
-
-</table>
-
-`;
-
+  </table>
+  </div>`;
 
 }
 
 
-/* ================================================
-   ADD RENT
-================================================ */
+/* =====================================================
+ADD RENT
+===================================================== */
 
-window.openRentModal =
-function(roomId){
+window.openRentModal=function(roomId=""){
 
-modalTitle.textContent =
-"Add Rent";
+  modalTitle.textContent=
+    "Add Rent";
 
-modalBody.innerHTML = `
+  const months=[
+    "January","February","March",
+    "April","May","June",
+    "July","August","September",
+    "October","November","December"
+  ];
 
-<div class="formgrid">
+  modalContent.innerHTML=`
 
-<div>
+  <div class="formGrid">
 
-<label>
-Room
-</label>
+    <div>
 
-<select id="rentRoom">
+      <label>Room</label>
 
-${rooms.map(r => `
+      <select id="rentRoom">
 
-<option
-value="${r.id}"
-${
-r.id===roomId
-? "selected"
-: ""
-}>
+        ${
+          rooms.map(
+            r=>
+            `<option
+              value="${r.id}"
+              ${r.id===roomId?"selected":""}>
 
-${escapeHTML(r.name)}
+              ${escapeHTML(r.name)}
 
-</option>
+            </option>`
+          ).join("")
+        }
 
-`).join("")}
+      </select>
 
-</select>
+    </div>
 
-</div>
+    <div>
 
+      <label>Renter Name</label>
 
-<div>
+      <input id="rentRenter">
 
-<label>
-Renter
-</label>
+    </div>
 
-<input
-id="rentRenter">
+    <div>
 
-</div>
+      <label>Month</label>
 
+      <select id="rentMonth">
 
-<div>
+        ${
+          months.map(
+            m=>
+            `<option>${m}</option>`
+          ).join("")
+        }
 
-<label>
-Month
-</label>
+      </select>
 
-<select id="rentMonth">
+    </div>
 
-${[
-"January",
-"February",
-"March",
-"April",
-"May",
-"June",
-"July",
-"August",
-"September",
-"October",
-"November",
-"December"
-].map(
-m =>
-`<option>${m}</option>`
-).join("")}
+    <div>
 
-</select>
+      <label>Year</label>
 
-</div>
+      <input
+        id="rentYear"
+        type="number"
+        value="${new Date().getFullYear()}">
 
+    </div>
 
-<div>
+    <div>
 
-<label>
-Year
-</label>
+      <label>Amount</label>
 
-<input
-id="rentYear"
-type="number"
-value="${new Date().getFullYear()}">
+      <input
+        id="rentAmount"
+        type="number">
 
-</div>
+    </div>
 
+    <div>
 
-<div>
+      <label>Status</label>
 
-<label>
-Amount
-</label>
+      <select id="rentStatus">
 
-<input
-id="rentAmount"
-type="number">
+        <option>Paid</option>
+        <option>Due</option>
 
-</div>
+      </select>
 
+    </div>
 
-<div>
+    <div>
 
-<label>
-Status
-</label>
+      <label>Payment Method</label>
 
-<select id="rentStatus">
+      <select id="rentMethod">
 
-<option>
-Paid
-</option>
+        <option>Cash</option>
+        <option>Online</option>
+        <option>Bank Transfer</option>
 
-<option>
-Due
-</option>
+      </select>
 
-</select>
+    </div>
 
-</div>
+  </div>
 
+  <button
+    class="success"
+    style="margin-top:15px"
+    onclick="saveRent()">
 
-<div>
+    Save Rent
 
-<label>
-Payment Method
-</label>
+  </button>
 
-<select id="rentMethod">
+  `;
 
-<option>
-Cash
-</option>
-
-<option>
-Online
-</option>
-
-<option>
-Bank Transfer
-</option>
-
-</select>
-
-</div>
-
-</div>
-
-
-<button
-class="success"
-onclick="saveRent()"
-style="margin-top:12px">
-
-Save Rent
-
-</button>
-
-`;
-
-modal.classList.add(
-"show"
-);
+  modal.classList.add("show");
 
 };
 
 
-window.saveRent =
-async function(){
+window.saveRent=async function(){
 
-const room =
-rooms.find(
-x =>
-x.id === rentRoom.value
-);
+  const room=
+    rooms.find(
+      r=>r.id===rentRoom.value
+    );
 
-await addDoc(
-collection(db,"rents"),
-{
+  await addDoc(
+    collection(db,"rents"),
+    {
 
-roomId:
-rentRoom.value,
+      roomId:
+        rentRoom.value,
 
-renter:
-rentRenter.value,
+      renter:
+        rentRenter.value.trim(),
 
-month:
-rentMonth.value,
+      month:
+        rentMonth.value,
 
-year:
-Number(
-rentYear.value
-),
+      year:
+        Number(rentYear.value),
 
-amount:
-Number(
-rentAmount.value ||
-room?.rent ||
-0
-),
+      amount:
+        Number(
+          rentAmount.value ||
+          room?.rent ||
+          0
+        ),
 
-status:
-rentStatus.value,
+      status:
+        rentStatus.value,
 
-method:
-rentMethod.value,
+      method:
+        rentMethod.value,
 
-date:
-new Date()
-.toISOString()
-.slice(0,10),
+      date:
+        new Date()
+        .toISOString()
+        .slice(0,10),
 
-createdAt:
-Date.now()
+      createdAt:
+        Date.now()
 
-}
-);
+    }
+  );
 
 
-rents =
-await getCollection(
-"rents"
-);
+  rents=
+    await getCollection("rents");
 
-closeModal();
+  populateYears();
 
-renderEverything();
+  closeModal();
 
-alert(
-"Rent saved successfully."
-);
+  renderEverything();
 
 };
 
 
-/* ================================================
-   INCOME
-================================================ */
+/* =====================================================
+INCOME
+===================================================== */
 
 function renderIncome(){
 
-incomeTable.innerHTML = `
-
-<table>
-
-<tr>
-
-<th>Date</th>
-<th>Year</th>
-<th>Description</th>
-<th>Amount</th>
-
-</tr>
-
-${incomes.map(x => `
-
-<tr>
-
-<td>${x.date}</td>
-
-<td>${x.year}</td>
-
-<td>
-${escapeHTML(x.description)}
-</td>
-
-<td>
-${money(x.amount)}
-</td>
-
-</tr>
-
-`).join("")}
-
-</table>
-
-`;
+  incomeTable.innerHTML=
+  tableHTML(
+    [
+      "Date",
+      "Year",
+      "Description",
+      "Amount"
+    ],
+    incomes.map(
+      x=>[
+        x.date,
+        x.year,
+        escapeHTML(x.description),
+        money(x.amount)
+      ]
+    )
+  );
 
 }
 
 
-window.openIncomeModal =
-function(){
+window.openIncomeModal=function(){
 
-modalTitle.textContent =
-"Add Income";
+  modalTitle.textContent=
+    "Add Income";
 
-modalBody.innerHTML = `
+  modalContent.innerHTML=`
 
-<div class="formgrid">
+  <div class="formGrid">
 
-<div>
+    <div>
+      <label>Description</label>
+      <input id="incomeDescription">
+    </div>
 
-<label>
-Description
-</label>
+    <div>
+      <label>Amount</label>
+      <input id="incomeAmount" type="number">
+    </div>
 
-<input
-id="incomeDescription">
+    <div>
+      <label>Year</label>
+      <input
+        id="incomeYear"
+        type="number"
+        value="${new Date().getFullYear()}">
+    </div>
 
-</div>
+  </div>
 
+  <button
+    class="success"
+    style="margin-top:15px"
+    onclick="saveIncome()">
 
-<div>
+    Save Income
 
-<label>
-Amount
-</label>
+  </button>
 
-<input
-id="incomeAmount"
-type="number">
+  `;
 
-</div>
-
-
-<div>
-
-<label>
-Year
-</label>
-
-<input
-id="incomeYear"
-type="number"
-value="${new Date().getFullYear()}">
-
-</div>
-
-</div>
-
-
-<button
-class="success"
-onclick="saveIncome()"
-style="margin-top:12px">
-
-Save Income
-
-</button>
-
-`;
-
-modal.classList.add(
-"show"
-);
+  modal.classList.add("show");
 
 };
 
 
-window.saveIncome =
-async function(){
+window.saveIncome=async function(){
 
-await addDoc(
-collection(db,"incomes"),
-{
+  await addDoc(
+    collection(db,"incomes"),
+    {
 
-description:
-incomeDescription.value,
+      description:
+        incomeDescription.value.trim(),
 
-amount:
-Number(
-incomeAmount.value
-),
+      amount:
+        Number(incomeAmount.value||0),
 
-year:
-Number(
-incomeYear.value
-),
+      year:
+        Number(incomeYear.value),
 
-date:
-new Date()
-.toISOString()
-.slice(0,10)
+      date:
+        new Date()
+        .toISOString()
+        .slice(0,10)
 
-}
-);
+    }
+  );
 
-incomes =
-await getCollection(
-"incomes"
-);
+  incomes=
+    await getCollection("incomes");
 
-closeModal();
+  populateYears();
 
-renderEverything();
+  closeModal();
+
+  renderEverything();
 
 };
 
 
-/* ================================================
-   EXPENSES
-================================================ */
+/* =====================================================
+EXPENSES
+===================================================== */
 
 function renderExpenses(){
 
-expenseTable.innerHTML = `
-
-<table>
-
-<tr>
-
-<th>Date</th>
-<th>Year</th>
-<th>Description</th>
-<th>Amount</th>
-
-</tr>
-
-${expenses.map(x => `
-
-<tr>
-
-<td>${x.date}</td>
-
-<td>${x.year}</td>
-
-<td>
-${escapeHTML(x.description)}
-</td>
-
-<td>
-${money(x.amount)}
-</td>
-
-</tr>
-
-`).join("")}
-
-</table>
-
-`;
+  expenseTable.innerHTML=
+  tableHTML(
+    [
+      "Date",
+      "Year",
+      "Description",
+      "Amount"
+    ],
+    expenses.map(
+      x=>[
+        x.date,
+        x.year,
+        escapeHTML(x.description),
+        money(x.amount)
+      ]
+    )
+  );
 
 }
 
 
-window.openExpenseModal =
-function(){
+window.openExpenseModal=function(){
 
-modalTitle.textContent =
-"Add Expense";
+  modalTitle.textContent=
+    "Add Expense";
 
-modalBody.innerHTML = `
+  modalContent.innerHTML=`
 
-<div class="formgrid">
+  <div class="formGrid">
 
-<div>
+    <div>
+      <label>Description</label>
+      <input id="expenseDescription">
+    </div>
 
-<label>
-Description
-</label>
+    <div>
+      <label>Amount</label>
+      <input id="expenseAmount" type="number">
+    </div>
 
-<input
-id="expenseDescription">
+    <div>
+      <label>Year</label>
+      <input
+        id="expenseYear"
+        type="number"
+        value="${new Date().getFullYear()}">
+    </div>
 
-</div>
+  </div>
 
+  <button
+    class="danger"
+    style="margin-top:15px"
+    onclick="saveExpense()">
 
-<div>
+    Save Expense
 
-<label>
-Amount
-</label>
+  </button>
 
-<input
-id="expenseAmount"
-type="number">
+  `;
 
-</div>
-
-
-<div>
-
-<label>
-Year
-</label>
-
-<input
-id="expenseYear"
-type="number"
-value="${new Date().getFullYear()}">
-
-</div>
-
-</div>
-
-
-<button
-class="danger"
-onclick="saveExpense()"
-style="margin-top:12px">
-
-Save Expense
-
-</button>
-
-`;
-
-modal.classList.add(
-"show"
-);
+  modal.classList.add("show");
 
 };
 
 
-window.saveExpense =
-async function(){
+window.saveExpense=async function(){
 
-await addDoc(
-collection(db,"expenses"),
-{
+  await addDoc(
+    collection(db,"expenses"),
+    {
 
-description:
-expenseDescription.value,
+      description:
+        expenseDescription.value.trim(),
 
-amount:
-Number(
-expenseAmount.value
-),
+      amount:
+        Number(expenseAmount.value||0),
 
-year:
-Number(
-expenseYear.value
-),
+      year:
+        Number(expenseYear.value),
 
-date:
-new Date()
-.toISOString()
-.slice(0,10)
+      date:
+        new Date()
+        .toISOString()
+        .slice(0,10)
 
-}
-);
+    }
+  );
 
-expenses =
-await getCollection(
-"expenses"
-);
+  expenses=
+    await getCollection("expenses");
 
-closeModal();
+  populateYears();
 
-renderEverything();
+  closeModal();
+
+  renderEverything();
 
 };
 
 
-/* ================================================
-   ELECTRICITY
-================================================ */
+/* =====================================================
+ELECTRICITY
+===================================================== */
 
 function renderElectricity(){
 
-electricityTable.innerHTML = `
-
-<table>
-
-<tr>
-
-<th>Date</th>
-<th>Year</th>
-<th>Description</th>
-<th>Amount</th>
-
-</tr>
-
-${electricity.map(x => `
-
-<tr>
-
-<td>${x.date}</td>
-
-<td>${x.year}</td>
-
-<td>
-${escapeHTML(x.description)}
-</td>
-
-<td>
-${money(x.amount)}
-</td>
-
-</tr>
-
-`).join("")}
-
-</table>
-
-`;
+  electricityTable.innerHTML=
+  tableHTML(
+    [
+      "Date",
+      "Year",
+      "Description",
+      "Amount"
+    ],
+    electricity.map(
+      x=>[
+        x.date,
+        x.year,
+        escapeHTML(x.description),
+        money(x.amount)
+      ]
+    )
+  );
 
 }
 
 
-window.openElectricityModal =
-function(){
+window.openElectricityModal=function(){
 
-modalTitle.textContent =
-"Add Electricity Bill";
+  modalTitle.textContent=
+    "Add Electricity Bill";
 
-modalBody.innerHTML = `
+  modalContent.innerHTML=`
 
-<div class="formgrid">
+  <div class="formGrid">
 
-<div>
+    <div>
+      <label>Description</label>
 
-<label>
-Description
-</label>
+      <input
+        id="electricDescription"
+        value="Electricity Bill">
 
-<input
-id="electricDescription"
-value="Electricity Bill">
+    </div>
 
-</div>
+    <div>
+      <label>Amount</label>
 
+      <input
+        id="electricAmount"
+        type="number">
 
-<div>
+    </div>
 
-<label>
-Amount
-</label>
+    <div>
+      <label>Year</label>
 
-<input
-id="electricAmount"
-type="number">
+      <input
+        id="electricYear"
+        type="number"
+        value="${new Date().getFullYear()}">
 
-</div>
+    </div>
 
+  </div>
 
-<div>
+  <button
+    class="orange"
+    style="margin-top:15px"
+    onclick="saveElectricity()">
 
-<label>
-Year
-</label>
+    Save Electricity
 
-<input
-id="electricYear"
-type="number"
-value="${new Date().getFullYear()}">
+  </button>
 
-</div>
+  `;
 
-</div>
-
-
-<button
-class="orange"
-onclick="saveElectricity()"
-style="margin-top:12px">
-
-Save Electricity
-
-</button>
-
-`;
-
-modal.classList.add(
-"show"
-);
+  modal.classList.add("show");
 
 };
 
 
-window.saveElectricity =
-async function(){
+window.saveElectricity=async function(){
 
-await addDoc(
-collection(db,"electricity"),
-{
+  await addDoc(
+    collection(db,"electricity"),
+    {
 
-description:
-electricDescription.value,
+      description:
+        electricDescription.value.trim(),
 
-amount:
-Number(
-electricAmount.value
-),
+      amount:
+        Number(electricAmount.value||0),
 
-year:
-Number(
-electricYear.value
-),
+      year:
+        Number(electricYear.value),
 
-date:
-new Date()
-.toISOString()
-.slice(0,10)
+      date:
+        new Date()
+        .toISOString()
+        .slice(0,10)
 
-}
-);
+    }
+  );
 
-electricity =
-await getCollection(
-"electricity"
-);
+  electricity=
+    await getCollection("electricity");
 
-closeModal();
+  populateYears();
 
-renderEverything();
+  closeModal();
+
+  renderEverything();
 
 };
 
 
-/* ================================================
-   CHECK-IN / CHECK-OUT
-================================================ */
+/* =====================================================
+CHECK-IN HISTORY
+===================================================== */
 
-window.setHistoryTab =
-function(tab){
+function renderCheckHistory(){
 
-historyTab =
-tab;
+  const year=
+    Number(historyYear.value) ||
+    new Date().getFullYear();
 
-checkinTab.className =
-tab==="checkin"
-? "primary"
-: "secondary";
 
-checkoutTab.className =
-tab==="checkout"
-? "primary"
-: "secondary";
+  if(historyMode==="checkin"){
 
-checkinAction.classList.toggle(
-"hidden",
-tab!=="checkin"
-);
+    checkHistoryTable.innerHTML=
+      tableHTML(
+        [
+          "Room",
+          "Renter",
+          "Members",
+          "Check-In",
+          "Rent",
+          "Deposit",
+          "Phone"
+        ],
+        checkins
+        .filter(
+          x=>Number(x.year)===year
+        )
+        .map(
+          x=>[
+            escapeHTML(
+              roomName(x.roomId)
+            ),
+            escapeHTML(x.renter),
+            escapeHTML(
+              (x.members||[]).join(", ")
+            ),
+            x.checkinDate,
+            money(x.rent),
+            money(x.deposit),
+            escapeHTML(x.phone||"")
+          ]
+        )
+      );
 
-checkoutAction.classList.toggle(
-"hidden",
-tab!=="checkout"
-);
+  }else{
 
-renderHistory();
+    checkHistoryTable.innerHTML=
+      tableHTML(
+        [
+          "Room",
+          "Renter",
+          "Check-In",
+          "Check-Out",
+          "Rent Paid",
+          "Rent Baki",
+          "Deposit"
+        ],
+        checkouts
+        .filter(
+          x=>Number(x.year)===year
+        )
+        .map(
+          x=>[
+            escapeHTML(
+              roomName(x.roomId)
+            ),
+            escapeHTML(x.renter),
+            x.checkinDate||"",
+            x.checkoutDate||"",
+            money(x.totalPaid),
+            money(x.rentBaki),
+            money(x.deposit)
+          ]
+        )
+      );
+
+  }
+
+}
+
+
+/* =====================================================
+CHECK-IN MODAL
+===================================================== */
+
+window.openCheckinModal=function(){
+
+  modalTitle.textContent=
+    "New Renter Check-In";
+
+  modalContent.innerHTML=`
+
+  <div class="formGrid">
+
+    <div>
+
+      <label>Room</label>
+
+      <select id="ciRoom">
+
+        ${
+          rooms.map(
+            r=>
+            `<option value="${r.id}">
+              ${escapeHTML(r.name)}
+            </option>`
+          ).join("")
+        }
+
+      </select>
+
+    </div>
+
+    <div>
+
+      <label>Renter Name</label>
+
+      <input id="ciRenter">
+
+    </div>
+
+    <div>
+
+      <label>Phone</label>
+
+      <input id="ciPhone" type="tel">
+
+    </div>
+
+    <div>
+
+      <label>Check-In Date</label>
+
+      <input
+        id="ciDate"
+        type="date"
+        value="${
+          new Date()
+          .toISOString()
+          .slice(0,10)
+        }">
+
+    </div>
+
+    <div>
+
+      <label>Monthly Rent</label>
+
+      <input
+        id="ciRent"
+        type="number">
+
+    </div>
+
+    <div>
+
+      <label>Deposit</label>
+
+      <input
+        id="ciDeposit"
+        type="number"
+        value="0">
+
+    </div>
+
+    <div style="grid-column:1/-1">
+
+      <label>
+        Members - Maximum 5
+      </label>
+
+      <textarea
+        id="ciMembers"
+        rows="5"
+        placeholder="One member per line"></textarea>
+
+    </div>
+
+  </div>
+
+  <button
+    class="success"
+    style="margin-top:15px"
+    onclick="saveCheckin()">
+
+    Save Check-In
+
+  </button>
+
+  `;
+
+  modal.classList.add("show");
 
 };
 
 
-function renderHistory(){
+window.saveCheckin=async function(){
 
-const year =
-Number(
-historyYear.value
-) ||
-new Date().getFullYear();
+  const members=
+    ciMembers.value
+    .split("\n")
+    .map(x=>x.trim())
+    .filter(Boolean);
 
+  if(members.length>5){
 
-if(historyTab==="checkin"){
+    alert(
+      "Maximum 5 members allowed."
+    );
 
-const data =
-checkins.filter(
-x =>
-Number(x.year) === year
-);
+    return;
 
+  }
 
-historyTable.innerHTML = `
 
-<table>
+  await addDoc(
+    collection(db,"checkins"),
+    {
 
-<tr>
+      roomId:
+        ciRoom.value,
 
-<th>Room</th>
-<th>Renter</th>
-<th>Members</th>
-<th>Check-In</th>
-<th>Rent</th>
-<th>Deposit</th>
-<th>Phone</th>
+      renter:
+        ciRenter.value.trim(),
 
-</tr>
+      phone:
+        ciPhone.value.trim(),
 
-${data.map(x => `
+      members,
 
-<tr>
+      checkinDate:
+        ciDate.value,
 
-<td>
-${escapeHTML(
-roomName(x.roomId)
-)}
-</td>
+      rent:
+        Number(ciRent.value||0),
 
-<td>
-${escapeHTML(x.renter)}
-</td>
+      deposit:
+        Number(ciDeposit.value||0),
 
-<td>
-${escapeHTML(
-(x.members||[]).join(", ")
-)}
-</td>
+      year:
+        new Date(ciDate.value)
+        .getFullYear(),
 
-<td>
-${x.checkinDate}
-</td>
+      createdAt:
+        Date.now()
 
-<td>
-${money(x.rent)}
-</td>
+    }
+  );
 
-<td>
-${money(x.deposit)}
-</td>
 
-<td>
-${escapeHTML(
-x.phone||""
-)}
-</td>
+  await updateDoc(
+    doc(
+      db,
+      "rooms",
+      ciRoom.value
+    ),
+    {
 
-</tr>
+      members,
 
-`).join("")}
+      rent:
+        Number(ciRent.value||0)
 
-</table>
+    }
+  );
 
-`;
 
-}else{
+  rooms=
+    await getCollection("rooms");
 
-const data =
-checkouts.filter(
-x =>
-Number(x.year) === year
-);
+  checkins=
+    await getCollection("checkins");
 
+  closeModal();
 
-historyTable.innerHTML = `
-
-<table>
-
-<tr>
-
-<th>Room</th>
-<th>Renter</th>
-<th>Check-In</th>
-<th>Check-Out</th>
-<th>Rent Paid</th>
-<th>Rent Baki</th>
-<th>Deposit</th>
-
-</tr>
-
-${data.map(x => `
-
-<tr>
-
-<td>
-${escapeHTML(
-roomName(x.roomId)
-)}
-</td>
-
-<td>
-${escapeHTML(x.renter)}
-</td>
-
-<td>
-${x.checkinDate||""}
-</td>
-
-<td>
-${x.checkoutDate}
-</td>
-
-<td>
-${money(x.totalPaid)}
-</td>
-
-<td>
-${money(x.rentBaki)}
-</td>
-
-<td>
-${money(x.deposit)}
-</td>
-
-</tr>
-
-`).join("")}
-
-</table>
-
-`;
-
-}
-
-}
-
-
-/* ================================================
-   CHECK-IN
-================================================ */
-
-window.openCheckinModal =
-function(){
-
-modalTitle.textContent =
-"New Renter Check-In";
-
-modalBody.innerHTML = `
-
-<div class="formgrid">
-
-<div>
-
-<label>
-Room
-</label>
-
-<select id="ciRoom">
-
-${rooms.map(r => `
-
-<option value="${r.id}">
-
-${escapeHTML(r.name)}
-
-</option>
-
-`).join("")}
-
-</select>
-
-</div>
-
-
-<div>
-
-<label>
-Renter Name
-</label>
-
-<input id="ciRenter">
-
-</div>
-
-
-<div>
-
-<label>
-Phone
-</label>
-
-<input
-id="ciPhone"
-type="tel">
-
-</div>
-
-
-<div>
-
-<label>
-Check-In Date
-</label>
-
-<input
-id="ciDate"
-type="date"
-value="${
-new Date()
-.toISOString()
-.slice(0,10)
-}">
-
-</div>
-
-
-<div>
-
-<label>
-Monthly Rent
-</label>
-
-<input
-id="ciRent"
-type="number">
-
-</div>
-
-
-<div>
-
-<label>
-Deposit
-</label>
-
-<input
-id="ciDeposit"
-type="number"
-value="0">
-
-</div>
-
-
-<div style="grid-column:1/-1">
-
-<label>
-Members - Maximum 5
-</label>
-
-<textarea
-id="ciMembers"
-rows="5"></textarea>
-
-</div>
-
-</div>
-
-
-<button
-class="success"
-onclick="saveCheckin()"
-style="margin-top:12px">
-
-Save Check-In
-
-</button>
-
-`;
-
-modal.classList.add(
-"show"
-);
+  renderEverything();
 
 };
 
 
-window.saveCheckin =
-async function(){
+/* =====================================================
+CHECK-OUT
+===================================================== */
 
-const members =
-ciMembers.value
-.split("\n")
-.map(
-x=>x.trim()
-)
-.filter(Boolean);
+window.openCheckoutModal=function(){
 
+  modalTitle.textContent=
+    "Renter Check-Out";
 
-if(members.length>5){
+  modalContent.innerHTML=`
 
-alert(
-"Maximum 5 members allowed."
-);
+  <div class="formGrid">
 
-return;
+    <div>
 
-}
+      <label>Room</label>
 
+      <select id="coRoom">
 
-await addDoc(
-collection(db,"checkins"),
-{
+        ${
+          rooms.map(
+            r=>
+            `<option value="${r.id}">
+              ${escapeHTML(r.name)}
+            </option>`
+          ).join("")
+        }
 
-roomId:
-ciRoom.value,
+      </select>
 
-renter:
-ciRenter.value,
+    </div>
 
-phone:
-ciPhone.value,
+    <div>
 
-members,
+      <label>Renter Name</label>
 
-checkinDate:
-ciDate.value,
+      <input id="coRenter">
 
-rent:
-Number(
-ciRent.value||0
-),
+    </div>
 
-deposit:
-Number(
-ciDeposit.value||0
-),
+    <div>
 
-year:
-new Date(
-ciDate.value
-).getFullYear(),
+      <label>Check-In Date</label>
 
-createdAt:
-Date.now()
+      <input id="coCheckin" type="date">
 
-}
-);
+    </div>
 
+    <div>
 
-await updateDoc(
-doc(
-db,
-"rooms",
-ciRoom.value
-),
-{
+      <label>Check-Out Date</label>
 
-members,
+      <input
+        id="coDate"
+        type="date"
+        value="${
+          new Date()
+          .toISOString()
+          .slice(0,10)
+        }">
 
-rent:
-Number(
-ciRent.value||0
-)
+    </div>
 
-}
-);
+    <div>
 
+      <label>Total Rent Paid</label>
 
-checkins =
-await getCollection(
-"checkins"
-);
+      <input
+        id="coPaid"
+        type="number"
+        value="0">
 
-rooms =
-await getCollection(
-"rooms"
-);
+    </div>
 
-closeModal();
+    <div>
 
-renderEverything();
+      <label>Rent Baki</label>
 
-alert(
-"Check-In saved."
-);
+      <input
+        id="coBaki"
+        type="number"
+        value="0">
+
+    </div>
+
+    <div>
+
+      <label>Deposit</label>
+
+      <input
+        id="coDeposit"
+        type="number"
+        value="0">
+
+    </div>
+
+  </div>
+
+  <div class="notice" style="margin-top:15px">
+
+    After checkout, the active renter login for this room
+    will be deactivated.
+
+  </div>
+
+  <button
+    class="danger"
+    onclick="saveCheckout()">
+
+    Check-Out & Deactivate Login
+
+  </button>
+
+  `;
+
+  modal.classList.add("show");
 
 };
 
 
-/* ================================================
-   CHECK-OUT
-================================================ */
+window.saveCheckout=async function(){
 
-window.openCheckoutModal =
-function(){
+  const roomId=
+    coRoom.value;
 
-modalTitle.textContent =
-"Renter Check-Out";
-
-modalBody.innerHTML = `
-
-<div class="formgrid">
-
-<div>
-
-<label>
-Room
-</label>
-
-<select id="coRoom">
-
-${rooms.map(r => `
-
-<option value="${r.id}">
-
-${escapeHTML(r.name)}
-
-</option>
-
-`).join("")}
-
-</select>
-
-</div>
+  const checkoutDate=
+    coDate.value;
 
 
-<div>
+  await addDoc(
+    collection(db,"checkouts"),
+    {
 
-<label>
-Renter Name
-</label>
+      roomId,
 
-<input id="coRenter">
+      renter:
+        coRenter.value.trim(),
 
-</div>
+      checkinDate:
+        coCheckin.value,
 
+      checkoutDate,
 
-<div>
+      totalPaid:
+        Number(coPaid.value||0),
 
-<label>
-Check-In Date
-</label>
+      rentBaki:
+        Number(coBaki.value||0),
 
-<input
-id="coCheckin"
-type="date">
+      deposit:
+        Number(coDeposit.value||0),
 
-</div>
+      year:
+        new Date(checkoutDate)
+        .getFullYear(),
 
+      createdAt:
+        Date.now()
 
-<div>
-
-<label>
-Check-Out Date
-</label>
-
-<input
-id="coDate"
-type="date"
-value="${
-new Date()
-.toISOString()
-.slice(0,10)
-}">
-
-</div>
+    }
+  );
 
 
-<div>
+  /* DEACTIVATE RENTER */
 
-<label>
-Total Rent Paid
-</label>
-
-<input
-id="coPaid"
-type="number"
-value="0">
-
-</div>
+  const q=
+    query(
+      collection(db,"renterAccounts"),
+      where("roomId","==",roomId),
+      where("active","==",true)
+    );
 
 
-<div>
-
-<label>
-Rent Baki
-</label>
-
-<input
-id="coBaki"
-type="number"
-value="0">
-
-</div>
+  const snap=
+    await getDocs(q);
 
 
-<div>
+  for(const renter of snap.docs){
 
-<label>
-Deposit
-</label>
+    await updateDoc(
+      doc(
+        db,
+        "renterAccounts",
+        renter.id
+      ),
+      {
 
-<input
-id="coDeposit"
-type="number"
-value="0">
+        active:false,
 
-</div>
+        checkedOutAt:
+          checkoutDate
 
-</div>
+      }
+    );
+
+  }
 
 
-<button
-class="danger"
-onclick="saveCheckout()"
-style="margin-top:12px">
+  /* VACATE ROOM */
 
-Save Check-Out & Deactivate Login
+  await updateDoc(
+    doc(
+      db,
+      "rooms",
+      roomId
+    ),
+    {
+      members:[],
+      rent:0
+    }
+  );
 
-</button>
 
-`;
+  rooms=
+    await getCollection("rooms");
 
-modal.classList.add(
-"show"
-);
+  checkouts=
+    await getCollection("checkouts");
+
+  renterAccounts=
+    await getCollection("renterAccounts");
+
+  closeModal();
+
+  renderEverything();
+
+  await loadRenterRooms();
+
+  alert(
+    "Renter checked out. Login deactivated."
+  );
 
 };
 
 
-window.saveCheckout =
-async function(){
-
-const roomId =
-coRoom.value;
-
-const date =
-coDate.value;
-
-
-await addDoc(
-collection(db,"checkouts"),
-{
-
-roomId,
-
-renter:
-coRenter.value,
-
-checkinDate:
-coCheckin.value,
-
-checkoutDate:
-date,
-
-totalPaid:
-Number(
-coPaid.value||0
-),
-
-rentBaki:
-Number(
-coBaki.value||0
-),
-
-deposit:
-Number(
-coDeposit.value||0
-),
-
-year:
-new Date(
-date
-).getFullYear(),
-
-createdAt:
-Date.now()
-
-}
-);
-
-
-/*
-DEACTIVATE RENTER LOGIN
-*/
-
-const accountQuery =
-query(
-collection(db,"renterAccounts"),
-where(
-"roomId",
-"==",
-roomId
-),
-where(
-"active",
-"==",
-true
-)
-);
-
-const snapshot =
-await getDocs(
-accountQuery
-);
-
-
-for(
-const account
-of snapshot.docs
-){
-
-await updateDoc(
-doc(
-db,
-"renterAccounts",
-account.id
-),
-{
-
-active:false,
-
-checkedOutAt:
-date
-
-}
-);
-
-}
-
-
-/*
-VACATE ROOM
-*/
-
-await updateDoc(
-doc(
-db,
-"rooms",
-roomId
-),
-{
-
-members:[],
-rent:0
-
-}
-);
-
-
-checkouts =
-await getCollection(
-"checkouts"
-);
-
-rooms =
-await getCollection(
-"rooms"
-);
-
-renters =
-await getCollection(
-"renterAccounts"
-);
-
-closeModal();
-
-renderEverything();
-
-await fillRenterRooms();
-
-alert(
-"Check-Out saved. Renter login has been deactivated."
-);
-
-};
-
-
-/* ================================================
-   RENTER ACCOUNTS
-================================================ */
+/* =====================================================
+RENTER ACCOUNTS
+===================================================== */
 
 function renderRenterAccounts(){
 
-renterAccountsTable.innerHTML = `
+  renterAccountsTable.innerHTML=
+  `<div class="tableWrap">
 
-<table>
+  <table>
 
-<tr>
+  <tr>
+    <th>Name</th>
+    <th>Room</th>
+    <th>Status</th>
+    <th>Action</th>
+  </tr>
 
-<th>Name</th>
-<th>Room</th>
-<th>Status</th>
-<th>Action</th>
+  ${
+    renterAccounts.map(
+      x=>`
 
-</tr>
+      <tr>
 
-${renters.map(x => `
+        <td>
+          ${escapeHTML(x.name||"")}
+        </td>
 
-<tr>
+        <td>
+          ${escapeHTML(roomName(x.roomId))}
+        </td>
 
-<td>
-${escapeHTML(x.name)}
-</td>
+        <td>
 
-<td>
-${escapeHTML(
-roomName(x.roomId)
-)}
-</td>
+          <span class="badge ${
+            x.active
+              ? ""
+              : "red"
+          }">
 
-<td>
+          ${
+            x.active
+              ? "Active"
+              : "Deactivated"
+          }
 
-<span class="badge ${
-x.active
-? ""
-: "red"
-}">
+          </span>
 
-${
-x.active
-? "Active"
-: "Deactivated"
-}
+        </td>
 
-</span>
+        <td>
 
-</td>
+        ${
+          x.active
+          ?
+          `<button
+            class="danger"
+            onclick="deactivateRenter('${x.id}')">
 
-<td>
+            Deactivate
 
-${
-x.active
+          </button>`
+          :
+          "—"
+        }
 
-?
+        </td>
 
-`<button
-class="danger"
-onclick="deactivateRenter('${x.id}')">
+      </tr>
 
-Deactivate
+      `
+    ).join("")
+  }
 
-</button>`
-
-:
-
-"-"
-
-}
-
-</td>
-
-</tr>
-
-`).join("")}
-
-</table>
-
-`;
+  </table>
+  </div>`;
 
 }
 
 
-/* ================================================
-   CREATE RENTER ACCOUNT
-================================================ */
+/* =====================================================
+ADD RENTER ACCOUNT
+===================================================== */
 
-window.openRenterAccountModal =
-function(){
+window.openRenterModal=function(){
 
-modalTitle.textContent =
-"Create Renter Login";
+  modalTitle.textContent=
+    "Create Renter Login";
 
-modalBody.innerHTML = `
+  modalContent.innerHTML=`
 
-<div class="formgrid">
+  <div class="formGrid">
 
-<div>
+    <div>
 
-<label>
-Renter Name
-</label>
+      <label>Renter Name</label>
 
-<input
-id="raName">
+      <input id="raName">
 
-</div>
+    </div>
 
+    <div>
 
-<div>
+      <label>Room</label>
 
-<label>
-Room
-</label>
+      <select id="raRoom">
 
-<select id="raRoom">
+        ${
+          rooms.map(
+            r=>
+            `<option value="${r.id}">
+              ${escapeHTML(r.name)}
+            </option>`
+          ).join("")
+        }
 
-${rooms.map(r => `
+      </select>
 
-<option value="${r.id}">
+    </div>
 
-${escapeHTML(r.name)}
+    <div>
 
-</option>
+      <label>Renter Password</label>
 
-`).join("")}
+      <input
+        id="raPassword"
+        type="password">
 
-</select>
+    </div>
 
-</div>
+  </div>
 
+  <div class="notice" style="margin-top:15px">
 
-<div>
+    Renter login:
+    <b>Room Number + Password</b>
 
-<label>
-Password
-</label>
+  </div>
 
-<input
-id="raPassword"
-type="password">
+  <button
+    class="success"
+    onclick="createRenter()">
 
-</div>
+    Create Renter Login
 
-</div>
+  </button>
 
+  `;
 
-<div class="notice">
-
-Renter logs in using:
-
-<br>
-
-<b>
-Room Number + Password
-</b>
-
-<br>
-
-No Gmail is required.
-
-</div>
-
-
-<button
-class="success"
-onclick="createRenterAccount()"
-style="margin-top:12px">
-
-Save Renter Account
-
-</button>
-
-`;
-
-modal.classList.add(
-"show"
-);
+  modal.classList.add("show");
 
 };
 
 
-window.createRenterAccount =
-async function(){
+window.createRenter=async function(){
 
-const roomId =
-raRoom.value;
+  const roomId=
+    raRoom.value;
 
-const password =
-raPassword.value.trim();
-
-
-if(!password){
-
-alert(
-"Enter a password."
-);
-
-return;
-
-}
+  const password=
+    raPassword.value.trim();
 
 
-const q =
-query(
-collection(db,"renterAccounts"),
-where(
-"roomId",
-"==",
-roomId
-),
-where(
-"active",
-"==",
-true
-)
-);
+  if(!password){
+
+    alert(
+      "Enter a renter password."
+    );
+
+    return;
+
+  }
 
 
-const snapshot =
-await getDocs(q);
+  const q=
+    query(
+      collection(db,"renterAccounts"),
+      where("roomId","==",roomId),
+      where("active","==",true)
+    );
 
 
-if(!snapshot.empty){
-
-alert(
-"This room already has an active renter account."
-);
-
-return;
-
-}
+  const existing=
+    await getDocs(q);
 
 
-await addDoc(
-collection(db,"renterAccounts"),
-{
+  if(!existing.empty){
 
-name:
-raName.value.trim(),
+    alert(
+      "This room already has an active renter login."
+    );
 
-roomId,
+    return;
 
-password,
-
-active:true,
-
-createdAt:
-Date.now()
-
-}
-);
+  }
 
 
-renters =
-await getCollection(
-"renterAccounts"
-);
+  await addDoc(
+    collection(db,"renterAccounts"),
+    {
 
-closeModal();
+      name:
+        raName.value.trim(),
 
-renderRenterAccounts();
+      roomId,
 
-alert(
-"Renter login saved."
-);
+      password,
+
+      active:true,
+
+      createdAt:
+        Date.now()
+
+    }
+  );
+
+
+  renterAccounts=
+    await getCollection(
+      "renterAccounts"
+    );
+
+  closeModal();
+
+  renderRenterAccounts();
+
+  await loadRenterRooms();
+
+  alert(
+    "Renter login created."
+  );
 
 };
 
 
-/* ================================================
-   DEACTIVATE
-================================================ */
+/* =====================================================
+DEACTIVATE RENTER
+===================================================== */
 
-window.deactivateRenter =
-async function(id){
+window.deactivateRenter=async function(id){
 
-if(
-!confirm(
-"Deactivate this renter login?"
-)
-){
+  if(
+    !confirm(
+      "Deactivate this renter login?"
+    )
+  ){
 
-return;
+    return;
 
-}
-
-
-await updateDoc(
-doc(
-db,
-"renterAccounts",
-id
-),
-{
-
-active:false,
-
-checkedOutAt:
-new Date()
-.toISOString()
-.slice(0,10)
-
-}
-);
+  }
 
 
-renters =
-await getCollection(
-"renterAccounts"
-);
+  await updateDoc(
+    doc(
+      db,
+      "renterAccounts",
+      id
+    ),
+    {
 
-renderRenterAccounts();
+      active:false,
+
+      checkedOutAt:
+        new Date()
+        .toISOString()
+        .slice(0,10)
+
+    }
+  );
+
+
+  renterAccounts=
+    await getCollection(
+      "renterAccounts"
+    );
+
+  renderRenterAccounts();
+
+  await loadRenterRooms();
 
 };
 
 
-/* ================================================
-   RENTER DASHBOARD
-================================================ */
+/* =====================================================
+RENTER DASHBOARD
+===================================================== */
 
-async function loadRenterData(){
+async function loadRenterDashboard(){
 
-const room =
-rooms.find(
-x =>
-x.id ===
-currentRenterRoomId
-);
+  const room=
+    rooms.find(
+      r=>r.id===currentRenterRoom
+    );
 
 
-if(!room){
+  if(!room){
 
-alert(
-"Room information not found."
-);
+    renterDashboardContent.innerHTML=
+      `<div class="card">
+        Room information not found.
+      </div>`;
 
-return;
+    return;
+
+  }
+
+
+  const q=
+    query(
+      collection(db,"rents"),
+      where(
+        "roomId",
+        "==",
+        currentRenterRoom
+      )
+    );
+
+
+  const snap=
+    await getDocs(q);
+
+
+  const myRents=
+    snap.docs.map(
+      d=>d.data()
+    );
+
+
+  const due=
+    myRents.filter(
+      x=>x.status==="Due"
+    );
+
+
+  const baki=
+    due.reduce(
+      (a,x)=>
+        a+
+        Number(x.amount||0),
+      0
+    );
+
+
+  renterDashboardContent.innerHTML=`
+
+  <div class="grid">
+
+    <div class="card">
+
+      <div class="muted">
+        Room
+      </div>
+
+      <div class="stat">
+        ${escapeHTML(room.name)}
+      </div>
+
+      <p>
+        <b>Members:</b>
+        ${(room.members||[]).length}/5
+      </p>
+
+      <p>
+        ${escapeHTML(
+          (room.members||[]).join(", ")
+        )}
+      </p>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="muted">
+        Monthly Rent
+      </div>
+
+      <div class="stat">
+        ${money(room.rent)}
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="muted">
+        Rent Baki
+      </div>
+
+      <div class="stat">
+        ${due.length} month(s)
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="muted">
+        Total Baki
+      </div>
+
+      <div class="stat">
+        ${money(baki)}
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card" style="margin-top:15px">
+
+    <h3>
+      My Rental History
+    </h3>
+
+    <div class="tableWrap">
+
+    <table>
+
+      <tr>
+        <th>Month</th>
+        <th>Year</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Date</th>
+      </tr>
+
+      ${
+        myRents.map(
+          x=>`
+
+          <tr>
+
+            <td>
+              ${escapeHTML(x.month||"")}
+            </td>
+
+            <td>
+              ${x.year||""}
+            </td>
+
+            <td>
+              ${money(x.amount)}
+            </td>
+
+            <td>
+
+              <span class="badge ${
+                x.status==="Paid"
+                  ? ""
+                  : "red"
+              }">
+
+              ${escapeHTML(x.status||"")}
+
+              </span>
+
+            </td>
+
+            <td>
+              ${escapeHTML(x.date||"")}
+            </td>
+
+          </tr>
+
+          `
+        ).join("")
+      }
+
+    </table>
+
+    </div>
+
+  </div>
+
+  `;
 
 }
 
 
-const snapshot =
-await getDocs(
-query(
-collection(db,"rents"),
-where(
-"roomId",
-"==",
-currentRenterRoomId
-)
-)
-);
+/* =====================================================
+SAVE DATA
+===================================================== */
 
+window.saveAllData=async function(){
 
-const roomRents =
-snapshot.docs.map(
-x=>x.data()
-);
+  try{
 
+    for(const room of rooms){
 
-const due =
-roomRents.filter(
-x =>
-x.status === "Due"
-);
+      await setDoc(
+        doc(
+          db,
+          "rooms",
+          room.id
+        ),
+        room,
+        {merge:true}
+      );
 
+    }
 
-const baki =
-due.reduce(
-(a,x)=>
-a+
-Number(
-x.amount||0
-),
-0
-);
 
+    saveMessage.textContent=
+      "✓ Data Saved";
 
-renterOwnDashboard.innerHTML = `
+    saveMessage.style.display=
+      "inline";
 
-<div class="grid">
+    setTimeout(
+      ()=>{
+        saveMessage.style.display=
+          "none";
+      },
+      2500
+    );
 
-<div class="card">
+  }catch(error){
 
-<div class="muted">
-Room
-</div>
+    alert(
+      "Save failed: "+
+      error.message
+    );
 
-<div class="stat">
-${escapeHTML(room.name)}
-</div>
-
-<p>
-
-<b>
-Members:
-</b>
-
-${(room.members||[]).length}/5
-
-</p>
-
-<p>
-
-${escapeHTML(
-(room.members||[]).join(", ")
-)}
-
-</p>
-
-</div>
-
-
-<div class="card">
-
-<div class="muted">
-Monthly Rent
-</div>
-
-<div class="stat">
-
-${money(room.rent)}
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<div class="muted">
-Rent Baki
-</div>
-
-<div class="stat">
-
-${due.length}
-month(s)
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<div class="muted">
-Total Baki
-</div>
-
-<div class="stat">
-
-${money(baki)}
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="card"
-style="margin-top:15px">
-
-<h3>
-My Rent History
-</h3>
-
-<table>
-
-<tr>
-
-<th>Month</th>
-<th>Year</th>
-<th>Amount</th>
-<th>Status</th>
-<th>Date</th>
-
-</tr>
-
-${roomRents.map(x => `
-
-<tr>
-
-<td>
-${escapeHTML(x.month)}
-</td>
-
-<td>
-${x.year}
-</td>
-
-<td>
-${money(x.amount)}
-</td>
-
-<td>
-
-<span class="badge ${
-x.status==="Paid"
-? ""
-: "red"
-}">
-
-${escapeHTML(x.status)}
-
-</span>
-
-</td>
-
-<td>
-${escapeHTML(x.date||"")}
-</td>
-
-</tr>
-
-`).join("")}
-
-</table>
-
-</div>
-
-`;
-
-}
-
-
-/* ================================================
-   RENTER VIEW
-================================================ */
-
-function showOnlyRenterDashboard(){
-
-document
-.querySelectorAll(".view")
-.forEach(
-v =>
-v.classList.remove("active")
-);
-
-renterDashboard.classList.add(
-"active"
-);
-
-}
-
-
-/* ================================================
-   NAVIGATION
-================================================ */
-
-window.showView =
-function(id,button){
-
-document
-.querySelectorAll(".view")
-.forEach(
-v =>
-v.classList.remove("active")
-);
-
-document
-.getElementById(id)
-.classList.add("active");
-
-
-document
-.querySelectorAll(".navbtn")
-.forEach(
-x =>
-x.classList.remove("active")
-);
-
-if(button){
-
-button.classList.add(
-"active"
-);
-
-}
-
-renderEverything();
+  }
 
 };
 
 
-/* ================================================
-   SMS BUTTONS
-================================================ */
+/* =====================================================
+SMS PLACEHOLDER
+===================================================== */
 
-window.sendDueSMS =
-function(roomId){
+window.sendSMS=function(type,roomId){
 
-alert(
-"Due SMS button is ready. Connect your SMS provider/backend to send the actual SMS."
-);
+  const room=
+    roomName(roomId);
 
-};
+  if(type==="paid"){
 
+    alert(
+      "Paid SMS selected for "+room+
+      ". SMS provider connection is required to send the real SMS."
+    );
 
-window.sendPaidSMS =
-function(roomId){
+  }else{
 
-alert(
-"Paid SMS button is ready. Connect your SMS provider/backend to send the actual SMS."
-);
+    alert(
+      "Due SMS selected for "+room+
+      ". SMS provider connection is required to send the real SMS."
+    );
 
-};
-
-
-/* ================================================
-   LOGOUT
-================================================ */
-
-window.logout =
-async function(){
-
-try{
-
-if(currentRole==="owner"){
-
-await signOut(auth);
-
-}
-
-}catch(e){
-
-console.error(e);
-
-}
-
-currentUser =
-null;
-
-currentRole =
-null;
-
-currentRenterRoomId =
-null;
-
-app.classList.add(
-"hidden"
-);
-
-loginPage.classList.remove(
-"hidden"
-);
-
-setLoginType(
-"owner"
-);
+  }
 
 };
 
 
-/* ================================================
-   HELPERS
-================================================ */
+/* =====================================================
+NAVIGATION
+===================================================== */
+
+window.showView=function(id,button){
+
+  document
+    .querySelectorAll(".view")
+    .forEach(
+      v=>
+        v.classList.remove("active")
+    );
+
+  document
+    .getElementById(id)
+    .classList.add("active");
+
+
+  document
+    .querySelectorAll("nav button")
+    .forEach(
+      b=>
+        b.classList.remove("active")
+    );
+
+
+  if(button){
+
+    button.classList.add("active");
+
+  }
+
+};
+
+
+/* =====================================================
+MODAL
+===================================================== */
+
+window.closeModal=function(){
+
+  modal.classList.remove("show");
+
+};
+
+
+/* =====================================================
+HELPERS
+===================================================== */
 
 function roomName(id){
 
-const room =
-rooms.find(
-x=>x.id===id
-);
+  const room=
+    rooms.find(
+      r=>r.id===id
+    );
 
-return room
-? room.name
-: "Room";
+  return room
+    ? room.name
+    : "Room";
 
 }
 
 
 function money(value){
 
-return "₹"+
-Number(
-value||0
-).toLocaleString(
-"en-IN"
-);
+  return "₹"+
+    Number(value||0)
+    .toLocaleString("en-IN");
 
 }
 
 
 function escapeHTML(value){
 
-return String(
-value ?? ""
-)
-.replace(
-/[&<>"']/g,
-char =>
-({
+  return String(value??"")
+    .replace(
+      /[&<>"']/g,
+      c=>({
 
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#39;"
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
 
-}[char])
-);
+      }[c])
+    );
 
 }
 
 
-window.closeModal =
-function(){
+function tableHTML(headers,rows){
 
-modal.classList.remove(
-"show"
-);
+  return `
 
-};
+  <div class="tableWrap">
+
+  <table>
+
+    <tr>
+
+      ${
+        headers.map(
+          h=>`<th>${h}</th>`
+        ).join("")
+      }
+
+    </tr>
+
+    ${
+      rows.map(
+        row=>
+        `<tr>
+          ${
+            row.map(
+              c=>`<td>${c??""}</td>`
+            ).join("")
+          }
+        </tr>`
+      ).join("")
+    }
+
+  </table>
+
+  </div>
+
+  `;
+
+}
 
 
-/* ================================================
-   START
-================================================ */
+/* =====================================================
+INITIAL
+===================================================== */
 
-fillRenterRooms();
+loadRenterRooms();
 
 </script>
 
