@@ -6,52 +6,46 @@
 <title>RentManager Pro - 11 Rooms</title>
 
 <style>
-:root{
-  --bg:#f4f7fb;
-  --card:#fff;
-  --ink:#172033;
-  --muted:#687386;
-  --line:#e5e9f0;
-  --blue:#2563eb;
-  --green:#16a34a;
-  --red:#dc2626;
-  --orange:#ea580c;
-  --purple:#7c3aed;
-}
 *{box-sizing:border-box}
 body{
   margin:0;
   font-family:Arial,sans-serif;
-  background:var(--bg);
-  color:var(--ink);
+  background:#f4f7fb;
+  color:#172033;
 }
 header{
   background:#172033;
   color:white;
   padding:16px 20px;
 }
-header h1{margin:0;font-size:21px}
-header small{opacity:.8}
+header h1{margin:0;font-size:22px}
 nav{
   display:flex;
   gap:8px;
   flex-wrap:wrap;
   padding:12px;
   background:white;
-  border-bottom:1px solid var(--line);
+  border-bottom:1px solid #ddd;
 }
 button{
   border:0;
   border-radius:8px;
-  padding:10px 13px;
+  padding:10px 14px;
   cursor:pointer;
-  font:inherit;
+  font-size:14px;
 }
+.primary{background:#2563eb;color:white}
+.success{background:#16a34a;color:white}
+.danger{background:#dc2626;color:white}
+.orange{background:#ea580c;color:white}
+.secondary{background:#e5e7eb;color:#111}
 .navbtn{background:#eef2ff;color:#1e3a8a}
-.navbtn.active{background:var(--blue);color:white}
+.navbtn.active{background:#2563eb;color:white}
+
 main{max-width:1300px;margin:auto;padding:18px}
 .view{display:none}
 .view.active{display:block}
+
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
@@ -59,7 +53,7 @@ main{max-width:1300px;margin:auto;padding:18px}
 }
 .card{
   background:white;
-  border:1px solid var(--line);
+  border:1px solid #e5e9f0;
   border-radius:14px;
   padding:16px;
   box-shadow:0 2px 8px #00000008;
@@ -69,7 +63,10 @@ main{max-width:1300px;margin:auto;padding:18px}
   font-weight:bold;
   margin-top:6px;
 }
-.muted{color:var(--muted);font-size:13px}
+.muted{
+  color:#687386;
+  font-size:13px;
+}
 .sectionhead{
   display:flex;
   justify-content:space-between;
@@ -78,12 +75,39 @@ main{max-width:1300px;margin:auto;padding:18px}
   flex-wrap:wrap;
   margin-bottom:15px;
 }
-.primary{background:var(--blue);color:white}
-.success{background:var(--green);color:white}
-.danger{background:var(--red);color:white}
-.orange{background:var(--orange);color:white}
-.purple{background:var(--purple);color:white}
-.secondary{background:#e5e7eb}
+
+.formgrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:12px;
+}
+label{
+  display:block;
+  font-size:13px;
+  color:#687386;
+  margin-bottom:5px;
+}
+input,select,textarea{
+  width:100%;
+  padding:10px;
+  border:1px solid #ccd3df;
+  border-radius:8px;
+  font:inherit;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+}
+th,td{
+  padding:10px;
+  border-bottom:1px solid #e5e9f0;
+  text-align:left;
+  font-size:14px;
+}
+th{background:#f8fafc}
+
 .badge{
   display:inline-block;
   padding:4px 8px;
@@ -96,41 +120,16 @@ main{max-width:1300px;margin:auto;padding:18px}
   background:#fee2e2;
   color:#991b1b;
 }
-.badge.orange{
-  background:#ffedd5;
-  color:#9a3412;
+
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:12px;
 }
-table{
-  width:100%;
-  border-collapse:collapse;
-  background:white;
-}
-th,td{
-  padding:10px;
-  border-bottom:1px solid var(--line);
-  text-align:left;
-  font-size:14px;
-}
-th{background:#f8fafc}
-.formgrid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
-  gap:12px;
-}
-label{
-  display:block;
-  font-size:13px;
-  color:var(--muted);
-  margin-bottom:5px;
-}
-input,select,textarea{
-  width:100%;
-  padding:10px;
-  border:1px solid #ccd3df;
-  border-radius:8px;
-  font:inherit;
-  background:white;
-}
+
+.room-card h3{margin-top:0}
+
 .modal{
   display:none;
   position:fixed;
@@ -148,11 +147,7 @@ input,select,textarea{
   border-radius:16px;
   padding:20px;
 }
-.empty{
-  padding:30px;
-  text-align:center;
-  color:var(--muted);
-}
+
 .login{
   min-height:100vh;
   display:flex;
@@ -168,66 +163,62 @@ input,select,textarea{
   border-radius:18px;
   box-shadow:0 8px 30px #0002;
 }
-.loginbox h1{text-align:center}
 .login-tabs{
   display:flex;
   gap:8px;
   margin-bottom:15px;
 }
 .login-tabs button{flex:1}
+
 .hidden{display:none!important}
+
 .notice{
   padding:12px;
   background:#eff6ff;
   border-radius:10px;
   margin-bottom:15px;
 }
-.actions{
+
+.savebar{
+  position:sticky;
+  top:0;
+  z-index:5;
+  background:white;
+  padding:10px;
+  border-bottom:1px solid #ddd;
+  margin:-18px -18px 18px;
   display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:12px;
+  justify-content:flex-end;
+  align-items:center;
+  gap:10px;
 }
-.small{font-size:12px}
-.danger-text{color:var(--red);font-weight:bold}
-.success-text{color:var(--green);font-weight:bold}
-.room-card h3{margin-top:0}
-.history-tabs{
-  display:flex;
-  gap:8px;
-  margin-bottom:15px;
-  flex-wrap:wrap;
+
+#saveMessage{
+  color:#16a34a;
+  font-weight:bold;
+  display:none;
 }
-.history-tabs button.active{
-  background:var(--blue);
-  color:white;
-}
-.member-row{
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:8px;
-  margin-bottom:8px;
-}
+
 @media(max-width:600px){
   main{padding:10px}
   .grid{grid-template-columns:1fr}
-  table{font-size:12px;display:block;overflow-x:auto}
-  th,td{padding:7px}
+  table{
+    display:block;
+    overflow-x:auto;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- =====================================================
-LOGIN
-===================================================== -->
+<!-- ================= LOGIN ================= -->
 
 <div id="loginPage" class="login">
 
 <div class="loginbox">
 
-<h1>RentManager</h1>
+<h1 style="text-align:center">RentManager</h1>
 
 <p class="muted" style="text-align:center">
 11 Room Rental Management
@@ -250,669 +241,16 @@ Renter Login
 </div>
 
 <div id="loginError"
-class="danger-text"
-style="margin-bottom:10px">
+style="color:#dc2626;margin-bottom:10px">
 </div>
 
-<label>Email</label>
-<input id="loginEmail"
-type="email"
-placeholder="Enter email">
+<!-- OWNER LOGIN -->
 
-<label style="margin-top:10px">
-Password
-</label>
+<div id="ownerLoginFields">
 
-<input id="loginPassword"
-type="password"
-placeholder="Enter password">
+<label>Owner Gmail</label>
 
-<button
-class="primary"
-style="width:100%;margin-top:15px"
-onclick="loginUser()">
-Login
-</button>
+<input
+id="ownerEmail"
+t 
 
-</div>
-</div>
-
-
-<!-- =====================================================
-APP
-===================================================== -->
-
-<div id="app" class="hidden">
-
-<header>
-
-<div class="sectionhead" style="margin:0">
-
-<div>
-<h1>RentManager Pro</h1>
-<small>11 Rooms • Rental Management System</small>
-</div>
-
-<div>
-<span id="userLabel"></span>
-<button
-class="secondary"
-onclick="logout()">
-Logout
-</button>
-</div>
-
-</div>
-
-</header>
-
-
-<nav id="ownerNav">
-
-<button class="navbtn active"
-onclick="showView('dashboard',this)">
-Dashboard
-</button>
-
-<button class="navbtn"
-onclick="showView('rooms',this)">
-Rooms
-</button>
-
-<button class="navbtn"
-onclick="showView('rent',this)">
-Rent History
-</button>
-
-<button class="navbtn"
-onclick="showView('income',this)">
-Income
-</button>
-
-<button class="navbtn"
-onclick="showView('expenses',this)">
-Expenses
-</button>
-
-<button class="navbtn"
-onclick="showView('electricity',this)">
-Electricity
-</button>
-
-<button class="navbtn"
-onclick="showView('history',this)">
-Check-In / Check-Out
-</button>
-
-<button class="navbtn"
-onclick="showView('renterAccounts',this)">
-Renter Accounts
-</button>
-
-</nav>
-
-
-<main>
-
-<!-- =====================================================
-OWNER DASHBOARD
-===================================================== -->
-
-<section id="dashboard" class="view active">
-
-<div class="sectionhead">
-
-<div>
-<h2>Owner Dashboard</h2>
-<div class="muted">
-Year-wise rental information
-</div>
-</div>
-
-<select id="dashboardYear"
-onchange="renderOwnerDashboard()"
-style="width:auto">
-</select>
-
-</div>
-
-<div id="dashboardStats" class="grid"></div>
-
-<h3>All 11 Rooms</h3>
-
-<div id="ownerRooms" class="grid"></div>
-
-</section>
-
-
-<!-- =====================================================
-ROOMS
-===================================================== -->
-
-<section id="rooms" class="view">
-
-<div class="sectionhead">
-
-<div>
-<h2>Room Management</h2>
-<div class="muted">
-Maximum 5 members per room.
-</div>
-</div>
-
-<button
-class="primary"
-onclick="openRoomModal()">
-Edit Room
-</button>
-
-</div>
-
-<div id="roomsTable"></div>
-
-</section>
-
-
-<!-- =====================================================
-RENT
-===================================================== -->
-
-<section id="rent" class="view">
-
-<div class="sectionhead">
-
-<div>
-<h2>Rental History</h2>
-
-<div class="muted">
-All monthly rent records.
-</div>
-
-</div>
-
-<button
-class="primary"
-onclick="openRentModal()">
-Add Rent
-</button>
-
-</div>
-
-<div id="rentTable"></div>
-
-</section>
-
-
-<!-- =====================================================
-INCOME
-===================================================== -->
-
-<section id="income" class="view">
-
-<div class="sectionhead">
-
-<div>
-<h2>Income</h2>
-<div class="muted">
-Rental and other income.
-</div>
-</div>
-
-<button
-class="success"
-onclick="openIncomeModal()">
-Add Income
-</button>
-
-</div>
-
-<div id="incomeTable"></div>
-
-</section>
-
-
-<!-- =====================================================
-EXPENSES
-===================================================== -->
-
-<section id="expenses" class="view">
-
-<div class="sectionhead">
-
-<div>
-<h2>Expenses</h2>
-<div class="muted">
-All owner expenses.
-</div>
-</div>
-
-<button
-class="danger"
-onclick="openExpenseModal()">
-Add Expense
-</button>
-
-</div>
-
-<div id="expenseTable"></div>
-
-</section>
-
-
-<!-- =====================================================
-ELECTRICITY
-===================================================== -->
-
-<section id="electricity" class="view">
-
-<div class="sectionhead">
-
-<div>
-<h2>Electricity Bills</h2>
-
-<div class="muted">
-Electricity is separate from rental income.
-</div>
-
-</div>
-
-<button
-class="orange"
-onclick="openElectricityModal()">
-Add Electricity Bill
-</button>
-
-</div>
-
-<div id="electricityTable"></div>
-
-</section>
-
-
-<!-- =====================================================
-CHECK IN / CHECK OUT HISTORY
-===================================================== -->
-
-<section id="history" class="view">
-
-<div class="sectionhead">
-
-<div>
-<h2>Renter History</h2>
-
-<div class="muted">
-Permanent check-in and check-out records.
-</div>
-
-</div>
-
-<select id="historyYear"
-onchange="renderHistory()"
-style="width:auto">
-</select>
-
-</div>
-
-
-<div class="history-tabs">
-
-<button
-id="checkinTab"
-class="primary"
-onclick="setHistoryTab('checkin')">
-Check-In History
-</button>
-
-<button
-id="checkoutTab"
-class="secondary"
-onclick="setHistoryTab('checkout')">
-Check-Out History
-</button>
-
-</div>
-
-
-<div id="checkinActions">
-<button
-class="success"
-onclick="openCheckinModal()">
-Add Check-In
-</button>
-</div>
-
-
-<div id="checkoutActions"
-class="hidden">
-
-<button
-class="danger"
-onclick="openCheckoutModal()">
-Add Check-Out
-</button>
-
-</div>
-
-
-<div id="historyTable"
-style="margin-top:15px">
-</div>
-
-</section>
-
-
-<!-- =====================================================
-RENTER ACCOUNTS
-===================================================== -->
-
-<section id="renterAccounts" class="view">
-
-<div class="sectionhead">
-
-<div>
-<h2>Renter Accounts</h2>
-
-<div class="muted">
-Create renter login accounts.
-</div>
-
-</div>
-
-<button
-class="primary"
-onclick="openRenterAccountModal()">
-Add Renter
-</button>
-
-</div>
-
-<div id="renterAccountsTable"></div>
-
-</section>
-
-
-<!-- =====================================================
-RENTER DASHBOARD
-===================================================== -->
-
-<section id="renterDashboard" class="view">
-
-<h2>Rental Dashboard</h2>
-
-<div class="notice">
-You can see only your own room information.
-</div>
-
-<div id="renterOwnDashboard"></div>
-
-</section>
-
-</main>
-</div>
-
-
-<!-- =====================================================
-MODAL
-===================================================== -->
-
-<div id="modal" class="modal">
-
-<div class="modalbox">
-
-<div class="sectionhead">
-
-<h2 id="modalTitle"></h2>
-
-<button
-class="secondary"
-onclick="closeModal()">
-Close
-</button>
-
-</div>
-
-<div id="modalBody"></div>
-
-</div>
-</div>
-
-
-<!-- =====================================================
-FIREBASE
-===================================================== -->
-
-<script type="module">
-
-import {
-initializeApp
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
-import {
-getAuth,
-signInWithEmailAndPassword,
-signOut,
-onAuthStateChanged,
-createUserWithEmailAndPassword
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
-import {
-getFirestore,
-collection,
-addDoc,
-setDoc,
-doc,
-getDoc,
-getDocs,
-updateDoc,
-query,
-where
-} from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
-
-/* =====================================================
-FIREBASE CONFIG
-
-PASTE YOUR OWN FIREBASE CONFIG HERE
-===================================================== */
-
-const firebaseConfig = {
-
-apiKey:"PASTE_YOUR_API_KEY",
-
-authDomain:"PASTE_YOUR_PROJECT.firebaseapp.com",
-
-projectId:"PASTE_YOUR_PROJECT_ID",
-
-storageBucket:"PASTE_YOUR_STORAGE_BUCKET",
-
-messagingSenderId:"PASTE_YOUR_MESSAGING_SENDER_ID",
-
-appId:"PASTE_YOUR_APP_ID"
-
-};
-
-
-/* =====================================================
-INITIALIZE
-===================================================== */
-
-const app=initializeApp(firebaseConfig);
-
-const auth=getAuth(app);
-
-const db=getFirestore(app);
-
-
-let currentUser=null;
-let loginType="owner";
-
-let rooms=[];
-let rents=[];
-let incomes=[];
-let expenses=[];
-let electricity=[];
-let checkins=[];
-let checkouts=[];
-let renters=[];
-
-let historyTab="checkin";
-
-
-/* =====================================================
-LOGIN TYPE
-===================================================== */
-
-window.setLoginType=function(type){
-
-loginType=type;
-
-if(type==="owner"){
-
-ownerTab.className="primary";
-renterTab.className="secondary";
-
-}else{
-
-ownerTab.className="secondary";
-renterTab.className="primary";
-
-}
-
-};
-
-
-/* =====================================================
-LOGIN
-===================================================== */
-
-window.loginUser=async function(){
-
-const email=
-document.getElementById("loginEmail").value.trim();
-
-const password=
-document.getElementById("loginPassword").value;
-
-const error=
-document.getElementById("loginError");
-
-error.textContent="";
-
-if(!email||!password){
-
-error.textContent=
-"Enter email and password.";
-
-return;
-
-}
-
-try{
-
-await signInWithEmailAndPassword(
-auth,email,password
-);
-
-}catch(e){
-
-error.textContent=
-"Login failed: "+e.message;
-
-}
-
-};
-
-
-/* =====================================================
-LOGOUT
-===================================================== */
-
-window.logout=async function(){
-
-await signOut(auth);
-
-};
-
-
-/* =====================================================
-AUTH
-===================================================== */
-
-onAuthStateChanged(
-auth,
-async user=>{
-
-if(!user){
-
-loginPage.classList.remove("hidden");
-app.classList.add("hidden");
-
-return;
-
-}
-
-currentUser=user;
-
-await loadUserProfile();
-
-});
-
-
-/* =====================================================
-USER PROFILE
-===================================================== */
-
-async function loadUserProfile(){
-
-const userDoc=
-await getDoc(
-doc(db,"users",currentUser.uid)
-);
-
-let role="renter";
-
-if(userDoc.exists()){
-
-role=userDoc.data().role||"renter";
-
-}
-
-
-loginPage.classList.add("hidden");
-app.classList.remove("hidden");
-
-userLabel.textContent=
-currentUser.email;
-
-
-if(role==="owner"){
-
-ownerNav.classList.remove("hidden");
-
-await loadOwnerData();
-
-}else{
-
-ownerNav.classList.add("hidden");
-
-showOnlyRenterDashboard();
-
-await loadRenterData();
-
-}
-
-}
-
-
-/* =====================================================
-OWNER DATA
-===================================================== */
-
-async function loadOwnerData(){
-
-rooms=await getCollection("rooms");
-
-rents=await get
