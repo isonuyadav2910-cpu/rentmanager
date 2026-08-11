@@ -7,771 +7,315 @@
 
 <style>
 *{box-sizing:border-box}
-
 body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
   background:#f4f7fb;
   color:#172033
 }
-
 button,input,select,textarea{font:inherit}
-
 button{
-  border:0;
-  border-radius:8px;
-  padding:10px 14px;
-  cursor:pointer;
-  background:#1769e0;
-  color:white;
-  font-weight:600
+  border:0;border-radius:8px;padding:10px 14px;
+  cursor:pointer;background:#1769e0;color:white;font-weight:600
 }
-
 button:hover{opacity:.9}
-
 .danger{background:#dc3545}
 .success{background:#198754}
 .warning{background:#f59f00}
 .gray{background:#6c757d}
-
 .hidden{display:none!important}
 
 #loginPage{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px
+  min-height:100vh;display:flex;align-items:center;
+  justify-content:center;padding:20px
 }
-
 .loginBox{
-  width:100%;
-  max-width:420px;
-  background:white;
-  padding:28px;
-  border-radius:16px;
-  box-shadow:0 8px 30px #0001
+  width:100%;max-width:420px;background:white;padding:28px;
+  border-radius:16px;box-shadow:0 8px 30px #0001
 }
-
 .loginBox h1{margin-top:0}
-
-.loginBox input,
-.loginBox select{
-  width:100%;
-  padding:12px;
-  margin:7px 0 12px;
-  border:1px solid #d8dee8;
-  border-radius:8px
+.loginBox input,.loginBox select{
+  width:100%;padding:12px;margin:7px 0 12px;
+  border:1px solid #d8dee8;border-radius:8px
 }
-
-.loginBox button{
-  width:100%;
-  margin-top:8px
-}
+.loginBox button{width:100%;margin-top:8px}
 
 #app{display:none}
-
 .topbar{
-  background:#172033;
-  color:white;
-  padding:14px 18px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  flex-wrap:wrap
+  background:#172033;color:white;padding:14px 18px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:10px;flex-wrap:wrap
 }
-
 .topbar h2{margin:0}
-
 .nav{
-  background:white;
-  padding:10px;
-  display:flex;
-  gap:8px;
-  overflow:auto;
-  border-bottom:1px solid #ddd
+  background:white;padding:10px;display:flex;gap:8px;
+  overflow:auto;border-bottom:1px solid #ddd
 }
-
 .nav button{
-  white-space:nowrap;
-  background:#edf2f7;
-  color:#172033
+  white-space:nowrap;background:#edf2f7;color:#172033
 }
+.nav button.active{background:#1769e0;color:white}
 
-.nav button.active{
-  background:#1769e0;
-  color:white
-}
-
-.container{
-  padding:18px;
-  max-width:1400px;
-  margin:auto
-}
-
+.container{padding:18px;max-width:1400px;margin:auto}
 .cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
   gap:14px
 }
-
 .card{
-  background:white;
-  border-radius:12px;
-  padding:18px;
-  box-shadow:0 2px 10px #0000000c;
-  border:1px solid #e8ecf2
+  background:white;border-radius:12px;padding:18px;
+  box-shadow:0 2px 10px #0000000c;border:1px solid #e8ecf2
 }
-
 .card h3{margin:0 0 8px}
-
-.big{
-  font-size:25px;
-  font-weight:700
-}
-
+.big{font-size:25px;font-weight:700}
 .muted{color:#687386}
 
 .toolbar{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-bottom:15px
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px
 }
-
-.toolbar input,
-.toolbar select,
-.form input,
-.form select,
-.form textarea{
-  padding:10px;
-  border:1px solid #ccd3dd;
-  border-radius:8px;
-  background:white
+.toolbar input,.toolbar select,
+.form input,.form select,.form textarea{
+  padding:10px;border:1px solid #ccd3dd;
+  border-radius:8px;background:white
 }
-
 .tableWrap{
-  overflow:auto;
-  background:white;
-  border-radius:12px;
+  overflow:auto;background:white;border-radius:12px;
   border:1px solid #e3e7ed
 }
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:800px
-}
-
-th,td{
-  padding:11px;
-  border-bottom:1px solid #e8ebef;
-  text-align:left
-}
-
+table{width:100%;border-collapse:collapse;min-width:800px}
+th,td{padding:11px;border-bottom:1px solid #e8ebef;text-align:left}
 th{background:#f5f7fa}
 
-.grid2{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:15px
-}
-
-.form{
-  display:grid;
-  gap:9px
-}
-
-.form label{
-  font-size:13px;
-  font-weight:600
-}
-
-.form input,
-.form select,
-.form textarea{
-  width:100%
-}
+.form{display:grid;gap:9px}
+.form label{font-size:13px;font-weight:600}
+.form input,.form select,.form textarea{width:100%}
 
 .roomGrid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
   gap:15px
 }
-
 .roomCard{
-  background:white;
-  border:1px solid #e1e6ed;
-  border-radius:14px;
-  padding:17px;
-  box-shadow:0 2px 8px #0000000a
+  background:white;border:1px solid #e1e6ed;border-radius:14px;
+  padding:17px;box-shadow:0 2px 8px #0000000a
 }
-
 .roomCard h3{margin-top:0}
 
 .badge{
-  display:inline-block;
-  padding:5px 8px;
-  border-radius:20px;
-  background:#e9eef7;
-  font-size:12px;
-  margin:2px
+  display:inline-block;padding:5px 8px;border-radius:20px;
+  background:#e9eef7;font-size:12px;margin:2px
 }
+.badge.due{background:#ffe1e1;color:#a40000}
+.badge.paid{background:#dff6e8;color:#08752d}
 
-.badge.due{
-  background:#ffe1e1;
-  color:#a40000
-}
-
-.badge.paid{
-  background:#dff6e8;
-  color:#08752d
-}
-
-.badge.net{
-  background:#dff6e8;
-  color:#08752d
-}
-
-.sectionTitle{
-  margin:8px 0 15px
-}
-
-.actions{
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-  margin-top:10px
-}
-
+.sectionTitle{margin:8px 0 15px}
+.actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
 .small{font-size:12px}
 
-.yearMaster{
-  border:2px solid #1769e0!important;
-  font-weight:700
+.incomeCard{
+  background:#e8f7ee;
+  border:2px solid #198754
 }
+.incomeCard .big{color:#08752d}
 
 #toast{
-  position:fixed;
-  bottom:20px;
-  left:50%;
+  position:fixed;bottom:20px;left:50%;
   transform:translateX(-50%);
-  background:#172033;
-  color:white;
-  padding:12px 18px;
-  border-radius:9px;
-  display:none;
-  z-index:9999
+  background:#172033;color:white;padding:12px 18px;
+  border-radius:9px;display:none;z-index:9999
 }
 </style>
 </head>
 
 <body>
 
-<!-- =====================================================
-     LOGIN
-===================================================== -->
-
+<!-- LOGIN -->
 <div id="loginPage">
-
   <div class="loginBox">
-
     <h1>🏠 RentManager</h1>
-
     <p class="muted">11 Room Rental Management</p>
 
     <label>Login Type</label>
-
-    <select id="loginType" onchange="changeLoginType()">
-
-      <option value="owner">
-        Owner Login
-      </option>
-
-      <option value="renter">
-        Rental Login
-      </option>
-
+    <select id="loginType">
+      <option value="owner">Owner Login</option>
+      <option value="renter">Rental Login</option>
     </select>
 
-    <!-- OWNER LOGIN -->
-
-    <div id="ownerLoginFields">
-
-      <label>Email</label>
-
-      <input
-        id="loginEmail"
-        type="email"
-        placeholder="Owner email">
-
-    </div>
-
-    <!-- RENTER LOGIN -->
-
-    <div id="renterLoginFields" class="hidden">
-
-      <label>Rental ID</label>
-
-      <input
-        id="loginRentalId"
-        type="text"
-        placeholder="Enter Rental ID">
-
-    </div>
+    <label>Login ID</label>
+    <input id="loginId" type="text" placeholder="Enter Login ID">
 
     <label>Password</label>
+    <input id="loginPassword" type="password" placeholder="Enter password">
 
-    <input
-      id="loginPassword"
-      type="password"
-      placeholder="Enter password">
-
-    <button onclick="login()">
-      Login
-    </button>
-
+    <button onclick="login()">Login</button>
     <p id="loginMessage" class="small"></p>
-
   </div>
-
 </div>
-
-
-<!-- =====================================================
-     APP
-===================================================== -->
 
 <div id="app">
 
   <div class="topbar">
-
     <h2>🏠 RentManager</h2>
-
     <div>
-
       <span id="userLabel"></span>
-
-      <button
-        class="gray"
-        onclick="logout()">
-        Logout
-      </button>
-
+      <button class="gray" onclick="logout()">Logout</button>
     </div>
-
   </div>
-
-
-  <!-- OWNER NAV -->
 
   <div class="nav" id="ownerNav">
-
-    <button
-      data-page="dashboard"
-      onclick="showPage('dashboard')">
-      Dashboard
-    </button>
-
-    <button
-      data-page="rooms"
-      onclick="showPage('rooms')">
-      All Rooms
-    </button>
-
-    <button
-      data-page="rents"
-      onclick="showPage('rents')">
-      Rent History
-    </button>
-
-    <button
-      data-page="expenses"
-      onclick="showPage('expenses')">
-      Expenses
-    </button>
-
-    <button
-      data-page="electricity"
-      onclick="showPage('electricity')">
-      Electricity
-    </button>
-
-    <button
-      data-page="checkout"
-      onclick="showPage('checkout')">
-      Checkout History
-    </button>
-
-    <button
-      data-page="accounts"
-      onclick="showPage('accounts')">
-      Rental Accounts
-    </button>
-
+    <button data-page="dashboard" onclick="showPage('dashboard')">Dashboard</button>
+    <button data-page="rooms" onclick="showPage('rooms')">All Rooms</button>
+    <button data-page="rents" onclick="showPage('rents')">Rent History</button>
+    <button data-page="expenses" onclick="showPage('expenses')">Expenses</button>
+    <button data-page="electricity" onclick="showPage('electricity')">Electricity</button>
+    <button data-page="checkout" onclick="showPage('checkout')">Checkout History</button>
+    <button data-page="accounts" onclick="showPage('accounts')">Rental Accounts</button>
   </div>
 
-
-  <!-- RENTER NAV -->
-
-  <div
-    class="nav hidden"
-    id="renterNav">
-
-    <button
-      data-page="renterDashboard"
-      onclick="showPage('renterDashboard')">
-      My Dashboard
-    </button>
-
-    <button
-      data-page="renterHistory"
-      onclick="showPage('renterHistory')">
-      Payment History
-    </button>
-
+  <div class="nav hidden" id="renterNav">
+    <button data-page="renterDashboard" onclick="showPage('renterDashboard')">My Dashboard</button>
+    <button data-page="renterHistory" onclick="showPage('renterHistory')">Payment History</button>
   </div>
-
 
   <main class="container">
 
-
-    <!-- =================================================
-         OWNER DASHBOARD
-    ================================================== -->
-
-    <section
-      id="page-dashboard"
-      class="page hidden">
+    <!-- DASHBOARD -->
+    <section id="page-dashboard" class="page hidden">
 
       <div class="toolbar">
-
-        <select
-          id="dashboardYear"
-          class="yearMaster"
-          onchange="changeMasterYear(this.value)">
-        </select>
-
-        <button onclick="saveAllData()">
-          💾 Save
-        </button>
-
-        <button onclick="refreshAll()">
-          ↻ Refresh
-        </button>
-
+        <select id="dashboardYear" onchange="changeDashboardYear()"></select>
+        <button onclick="saveAllData()">💾 Save</button>
+        <button onclick="refreshAll()">↻ Refresh</button>
       </div>
 
-
-      <h2 class="sectionTitle">
-
-        Dashboard
-        <span id="dashYearTitle"></span>
-
-      </h2>
-
+      <h2>Dashboard — <span id="dashYearTitle"></span></h2>
 
       <div class="cards">
 
         <div class="card">
-
           <h3>Total Rooms</h3>
-
-          <div
-            class="big"
-            id="statRooms">
-            11
-          </div>
-
+          <div class="big" id="statRooms">11</div>
         </div>
 
-
         <div class="card">
-
           <h3>Occupied Rooms</h3>
-
-          <div
-            class="big"
-            id="statOccupied">
-            0
-          </div>
-
+          <div class="big" id="statOccupied">0</div>
         </div>
 
-
         <div class="card">
-
           <h3>Monthly Rent</h3>
-
-          <div
-            class="big"
-            id="statMonthly">
-            ₹0
-          </div>
-
+          <div class="big" id="statMonthly">₹0</div>
         </div>
 
+        <div class="card">
+          <h3>Total Rent</h3>
+          <div class="big" id="statPaid">₹0</div>
+        </div>
 
         <div class="card">
-
           <h3>Total Rent Due</h3>
-
-          <div
-            class="big"
-            id="statDue">
-            ₹0
-          </div>
-
+          <div class="big" id="statDue">₹0</div>
         </div>
 
-
         <div class="card">
-
-          <h3>Rent Paid</h3>
-
-          <div
-            class="big"
-            id="statPaid">
-            ₹0
-          </div>
-
-        </div>
-
-
-        <div class="card">
-
           <h3>Expenses</h3>
-
-          <div
-            class="big"
-            id="statExpenses">
-            ₹0
-          </div>
-
+          <div class="big" id="statExpenses">₹0</div>
         </div>
 
-
         <div class="card">
-
           <h3>Electricity</h3>
-
-          <div
-            class="big"
-            id="statElectricity">
-            ₹0
-          </div>
-
+          <div class="big" id="statElectricity">₹0</div>
         </div>
 
-
-        <!-- NEW NET INCOME -->
-
-        <div class="card">
-
-          <h3>Net Income</h3>
-
-          <div
-            class="big"
-            id="statNetIncome">
-            ₹0
+        <div class="card incomeCard">
+          <h3>💰 Total Income</h3>
+          <div class="big" id="statIncome">₹0</div>
+          <div class="small muted">
+            Total Rent − Expenses − Electricity
           </div>
-
-          <p class="muted small">
-            Rent Paid − Expenses − Electricity
-          </p>
-
         </div>
 
       </div>
-
 
       <br>
 
-
       <div class="card">
-
-        <h3>
-          Rent Due —
-          <span id="dueYear"></span>
-        </h3>
-
+        <h3>Rent Due — <span id="dueYear"></span></h3>
         <div id="dashboardDueList"></div>
-
       </div>
-
     </section>
 
-
-    <!-- =================================================
-         ROOMS
-    ================================================== -->
-
-    <section
-      id="page-rooms"
-      class="page hidden">
+    <!-- ROOMS -->
+    <section id="page-rooms" class="page hidden">
 
       <div class="toolbar">
-
-        <button onclick="openRoomForm()">
-          ➕ Add / Edit Room
-        </button>
-
-        <select
-          id="roomYear"
-          onchange="changeMasterYear(this.value)">
-        </select>
-
+        <button onclick="openRoomForm()">➕ Add / Edit Room</button>
+        <select id="roomYear" onchange="renderRooms()"></select>
       </div>
 
-
-      <div
-        id="roomFormBox"
-        class="card hidden">
+      <div id="roomFormBox" class="card hidden">
 
         <h3>Room Details</h3>
 
         <div class="form">
 
-          <input
-            type="hidden"
-            id="roomId">
-
+          <input type="hidden" id="roomId">
 
           <label>Room Number</label>
-
-          <input
-            id="roomNo"
-            placeholder="Room number">
-
+          <input id="roomNo">
 
           <label>Renter Name</label>
-
-          <input
-            id="renterName"
-            placeholder="Renter name">
-
+          <input id="renterName">
 
           <label>Renter Phone</label>
-
-          <input
-            id="renterPhone"
-            placeholder="Phone number">
-
+          <input id="renterPhone">
 
           <label>Members</label>
-
-          <input
-            id="members"
-            type="number"
-            min="1"
-            max="5"
-            value="1">
-
+          <input id="members" type="number" min="1" max="5" value="1">
 
           <label>Check-in Date</label>
-
-          <input
-            id="checkinDate"
-            type="date">
-
+          <input id="checkinDate" type="date">
 
           <label>Monthly Rent</label>
-
-          <input
-            id="monthlyRent"
-            type="number"
-            min="0"
-            placeholder="Monthly rent">
-
+          <input id="monthlyRent" type="number">
 
           <label>Deposit</label>
-
-          <input
-            id="deposit"
-            type="number"
-            min="0"
-            placeholder="Deposit amount">
-
+          <input id="deposit" type="number">
 
           <div class="actions">
-
-            <button onclick="saveRoom()">
-              Save Room
-            </button>
-
-            <button
-              class="gray"
-              onclick="closeRoomForm()">
-              Cancel
-            </button>
-
+            <button onclick="saveRoom()">Save Room</button>
+            <button class="gray" onclick="closeRoomForm()">Cancel</button>
           </div>
 
         </div>
-
       </div>
-
 
       <br>
-
-      <div
-        id="roomsGrid"
-        class="roomGrid">
-      </div>
-
+      <div id="roomsGrid" class="roomGrid"></div>
     </section>
 
-
-    <!-- =================================================
-         RENT HISTORY
-    ================================================== -->
-
-    <section
-      id="page-rents"
-      class="page hidden">
+    <!-- RENT HISTORY -->
+    <section id="page-rents" class="page hidden">
 
       <div class="toolbar">
+        <select id="rentYear" onchange="renderRentHistory()"></select>
 
-        <select
-          id="rentYear"
-          onchange="changeMasterYear(this.value)">
+        <select id="rentRoom" onchange="renderRentHistory()">
+          <option value="">All Rooms</option>
         </select>
 
-        <select
-          id="rentRoom"
-          onchange="renderRentHistory()">
-
-          <option value="">
-            All Rooms
-          </option>
-
-        </select>
-
-        <button onclick="openRentForm()">
-          ➕ Add Rent
-        </button>
-
+        <button onclick="openRentForm()">➕ Add Rent</button>
       </div>
 
-
-      <div
-        id="rentFormBox"
-        class="card hidden">
+      <div id="rentFormBox" class="card hidden">
 
         <h3>Add Monthly Rent</h3>
 
         <div class="form">
 
           <label>Room</label>
-
           <select id="payRoom"></select>
 
-
           <label>Month</label>
-
           <select id="payMonth">
-
             <option value="1">January</option>
             <option value="2">February</option>
             <option value="3">March</option>
@@ -784,73 +328,38 @@ th{background:#f5f7fa}
             <option value="10">October</option>
             <option value="11">November</option>
             <option value="12">December</option>
-
           </select>
 
-
           <label>Year</label>
-
-          <input
-            id="payYear"
-            type="number">
-
+          <input id="payYear" type="number">
 
           <label>Amount</label>
-
-          <input
-            id="payAmount"
-            type="number">
-
+          <input id="payAmount" type="number">
 
           <label>Payment Date</label>
-
-          <input
-            id="payDate"
-            type="date">
-
+          <input id="payDate" type="date">
 
           <label>Payment Method</label>
-
           <select id="payMethod">
-
             <option>Cash</option>
             <option>Online</option>
             <option>UPI</option>
             <option>Bank Transfer</option>
-
           </select>
 
-
           <div class="actions">
-
-            <button
-              class="success"
-              onclick="saveRent()">
-              Save Paid Rent
-            </button>
-
-            <button
-              class="gray"
-              onclick="closeRentForm()">
-              Cancel
-            </button>
-
+            <button class="success" onclick="saveRent()">Save Rent</button>
+            <button class="gray" onclick="closeRentForm()">Cancel</button>
           </div>
 
         </div>
-
       </div>
-
 
       <br>
 
-
       <div class="tableWrap">
-
         <table>
-
           <thead>
-
             <tr>
               <th>Room</th>
               <th>Renter</th>
@@ -862,249 +371,118 @@ th{background:#f5f7fa}
               <th>Method</th>
               <th>Action</th>
             </tr>
-
           </thead>
-
           <tbody id="rentTable"></tbody>
-
         </table>
-
       </div>
-
     </section>
 
-
-    <!-- =================================================
-         EXPENSES
-    ================================================== -->
-
-    <section
-      id="page-expenses"
-      class="page hidden">
+    <!-- EXPENSES -->
+    <section id="page-expenses" class="page hidden">
 
       <div class="toolbar">
-
-        <select
-          id="expenseYear"
-          onchange="changeMasterYear(this.value)">
-        </select>
-
-        <button onclick="openExpenseForm()">
-          ➕ Add Expense
-        </button>
-
+        <select id="expenseYear" onchange="renderExpenses()"></select>
+        <button onclick="openExpenseForm()">➕ Add Expense</button>
       </div>
 
-
-      <div
-        id="expenseFormBox"
-        class="card hidden">
-
+      <div id="expenseFormBox" class="card hidden">
         <h3>Add Expense</h3>
 
         <div class="form">
-
           <label>Date</label>
-
-          <input
-            id="expenseDate"
-            type="date">
-
+          <input id="expenseDate" type="date">
 
           <label>Description</label>
-
-          <input
-            id="expenseDescription">
-
+          <input id="expenseDescription">
 
           <label>Amount</label>
-
-          <input
-            id="expenseAmount"
-            type="number">
-
+          <input id="expenseAmount" type="number">
 
           <div class="actions">
-
-            <button onclick="saveExpense()">
-              Save
-            </button>
-
-            <button
-              class="gray"
-              onclick="closeExpenseForm()">
-              Cancel
-            </button>
-
+            <button onclick="saveExpense()">Save</button>
+            <button class="gray" onclick="closeExpenseForm()">Cancel</button>
           </div>
-
         </div>
-
       </div>
-
 
       <br>
 
-
       <div class="tableWrap">
-
         <table>
-
           <thead>
-
             <tr>
               <th>Date</th>
               <th>Description</th>
               <th>Amount</th>
               <th>Action</th>
             </tr>
-
           </thead>
-
           <tbody id="expenseTable"></tbody>
-
         </table>
-
       </div>
-
     </section>
 
-
-    <!-- =================================================
-         ELECTRICITY
-    ================================================== -->
-
-    <section
-      id="page-electricity"
-      class="page hidden">
+    <!-- ELECTRICITY -->
+    <section id="page-electricity" class="page hidden">
 
       <div class="toolbar">
-
-        <select
-          id="electricYear"
-          onchange="changeMasterYear(this.value)">
-        </select>
-
-        <button onclick="openElectricForm()">
-          ➕ Add Electricity
-        </button>
-
+        <select id="electricYear" onchange="renderElectricity()"></select>
+        <button onclick="openElectricForm()">➕ Add Electricity</button>
       </div>
 
-
-      <div
-        id="electricFormBox"
-        class="card hidden">
+      <div id="electricFormBox" class="card hidden">
 
         <h3>Add Electricity Bill</h3>
 
         <div class="form">
 
           <label>Date</label>
-
-          <input
-            id="electricDate"
-            type="date">
-
+          <input id="electricDate" type="date">
 
           <label>Description</label>
-
-          <input
-            id="electricDescription"
-            placeholder="Electricity bill">
-
+          <input id="electricDescription" placeholder="Electricity bill">
 
           <label>Amount</label>
-
-          <input
-            id="electricAmount"
-            type="number">
-
+          <input id="electricAmount" type="number">
 
           <div class="actions">
-
-            <button onclick="saveElectricity()">
-              Save
-            </button>
-
-            <button
-              class="gray"
-              onclick="closeElectricForm()">
-              Cancel
-            </button>
-
+            <button onclick="saveElectricity()">Save</button>
+            <button class="gray" onclick="closeElectricForm()">Cancel</button>
           </div>
 
         </div>
-
       </div>
-
 
       <br>
 
-
       <div class="tableWrap">
-
         <table>
-
           <thead>
-
             <tr>
               <th>Date</th>
               <th>Description</th>
               <th>Amount</th>
               <th>Action</th>
             </tr>
-
           </thead>
-
           <tbody id="electricTable"></tbody>
-
         </table>
-
       </div>
-
     </section>
 
-
-    <!-- =================================================
-         CHECKOUT
-    ================================================== -->
-
-    <section
-      id="page-checkout"
-      class="page hidden">
-
-      <div class="toolbar">
-
-        <select
-          id="checkoutYear"
-          onchange="changeMasterYear(this.value)">
-        </select>
-
-      </div>
-
+    <!-- CHECKOUT -->
+    <section id="page-checkout" class="page hidden">
 
       <div class="card">
-
         <h2>Checkout History</h2>
-
-        <p class="muted">
-          Only completed checkout records are shown here.
-        </p>
-
+        <p class="muted">Only completed checkout records are shown here.</p>
       </div>
-
 
       <br>
 
-
       <div class="tableWrap">
-
         <table>
-
           <thead>
-
             <tr>
               <th>Room</th>
               <th>Renter</th>
@@ -1113,41 +491,24 @@ th{background:#f5f7fa}
               <th>Checkout Date</th>
               <th>Action</th>
             </tr>
-
           </thead>
-
           <tbody id="checkoutTable"></tbody>
-
         </table>
-
       </div>
-
     </section>
 
-
-    <!-- =================================================
-         RENTAL ACCOUNTS
-    ================================================== -->
-
-    <section
-      id="page-accounts"
-      class="page hidden">
+    <!-- RENTAL ACCOUNTS -->
+    <section id="page-accounts" class="page hidden">
 
       <div class="card">
-
         <h2>Rental Accounts</h2>
-
         <p class="muted">
-          Create login accounts for renters.
-          Renters use Rental ID + Password.
-          Gmail/Email is not required from the renter.
+          Create a Login ID and Password for each renter.
+          No Gmail or email is required in the rental account.
         </p>
-
       </div>
 
-
       <br>
-
 
       <div class="card">
 
@@ -1155,198 +516,114 @@ th{background:#f5f7fa}
 
         <div class="form">
 
-          <label>Rental ID</label>
-
-          <input
-            id="accountRentalId"
-            placeholder="Example: ROOM01">
-
+          <label>Login ID</label>
+          <input id="accountLoginId"
+                 type="text"
+                 placeholder="Example: room101">
 
           <label>Password</label>
-
-          <input
-            id="accountPassword"
-            type="password"
-            placeholder="Create password">
-
+          <input id="accountPassword"
+                 type="password"
+                 placeholder="Create password">
 
           <label>Room</label>
-
           <select id="accountRoom"></select>
 
-
           <button onclick="createRentalAccount()">
-            Create Account
+            Create Rental Account
           </button>
 
         </div>
 
-        <p
-          id="accountMessage"
-          class="small">
-        </p>
+        <p id="accountMessage" class="small"></p>
 
       </div>
 
-
       <br>
 
-
       <div class="tableWrap">
-
         <table>
 
           <thead>
-
             <tr>
-              <th>Rental ID</th>
+              <th>Login ID</th>
               <th>Room</th>
               <th>UID</th>
               <th>Action</th>
             </tr>
-
           </thead>
 
           <tbody id="accountTable"></tbody>
 
         </table>
-
       </div>
 
     </section>
 
-
-    <!-- =================================================
-         RENTER DASHBOARD
-    ================================================== -->
-
-    <section
-      id="page-renterDashboard"
-      class="page hidden">
+    <!-- RENTER DASHBOARD -->
+    <section id="page-renterDashboard" class="page hidden">
 
       <div class="toolbar">
-
-        <select
-          id="renterYear"
-          onchange="renderRenterDashboard()">
-        </select>
-
+        <select id="renterYear" onchange="renderRenterDashboard()"></select>
       </div>
-
 
       <h2>My Rental Dashboard</h2>
 
-
       <div id="myRoomDetails"></div>
 
-
       <br>
-
 
       <div class="cards">
 
         <div class="card">
-
           <h3>Monthly Rent</h3>
-
-          <div
-            class="big"
-            id="myMonthlyRent">
-            ₹0
-          </div>
-
+          <div class="big" id="myMonthlyRent">₹0</div>
         </div>
 
-
         <div class="card">
-
           <h3>Rent Due</h3>
-
-          <div
-            class="big"
-            id="myDue">
-            ₹0
-          </div>
-
+          <div class="big" id="myDue">₹0</div>
         </div>
 
-
         <div class="card">
-
           <h3>Total Due Amount</h3>
-
-          <div
-            class="big"
-            id="myTotalDue">
-            ₹0
-          </div>
-
+          <div class="big" id="myTotalDue">₹0</div>
         </div>
 
-
         <div class="card">
-
           <h3>Deposit</h3>
-
-          <div
-            class="big"
-            id="myDeposit">
-            ₹0
-          </div>
-
+          <div class="big" id="myDeposit">₹0</div>
         </div>
 
       </div>
 
-
       <br>
 
-
       <div class="card">
-
         <h3>Rent Due by Month</h3>
-
         <div id="myDueMonths"></div>
-
       </div>
 
     </section>
 
-
-    <!-- =================================================
-         RENTER HISTORY
-    ================================================== -->
-
-    <section
-      id="page-renterHistory"
-      class="page hidden">
+    <!-- RENTER HISTORY -->
+    <section id="page-renterHistory" class="page hidden">
 
       <div class="toolbar">
-
-        <select
-          id="renterHistoryYear"
-          onchange="renderRenterHistory()">
-        </select>
-
+        <select id="renterHistoryYear"
+                onchange="renderRenterHistory()"></select>
       </div>
-
 
       <div class="card">
-
         <h2>My Monthly Payment History</h2>
-
       </div>
-
 
       <br>
 
-
       <div class="tableWrap">
-
         <table>
 
           <thead>
-
             <tr>
               <th>Month</th>
               <th>Year</th>
@@ -1355,35 +632,23 @@ th{background:#f5f7fa}
               <th>Paid Date</th>
               <th>Method</th>
             </tr>
-
           </thead>
 
           <tbody id="renterHistoryTable"></tbody>
 
         </table>
-
       </div>
 
     </section>
 
   </main>
-
 </div>
-
 
 <div id="toast"></div>
 
-
 <script type="module">
 
-/* =========================================================
-   FIREBASE
-========================================================= */
-
-import {
-  initializeApp,
-  deleteApp
-}
+import { initializeApp }
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 import {
@@ -1408,48 +673,31 @@ import {
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-const firebaseConfig = {
+/* =========================================================
+   FIREBASE
+========================================================= */
 
-  apiKey:
-    "AIzaSyBZdB8odEXTzC9kFP6Ft3PKCeAhd8WTnWU",
-
-  authDomain:
-    "rent-manager-11-rooms.firebaseapp.com",
-
-  projectId:
-    "rent-manager-11-rooms",
-
-  storageBucket:
-    "rent-manager-11-rooms.firebasestorage.app",
-
-  messagingSenderId:
-    "381338899569",
-
-  appId:
-    "1:381338899569:web:bc0edbe266032d28b677d0",
-
-  measurementId:
-    "G-3CH0PGPSMB"
+const firebaseConfig={
+  apiKey:"AIzaSyBZbB8odEXTzC9kFP6Ft3PKCeAhd8WTnWU",
+  authDomain:"rent-manager-11-rooms.firebaseapp.com",
+  projectId:"rent-manager-11-rooms",
+  storageBucket:"rent-manager-11-rooms.firebasestorage.app",
+  messagingSenderId:"381338899569",
+  appId:"1:381338899569:web:bc0edbe266032d28b677d0",
+  measurementId:"G-3CH0PGPSMB"
 };
 
-
-const app =
-  initializeApp(firebaseConfig);
-
-const auth =
-  getAuth(app);
-
-const db =
-  getFirestore(app);
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
 
 /* =========================================================
-   GLOBAL DATA
+   DATA
 ========================================================= */
 
 let currentUser=null;
 let currentRole=null;
-
 let rooms=[];
 let rents=[];
 let expenses=[];
@@ -1458,24 +706,11 @@ let checkouts=[];
 let renterAccounts=[];
 
 const months=[
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
+ "January","February","March","April","May","June",
+ "July","August","September","October","November","December"
 ];
 
-const currentYear=
-  new Date().getFullYear();
-
-let masterYear=currentYear;
+const currentYear=new Date().getFullYear();
 
 
 /* =========================================================
@@ -1483,31 +718,25 @@ let masterYear=currentYear;
 ========================================================= */
 
 function money(value){
-
-  return "₹"+
-    Number(value||0)
-      .toLocaleString("en-IN");
+  return "₹"+Number(value||0).toLocaleString("en-IN");
 }
 
-
-function dateDMY(dateString){
-
-  if(!dateString)
-    return "-";
-
-  const d=
-    new Date(dateString);
-
-  if(isNaN(d))
-    return dateString;
-
-  return String(d.getDate()).padStart(2,"0")+
-    "-"+
-    String(d.getMonth()+1).padStart(2,"0")+
-    "-"+
-    d.getFullYear();
+function today(){
+  return new Date().toISOString().slice(0,10);
 }
 
+function dateDMY(value){
+
+  if(!value)return "-";
+
+  const d=new Date(value);
+
+  if(isNaN(d))return value;
+
+  return String(d.getDate()).padStart(2,"0")+"-"+
+         String(d.getMonth()+1).padStart(2,"0")+"-"+
+         d.getFullYear();
+}
 
 function esc(value){
 
@@ -1519,14 +748,11 @@ function esc(value){
     .replaceAll("'","&#039;");
 }
 
-
 function toast(message){
 
-  const el=
-    document.getElementById("toast");
+  const el=document.getElementById("toast");
 
   el.textContent=message;
-
   el.style.display="block";
 
   setTimeout(()=>{
@@ -1535,79 +761,17 @@ function toast(message){
 }
 
 
-function today(){
-
-  return new Date()
-    .toISOString()
-    .slice(0,10);
-}
-
-
 /* =========================================================
-   HIDDEN FIREBASE LOGIN EMAIL
-   Rental user never sees this.
-========================================================= */
-
-function rentalFirebaseEmail(rentalId){
-
-  const clean=
-    String(rentalId||"")
-      .trim()
-      .toLowerCase()
-      .replace(/[^a-z0-9._-]/g,"");
-
-  return clean+
-    "@rentmanager.local";
-}
-
-
-/* =========================================================
-   LOGIN TYPE UI
-========================================================= */
-
-window.changeLoginType=function(){
-
-  const type=
-    document.getElementById("loginType").value;
-
-  document
-    .getElementById("ownerLoginFields")
-    .classList.toggle(
-      "hidden",
-      type!=="owner"
-    );
-
-  document
-    .getElementById("renterLoginFields")
-    .classList.toggle(
-      "hidden",
-      type!=="renter"
-    );
-
-  document
-    .getElementById("loginMessage")
-    .textContent="";
-};
-
-
-/* =========================================================
-   YEAR SYSTEM
+   YEAR SELECTORS
 ========================================================= */
 
 function populateYears(){
 
   const years=[];
 
-  for(
-    let y=2020;
-    y<=currentYear+10;
-    y++
-  ){
-
+  for(let y=2020;y<=currentYear+10;y++){
     years.push(y);
-
   }
-
 
   [
     "dashboardYear",
@@ -1615,90 +779,62 @@ function populateYears(){
     "rentYear",
     "expenseYear",
     "electricYear",
-    "checkoutYear",
     "renterYear",
     "renterHistoryYear"
   ].forEach(id=>{
 
-    const el=
-      document.getElementById(id);
+    const el=document.getElementById(id);
 
-    if(!el)
-      return;
+    if(!el)return;
 
-    el.innerHTML=
-      years.map(y=>
-        `<option value="${y}">
-          ${y}
-        </option>`
-      ).join("");
+    const old=el.value;
 
+    el.innerHTML=years.map(y=>
+      `<option value="${y}">${y}</option>`
+    ).join("");
+
+    el.value=
+      old && years.includes(Number(old))
+      ? old
+      : currentYear;
   });
-
-
-  setAllOwnerYears(masterYear);
-
-  const renterYear=
-    document.getElementById("renterYear");
-
-  const renterHistoryYear=
-    document.getElementById("renterHistoryYear");
-
-  if(renterYear)
-    renterYear.value=currentYear;
-
-  if(renterHistoryYear)
-    renterHistoryYear.value=currentYear;
 }
 
 
 /* =========================================================
-   MASTER YEAR CHANGE
+   DASHBOARD YEAR
 ========================================================= */
 
-window.changeMasterYear=function(year){
+window.changeDashboardYear=function(){
 
-  masterYear=
-    Number(year)||currentYear;
+  const year=
+    Number(document.getElementById("dashboardYear").value);
 
-  setAllOwnerYears(masterYear);
-
-  renderDashboard();
-  renderRooms();
-  renderRentHistory();
-  renderExpenses();
-  renderElectricity();
-  renderCheckout();
-};
-
-
-/* =========================================================
-   SET ALL OWNER YEAR SELECTORS
-========================================================= */
-
-function setAllOwnerYears(year){
+  /*
+    Dashboard year becomes the common selected year.
+    All year-based sections are changed automatically.
+  */
 
   [
-    "dashboardYear",
     "roomYear",
     "rentYear",
     "expenseYear",
     "electricYear",
-    "checkoutYear"
+    "renterYear",
+    "renterHistoryYear"
   ].forEach(id=>{
 
-    const el=
-      document.getElementById(id);
+    const el=document.getElementById(id);
 
-    if(el)
-      el.value=String(year);
-
+    if(el)el.value=year;
   });
-}
+
+  renderAll();
+};
 
 
 /* =========================================================
-   FIRESTORE LOAD
+   LOAD FIRESTORE
 ========================================================= */
 
 async function loadAll(){
@@ -1706,90 +842,91 @@ async function loadAll(){
   try{
 
     const roomSnap=
-      await getDocs(
-        collection(db,"rooms")
-      );
+      await getDocs(collection(db,"rooms"));
 
-    rooms=
-      roomSnap.docs.map(d=>({
-        id:d.id,
-        ...d.data()
-      }));
-
+    rooms=roomSnap.docs.map(d=>({
+      id:d.id,
+      ...d.data()
+    }));
 
     const rentSnap=
-      await getDocs(
-        collection(db,"rents")
-      );
+      await getDocs(collection(db,"rents"));
 
-    rents=
-      rentSnap.docs.map(d=>({
-        id:d.id,
-        ...d.data()
-      }));
-
+    rents=rentSnap.docs.map(d=>({
+      id:d.id,
+      ...d.data()
+    }));
 
     const expenseSnap=
-      await getDocs(
-        collection(db,"expenses")
-      );
+      await getDocs(collection(db,"expenses"));
 
-    expenses=
-      expenseSnap.docs.map(d=>({
-        id:d.id,
-        ...d.data()
-      }));
-
+    expenses=expenseSnap.docs.map(d=>({
+      id:d.id,
+      ...d.data()
+    }));
 
     const electricSnap=
-      await getDocs(
-        collection(db,"electricity")
-      );
+      await getDocs(collection(db,"electricity"));
 
-    electricity=
-      electricSnap.docs.map(d=>({
-        id:d.id,
-        ...d.data()
-      }));
-
+    electricity=electricSnap.docs.map(d=>({
+      id:d.id,
+      ...d.data()
+    }));
 
     const checkoutSnap=
-      await getDocs(
-        collection(db,"checkouts")
-      );
+      await getDocs(collection(db,"checkouts"));
 
-    checkouts=
-      checkoutSnap.docs.map(d=>({
-        id:d.id,
-        ...d.data()
-      }));
-
+    checkouts=checkoutSnap.docs.map(d=>({
+      id:d.id,
+      ...d.data()
+    }));
 
     const accountSnap=
-      await getDocs(
-        collection(db,"renterAccounts")
-      );
+      await getDocs(collection(db,"renterAccounts"));
 
-    renterAccounts=
-      accountSnap.docs.map(d=>({
-        id:d.id,
-        ...d.data()
-      }));
+    renterAccounts=accountSnap.docs.map(d=>({
+      id:d.id,
+      ...d.data()
+    }));
 
-
+    populateYears();
     renderAll();
 
   }catch(error){
 
     console.error(error);
 
-    toast(
-      "Firebase data load error: "+
-      (error.message||error.code)
-    );
-
+    toast("Firebase load error: "+error.message);
   }
+}
 
+
+/* =========================================================
+   RENTAL LOGIN ID
+========================================================= */
+
+/*
+  Firebase Email/Password Auth technically requires an email
+  internally.
+
+  Therefore Login ID is converted to a private technical
+  address. The renter never sees this address.
+
+  Example:
+  room101
+  becomes internally:
+  room101@rentmanager.local
+
+  No Gmail is used or displayed.
+*/
+
+function internalAuthEmail(loginId){
+
+  return loginId
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9._-]/g,"")
+    +"@rentmanager.local";
 }
 
 
@@ -1799,62 +936,56 @@ async function loadAll(){
 
 window.login=async function(){
 
-  const type=
-    document.getElementById("loginType").value;
+  const loginId=
+    document.getElementById("loginId")
+      .value.trim();
 
   const password=
-    document.getElementById("loginPassword").value;
+    document.getElementById("loginPassword")
+      .value;
+
+  const type=
+    document.getElementById("loginType")
+      .value;
 
   const message=
     document.getElementById("loginMessage");
 
-  message.textContent=
-    "Logging in...";
+  if(!loginId || !password){
 
+    message.textContent=
+      "Enter Login ID and Password.";
+
+    return;
+  }
+
+  message.textContent="Logging in...";
 
   try{
 
-    /* ================================================
-       OWNER
-    ================================================= */
-
     if(type==="owner"){
 
-      const email=
-        document
-          .getElementById("loginEmail")
-          .value
-          .trim();
-
-      if(!email||!password){
-
-        message.textContent=
-          "Enter owner email and password.";
-
-        return;
-      }
-
+      /*
+        OWNER:
+        Existing owner Firebase account can still use its
+        normal Firebase email/password.
+        
+        Put the owner email into Login ID.
+      */
 
       const result=
         await signInWithEmailAndPassword(
           auth,
-          email,
+          loginId,
           password
         );
 
-
       currentUser=result.user;
-
 
       const ownerDoc=
         await getDoc(
-          doc(
-            db,
-            "owners",
-            currentUser.uid
-          )
+          doc(db,"owners",currentUser.uid)
         );
-
 
       if(!ownerDoc.exists()){
 
@@ -1866,35 +997,22 @@ window.login=async function(){
         return;
       }
 
-
       currentRole="owner";
 
-
-      document
-        .getElementById("loginPage")
+      document.getElementById("loginPage")
         .classList.add("hidden");
 
-
-      document
-        .getElementById("app")
+      document.getElementById("app")
         .style.display="block";
 
-
-      document
-        .getElementById("ownerNav")
+      document.getElementById("ownerNav")
         .classList.remove("hidden");
 
-
-      document
-        .getElementById("renterNav")
+      document.getElementById("renterNav")
         .classList.add("hidden");
 
-
-      document
-        .getElementById("userLabel")
-        .textContent=
-        "Owner: "+email;
-
+      document.getElementById("userLabel")
+        .textContent="Owner";
 
       await loadAll();
 
@@ -1904,136 +1022,66 @@ window.login=async function(){
     }
 
 
-    /* ================================================
-       RENTER
-    ================================================= */
+    /* =====================================================
+       RENTER LOGIN
+    ===================================================== */
 
-    if(type==="renter"){
+    const account=
+      renterAccounts.find(a=>
+        String(a.loginId||"").toLowerCase()
+        ===loginId.toLowerCase()
+      );
 
-      const rentalId=
-        document
-          .getElementById("loginRentalId")
-          .value
-          .trim();
+    if(!account){
 
+      message.textContent=
+        "Invalid Rental Login ID.";
 
-      if(!rentalId||!password){
-
-        message.textContent=
-          "Enter Rental ID and password.";
-
-        return;
-      }
-
-
-      /*
-        Convert Rental ID into hidden internal
-        Firebase email.
-      */
-
-      const hiddenEmail=
-        rentalFirebaseEmail(rentalId);
-
-
-      const result=
-        await signInWithEmailAndPassword(
-          auth,
-          hiddenEmail,
-          password
-        );
-
-
-      currentUser=result.user;
-
-
-      /*
-        Load account records after Firebase login.
-      */
-
-      const accountDoc=
-        await getDoc(
-          doc(
-            db,
-            "renterAccounts",
-            currentUser.uid
-          )
-        );
-
-
-      if(!accountDoc.exists()){
-
-        await signOut(auth);
-
-        message.textContent=
-          "Rental ID is not linked to a room.";
-
-        return;
-      }
-
-
-      const account={
-        id:accountDoc.id,
-        ...accountDoc.data()
-      };
-
-
-      currentRole="renter";
-
-      window.myRenterAccount=
-        account;
-
-
-      document
-        .getElementById("loginPage")
-        .classList.add("hidden");
-
-
-      document
-        .getElementById("app")
-        .style.display="block";
-
-
-      document
-        .getElementById("ownerNav")
-        .classList.add("hidden");
-
-
-      document
-        .getElementById("renterNav")
-        .classList.remove("hidden");
-
-
-      document
-        .getElementById("userLabel")
-        .textContent=
-        "Rental ID: "+account.rentalId;
-
-
-      await loadAll();
-
-      showPage("renterDashboard");
-
+      return;
     }
+
+    const authEmail=
+      account.authEmail ||
+      internalAuthEmail(loginId);
+
+    const result=
+      await signInWithEmailAndPassword(
+        auth,
+        authEmail,
+        password
+      );
+
+    currentUser=result.user;
+    currentRole="renter";
+
+    window.myRenterAccount=account;
+
+    document.getElementById("loginPage")
+      .classList.add("hidden");
+
+    document.getElementById("app")
+      .style.display="block";
+
+    document.getElementById("ownerNav")
+      .classList.add("hidden");
+
+    document.getElementById("renterNav")
+      .classList.remove("hidden");
+
+    document.getElementById("userLabel")
+      .textContent="Rental: "+account.loginId;
+
+    await loadAll();
+
+    showPage("renterDashboard");
 
   }catch(error){
 
     console.error(error);
 
-    let text=
-      error.message||error.code||"Login failed";
-
-
-    if(error.code==="auth/invalid-credential"){
-      text=
-        "Invalid Rental ID/password or Owner login.";
-    }
-
-
     message.textContent=
-      text;
-
+      "Login failed: "+error.message;
   }
-
 };
 
 
@@ -2049,195 +1097,108 @@ window.logout=async function(){
   currentRole=null;
   window.myRenterAccount=null;
 
-
-  document
-    .getElementById("app")
+  document.getElementById("app")
     .style.display="none";
 
-
-  document
-    .getElementById("loginPage")
+  document.getElementById("loginPage")
     .classList.remove("hidden");
 
-
-  document
-    .getElementById("loginPassword")
-    .value="";
-
+  document.getElementById("loginPassword").value="";
 };
 
 
 /* =========================================================
-   PAGE NAVIGATION
+   NAVIGATION
 ========================================================= */
 
 window.showPage=function(page){
 
-  document
-    .querySelectorAll(".page")
-    .forEach(x=>
-      x.classList.add("hidden")
-    );
-
+  document.querySelectorAll(".page")
+    .forEach(x=>x.classList.add("hidden"));
 
   const target=
-    document.getElementById(
-      "page-"+page
-    );
-
+    document.getElementById("page-"+page);
 
   if(target)
     target.classList.remove("hidden");
 
-
-  document
-    .querySelectorAll(".nav button")
+  document.querySelectorAll(".nav button")
     .forEach(btn=>{
-
       btn.classList.toggle(
         "active",
         btn.dataset.page===page
       );
-
     });
 
-
   renderAll();
-
 };
 
 
 /* =========================================================
-   ROOM FORM
+   ROOM
 ========================================================= */
 
 window.openRoomForm=function(room=null){
 
-  document
-    .getElementById("roomFormBox")
+  document.getElementById("roomFormBox")
     .classList.remove("hidden");
-
 
   document.getElementById("roomId").value=
     room?.id||"";
 
-
   document.getElementById("roomNo").value=
     room?.roomNo||"";
-
 
   document.getElementById("renterName").value=
     room?.renterName||"";
 
-
   document.getElementById("renterPhone").value=
     room?.renterPhone||"";
-
 
   document.getElementById("members").value=
     room?.members||1;
 
-
   document.getElementById("checkinDate").value=
     room?.checkinDate||today();
-
 
   document.getElementById("monthlyRent").value=
     room?.monthlyRent||"";
 
-
   document.getElementById("deposit").value=
     room?.deposit||"";
-
 };
-
 
 window.closeRoomForm=function(){
-
-  document
-    .getElementById("roomFormBox")
+  document.getElementById("roomFormBox")
     .classList.add("hidden");
-
 };
 
-
-/* =========================================================
-   SAVE ROOM
-========================================================= */
 
 window.saveRoom=async function(){
 
   if(currentRole!=="owner"){
-
     toast("Owner access required");
-
     return;
   }
-
 
   const id=
     document.getElementById("roomId").value;
 
-
   const data={
-
-    roomNo:
-      document
-        .getElementById("roomNo")
-        .value
-        .trim(),
-
-    renterName:
-      document
-        .getElementById("renterName")
-        .value
-        .trim(),
-
-    renterPhone:
-      document
-        .getElementById("renterPhone")
-        .value
-        .trim(),
-
-    members:
-      Number(
-        document
-          .getElementById("members")
-          .value||1
-      ),
-
-    checkinDate:
-      document
-        .getElementById("checkinDate")
-        .value,
-
-    monthlyRent:
-      Number(
-        document
-          .getElementById("monthlyRent")
-          .value||0
-      ),
-
-    deposit:
-      Number(
-        document
-          .getElementById("deposit")
-          .value||0
-      ),
-
-    updatedAt:
-      new Date().toISOString()
-
+    roomNo:document.getElementById("roomNo").value.trim(),
+    renterName:document.getElementById("renterName").value.trim(),
+    renterPhone:document.getElementById("renterPhone").value.trim(),
+    members:Number(document.getElementById("members").value||1),
+    checkinDate:document.getElementById("checkinDate").value,
+    monthlyRent:Number(document.getElementById("monthlyRent").value||0),
+    deposit:Number(document.getElementById("deposit").value||0),
+    updatedAt:new Date().toISOString()
   };
 
-
   if(!data.roomNo){
-
     toast("Enter room number");
-
     return;
   }
-
 
   try{
 
@@ -2258,387 +1219,79 @@ window.saveRoom=async function(){
       );
 
       toast("Room added");
-
     }
 
-
     closeRoomForm();
-
     await loadAll();
 
   }catch(error){
 
     console.error(error);
-
     toast("Could not save room");
-
   }
-
 };
 
 
-/* =========================================================
-   DELETE ROOM
-========================================================= */
-
 window.deleteRoom=async function(id){
 
-  if(currentRole!=="owner"){
-
-    toast("Owner access required");
-
-    return;
-  }
-
-
-  const room=
-    rooms.find(r=>r.id===id);
-
-  if(!room)
-    return;
-
-
-  if(!confirm(
-    "Delete Room "+room.roomNo+
-    "?"
-  ))
-    return;
-
+  if(!confirm("Delete this room?"))return;
 
   try{
 
-    await deleteDoc(
-      doc(db,"rooms",id)
-    );
+    await deleteDoc(doc(db,"rooms",id));
 
-
-    rooms=
-      rooms.filter(r=>r.id!==id);
-
+    rooms=rooms.filter(r=>r.id!==id);
 
     renderRooms();
 
-    renderDashboard();
-
-    toast(
-      "Room deleted successfully"
-    );
+    toast("Room deleted");
 
   }catch(error){
 
     console.error(error);
-
-    toast(
-      "Delete failed: "+
-      (error.message||error.code)
-    );
-
+    toast("Delete failed");
   }
-
 };
 
 
 /* =========================================================
-   ROOM RENDER
-========================================================= */
-
-function renderRooms(){
-
-  const grid=
-    document.getElementById("roomsGrid");
-
-  if(!grid)
-    return;
-
-
-  const year=
-    masterYear;
-
-
-  if(!rooms.length){
-
-    grid.innerHTML=
-      `<div class="card">
-        No rooms found. Add your rooms.
-      </div>`;
-
-    return;
-  }
-
-
-  grid.innerHTML=
-    rooms
-      .slice()
-      .sort((a,b)=>
-        String(a.roomNo)
-          .localeCompare(
-            String(b.roomNo),
-            undefined,
-            {numeric:true}
-          )
-      )
-      .map(room=>{
-
-        const roomRents=
-          rents.filter(r=>
-            r.roomId===room.id&&
-            Number(r.year)===year
-          );
-
-
-        const paid=
-          roomRents
-            .filter(r=>r.status==="paid")
-            .reduce(
-              (sum,r)=>
-                sum+Number(r.amount||0),
-              0
-            );
-
-
-        const due=
-          calculateRoomDue(
-            room,
-            year
-          );
-
-
-        return `
-
-        <div class="roomCard">
-
-          <h3>
-            Room ${esc(room.roomNo)}
-          </h3>
-
-          <span class="badge">
-            ${
-              room.renterName
-              ? esc(room.renterName)
-              : "Vacant"
-            }
-          </span>
-
-
-          <p>
-            <b>Members:</b>
-            ${esc(room.members||0)}
-          </p>
-
-
-          <p>
-            <b>Check-in:</b>
-            ${dateDMY(room.checkinDate)}
-          </p>
-
-
-          <p>
-            <b>Monthly Rent:</b>
-            ${money(room.monthlyRent)}
-          </p>
-
-
-          <p>
-            <b>Deposit:</b>
-            ${money(room.deposit)}
-          </p>
-
-
-          <p>
-            <b>${year} Paid:</b>
-            ${money(paid)}
-          </p>
-
-
-          <p>
-            <b>${year} Total Due:</b>
-            ${money(due)}
-          </p>
-
-
-          <div class="actions">
-
-            <button
-              onclick='openRoomForm(${JSON.stringify(room)})'>
-              Edit
-            </button>
-
-
-            <button
-              class="danger"
-              onclick="deleteRoom('${room.id}')">
-              Delete
-            </button>
-
-
-            <button
-              class="success"
-              onclick="openRoomRentHistory('${room.id}')">
-              Rent History
-            </button>
-
-
-            <button
-              class="warning"
-              onclick="sendDueSMS('${room.id}')">
-              Due SMS
-            </button>
-
-
-            <button
-              onclick="sendPaidSMS('${room.id}')">
-              Paid SMS
-            </button>
-
-
-            ${
-              room.renterPhone
-              ?
-              `<button
-                class="gray"
-                onclick="checkoutRoom('${room.id}')">
-                Checkout
-              </button>`
-              :
-              ""
-            }
-
-          </div>
-
-        </div>
-
-        `;
-
-      })
-      .join("");
-
-}
-
-
-/* =========================================================
-   CALCULATE DUE
+   DUE CALCULATION
 ========================================================= */
 
 function calculateRoomDue(room,year){
 
-  const paidMonths=
-    new Set(
-      rents
-        .filter(r=>
-          r.roomId===room.id&&
-          Number(r.year)===Number(year)&&
-          r.status==="paid"
-        )
-        .map(r=>Number(r.month))
-    );
-
+  const paidMonths=new Set(
+    rents
+      .filter(r=>
+        r.roomId===room.id &&
+        Number(r.year)===Number(year) &&
+        r.status==="paid"
+      )
+      .map(r=>Number(r.month))
+  );
 
   const checkin=
     room.checkinDate
     ?new Date(room.checkinDate)
     :null;
 
-
   let startMonth=1;
 
+  if(checkin &&
+     checkin.getFullYear()===year){
 
-  if(
-    checkin&&
-    checkin.getFullYear()===year
-  ){
-
-    startMonth=
-      checkin.getMonth()+1;
-
+    startMonth=checkin.getMonth()+1;
   }
 
-
   let endMonth=12;
-
 
   if(year===currentYear){
 
     endMonth=
       new Date().getMonth()+1;
-
   }
-
 
   let due=0;
-
-
-  for(
-    let month=startMonth;
-    month<=endMonth;
-    month++
-  ){
-
-    if(!paidMonths.has(month)){
-
-      due+=
-        Number(room.monthlyRent||0);
-
-    }
-
-  }
-
-
-  return due;
-
-}
-
-
-/* =========================================================
-   GET DUE MONTHS
-========================================================= */
-
-function getDueMonths(room,year){
-
-  const paidMonths=
-    new Set(
-      rents
-        .filter(r=>
-          r.roomId===room.id&&
-          Number(r.year)===Number(year)&&
-          r.status==="paid"
-        )
-        .map(r=>Number(r.month))
-    );
-
-
-  const checkin=
-    room.checkinDate
-    ?new Date(room.checkinDate)
-    :null;
-
-
-  let startMonth=1;
-
-
-  if(
-    checkin&&
-    checkin.getFullYear()===year
-  ){
-
-    startMonth=
-      checkin.getMonth()+1;
-
-  }
-
-
-  let endMonth=12;
-
-
-  if(year===currentYear){
-
-    endMonth=
-      new Date().getMonth()+1;
-
-  }
-
-
-  const result=[];
-
 
   for(
     let m=startMonth;
@@ -2646,183 +1299,245 @@ function getDueMonths(room,year){
     m++
   ){
 
-    if(!paidMonths.has(m))
-      result.push(m);
-
+    if(!paidMonths.has(m)){
+      due+=Number(room.monthlyRent||0);
+    }
   }
 
+  return due;
+}
+
+
+function getDueMonths(room,year){
+
+  const paidMonths=new Set(
+    rents
+      .filter(r=>
+        r.roomId===room.id &&
+        Number(r.year)===Number(year) &&
+        r.status==="paid"
+      )
+      .map(r=>Number(r.month))
+  );
+
+  const checkin=
+    room.checkinDate
+    ?new Date(room.checkinDate)
+    :null;
+
+  let startMonth=1;
+
+  if(checkin &&
+     checkin.getFullYear()===year){
+
+    startMonth=checkin.getMonth()+1;
+  }
+
+  let endMonth=12;
+
+  if(year===currentYear){
+    endMonth=new Date().getMonth()+1;
+  }
+
+  const result=[];
+
+  for(
+    let m=startMonth;
+    m<=endMonth;
+    m++
+  ){
+
+    if(!paidMonths.has(m)){
+      result.push(m);
+    }
+  }
 
   return result;
-
 }
 
 
 /* =========================================================
-   RENT FORM
+   ROOMS RENDER
+========================================================= */
+
+function renderRooms(){
+
+  const grid=
+    document.getElementById("roomsGrid");
+
+  if(!grid)return;
+
+  const year=
+    Number(document.getElementById("roomYear")?.value)
+    ||currentYear;
+
+  grid.innerHTML=
+    rooms
+      .sort((a,b)=>
+        String(a.roomNo).localeCompare(
+          String(b.roomNo),
+          undefined,
+          {numeric:true}
+        )
+      )
+      .map(room=>{
+
+        const paid=
+          rents
+            .filter(r=>
+              r.roomId===room.id &&
+              Number(r.year)===year &&
+              r.status==="paid"
+            )
+            .reduce(
+              (s,r)=>s+Number(r.amount||0),
+              0
+            );
+
+        const due=
+          calculateRoomDue(room,year);
+
+        return `
+        <div class="roomCard">
+
+          <h3>Room ${esc(room.roomNo)}</h3>
+
+          <span class="badge">
+            ${esc(room.renterName||"Vacant")}
+          </span>
+
+          <p>
+            <b>Members:</b>
+            ${room.members||0}
+          </p>
+
+          <p>
+            <b>Check-in:</b>
+            ${dateDMY(room.checkinDate)}
+          </p>
+
+          <p>
+            <b>Monthly Rent:</b>
+            ${money(room.monthlyRent)}
+          </p>
+
+          <p>
+            <b>Deposit:</b>
+            ${money(room.deposit)}
+          </p>
+
+          <p>
+            <b>${year} Total Rent:</b>
+            ${money(paid)}
+          </p>
+
+          <p>
+            <b>${year} Rent Due:</b>
+            ${money(due)}
+          </p>
+
+          <div class="actions">
+
+            <button onclick='openRoomForm(${JSON.stringify(room)})'>
+              Edit
+            </button>
+
+            <button class="danger"
+                    onclick="deleteRoom('${room.id}')">
+              Delete
+            </button>
+
+            <button class="success"
+                    onclick="openRoomRentHistory('${room.id}')">
+              Rent History
+            </button>
+
+            <button class="warning"
+                    onclick="sendDueSMS('${room.id}')">
+              Due SMS
+            </button>
+
+          </div>
+
+        </div>`;
+      }).join("");
+}
+
+
+/* =========================================================
+   RENT
 ========================================================= */
 
 window.openRentForm=function(){
 
-  document
-    .getElementById("rentFormBox")
+  document.getElementById("rentFormBox")
     .classList.remove("hidden");
 
-
-  const roomSelect=
-    document.getElementById("payRoom");
-
-
-  roomSelect.innerHTML=
+  document.getElementById("payRoom").innerHTML=
     rooms.map(r=>
       `<option value="${r.id}">
         Room ${esc(r.roomNo)}
-        -
-        ${esc(r.renterName||"Vacant")}
       </option>`
     ).join("");
 
-
   document.getElementById("payYear").value=
-    masterYear;
-
+    currentYear;
 
   document.getElementById("payDate").value=
     today();
-
-
-  if(roomSelect.value){
-
-    const room=
-      rooms.find(
-        r=>r.id===roomSelect.value
-      );
-
-
-    if(room){
-
-      document
-        .getElementById("payAmount")
-        .value=
-        room.monthlyRent||"";
-
-    }
-
-  }
-
 };
-
 
 window.closeRentForm=function(){
 
-  document
-    .getElementById("rentFormBox")
+  document.getElementById("rentFormBox")
     .classList.add("hidden");
-
 };
 
 
-/* =========================================================
-   SAVE RENT
-========================================================= */
-
 window.saveRent=async function(){
-
-  if(currentRole!=="owner"){
-
-    toast("Owner access required");
-
-    return;
-  }
-
 
   const roomId=
     document.getElementById("payRoom").value;
 
-
   const month=
-    Number(
-      document.getElementById("payMonth").value
-    );
-
+    Number(document.getElementById("payMonth").value);
 
   const year=
-    Number(
-      document.getElementById("payYear").value
-    );
-
+    Number(document.getElementById("payYear").value);
 
   const amount=
-    Number(
-      document.getElementById("payAmount").value||0
-    );
-
+    Number(document.getElementById("payAmount").value||0);
 
   const room=
     rooms.find(r=>r.id===roomId);
 
-
-  if(!room){
-
-    toast("Select a room");
-
+  if(!room || !amount){
+    toast("Select room and enter amount");
     return;
   }
-
-
-  if(!amount){
-
-    toast("Enter amount");
-
-    return;
-  }
-
 
   try{
 
     const existing=
       rents.find(r=>
-        r.roomId===roomId&&
-        Number(r.month)===month&&
+        r.roomId===roomId &&
+        Number(r.month)===month &&
         Number(r.year)===year
       );
 
-
     const data={
-
       roomId,
-
-      roomNo:
-        room.roomNo,
-
-      renterName:
-        room.renterName||"",
-
+      roomNo:room.roomNo,
+      renterName:room.renterName||"",
       month,
-
-      monthName:
-        months[month-1],
-
+      monthName:months[month-1],
       year,
-
       amount,
-
-      paidDate:
-        document
-          .getElementById("payDate")
-          .value,
-
-      paymentMethod:
-        document
-          .getElementById("payMethod")
-          .value,
-
+      paidDate:document.getElementById("payDate").value,
+      paymentMethod:document.getElementById("payMethod").value,
       status:"paid",
-
-      updatedAt:
-        new Date().toISOString()
-
+      updatedAt:new Date().toISOString()
     };
-
 
     if(existing){
 
@@ -2831,205 +1546,102 @@ window.saveRent=async function(){
         data
       );
 
-      toast("Payment updated");
-
     }else{
 
       await addDoc(
         collection(db,"rents"),
         data
       );
-
-      toast("Rent payment saved");
-
     }
 
-
     closeRentForm();
-
     await loadAll();
+
+    toast("Total rent saved");
 
   }catch(error){
 
     console.error(error);
-
     toast("Could not save rent");
-
   }
-
 };
 
-
-/* =========================================================
-   RENT HISTORY
-========================================================= */
 
 function renderRentHistory(){
 
   const year=
-    masterYear;
-
+    Number(document.getElementById("rentYear")?.value)
+    ||currentYear;
 
   const roomId=
-    document
-      .getElementById("rentRoom")
-      ?.value||"";
-
+    document.getElementById("rentRoom")?.value||"";
 
   const tbody=
     document.getElementById("rentTable");
 
+  if(!tbody)return;
 
-  if(!tbody)
-    return;
-
-
-  let list=
+  const list=
     rents.filter(r=>
-      Number(r.year)===year&&
+      Number(r.year)===year &&
       (!roomId||r.roomId===roomId)
     );
-
-
-  list.sort(
-    (a,b)=>
-      Number(a.month||0)-
-      Number(b.month||0)
-  );
-
 
   tbody.innerHTML=
     list.length
     ?
     list.map(r=>`
-
       <tr>
-
+        <td>${esc(r.roomNo)}</td>
+        <td>${esc(r.renterName)}</td>
+        <td>${esc(r.monthName)}</td>
+        <td>${r.year}</td>
+        <td>${money(r.amount)}</td>
+        <td><span class="badge paid">Total Rent</span></td>
+        <td>${dateDMY(r.paidDate)}</td>
+        <td>${esc(r.paymentMethod)}</td>
         <td>
-          ${esc(r.roomNo)}
-        </td>
-
-        <td>
-          ${esc(r.renterName)}
-        </td>
-
-        <td>
-          ${esc(
-            r.monthName||
-            months[(r.month||1)-1]
-          )}
-        </td>
-
-        <td>
-          ${r.year}
-        </td>
-
-        <td>
-          ${money(r.amount)}
-        </td>
-
-        <td>
-          <span class="badge paid">
-            ${esc(r.status||"paid")}
-          </span>
-        </td>
-
-        <td>
-          ${dateDMY(r.paidDate)}
-        </td>
-
-        <td>
-          ${esc(r.paymentMethod||"-")}
-        </td>
-
-        <td>
-
-          <button
-            class="danger"
-            onclick="deleteRent('${r.id}')">
+          <button class="danger"
+                  onclick="deleteRent('${r.id}')">
             Delete
           </button>
-
         </td>
-
       </tr>
-
     `).join("")
     :
-    `<tr>
-      <td colspan="9">
-        No payment records for ${year}
-      </td>
-    </tr>`;
-
+    `<tr><td colspan="9">No rent records for ${year}</td></tr>`;
 }
 
 
-/* =========================================================
-   DELETE RENT
-========================================================= */
-
 window.deleteRent=async function(id){
 
-  if(currentRole!=="owner"){
-
-    toast("Owner access required");
-
-    return;
-  }
-
-
-  if(!confirm(
-    "Delete this rent payment?"
-  ))
-    return;
-
+  if(!confirm("Delete this rent payment?"))return;
 
   try{
 
-    await deleteDoc(
-      doc(db,"rents",id)
-    );
+    await deleteDoc(doc(db,"rents",id));
 
-
-    rents=
-      rents.filter(r=>r.id!==id);
-
+    rents=rents.filter(r=>r.id!==id);
 
     renderRentHistory();
     renderDashboard();
 
-
-    toast(
-      "Rent payment deleted"
-    );
+    toast("Rent deleted");
 
   }catch(error){
 
     console.error(error);
-
     toast("Delete failed");
-
   }
-
 };
 
 
-/* =========================================================
-   OPEN ROOM RENT HISTORY
-========================================================= */
-
 window.openRoomRentHistory=function(roomId){
 
-  document
-    .getElementById("rentRoom")
-    .value=roomId;
-
+  document.getElementById("rentRoom").value=
+    roomId;
 
   showPage("rents");
-
-  renderRentHistory();
-
 };
 
 
@@ -3040,203 +1652,141 @@ window.openRoomRentHistory=function(roomId){
 function renderDashboard(){
 
   const year=
-    masterYear;
+    Number(document.getElementById("dashboardYear")?.value)
+    ||currentYear;
 
+  document.getElementById("dashYearTitle")
+    .textContent=year;
 
-  const title=
-    document.getElementById(
-      "dashYearTitle"
-    );
-
-  if(title)
-    title.textContent=year;
-
-
-  const dueYear=
-    document.getElementById(
-      "dueYear"
-    );
-
-  if(dueYear)
-    dueYear.textContent=year;
-
+  document.getElementById("dueYear")
+    .textContent=year;
 
   document.getElementById("statRooms")
-    .textContent=
-    rooms.length;
-
-
-  const occupied=
-    rooms.filter(
-      r=>r.renterName
-    ).length;
-
+    .textContent=rooms.length;
 
   document.getElementById("statOccupied")
     .textContent=
-    occupied;
-
+      rooms.filter(r=>r.renterName).length;
 
   const monthly=
     rooms.reduce(
-      (sum,r)=>
-        sum+Number(r.monthlyRent||0),
+      (s,r)=>s+Number(r.monthlyRent||0),
       0
     );
-
 
   document.getElementById("statMonthly")
-    .textContent=
-    money(monthly);
+    .textContent=money(monthly);
 
 
-  const due=
-    rooms.reduce(
-      (sum,r)=>
-        sum+
-        calculateRoomDue(
-          r,
-          year
-        ),
-      0
-    );
+  /* TOTAL RENT */
 
-
-  document.getElementById("statDue")
-    .textContent=
-    money(due);
-
-
-  const paid=
+  const totalRent=
     rents
       .filter(r=>
-        Number(r.year)===year&&
+        Number(r.year)===year &&
         r.status==="paid"
       )
       .reduce(
-        (sum,r)=>
-          sum+Number(r.amount||0),
+        (s,r)=>s+Number(r.amount||0),
         0
       );
 
-
   document.getElementById("statPaid")
-    .textContent=
-    money(paid);
+    .textContent=money(totalRent);
 
 
-  const exp=
+  /* TOTAL DUE */
+
+  const totalDue=
+    rooms.reduce(
+      (s,r)=>s+calculateRoomDue(r,year),
+      0
+    );
+
+  document.getElementById("statDue")
+    .textContent=money(totalDue);
+
+
+  /* EXPENSES */
+
+  const totalExpenses=
     expenses
       .filter(e=>
         Number(
-          e.year||
-          new Date(e.date)
-            .getFullYear()
+          e.year ||
+          new Date(e.date).getFullYear()
         )===year
       )
       .reduce(
-        (sum,e)=>
-          sum+Number(e.amount||0),
+        (s,e)=>s+Number(e.amount||0),
         0
       );
 
-
   document.getElementById("statExpenses")
-    .textContent=
-    money(exp);
+    .textContent=money(totalExpenses);
 
 
-  const elec=
+  /* ELECTRICITY */
+
+  const totalElectricity=
     electricity
       .filter(e=>
         Number(
-          e.year||
-          new Date(e.date)
-            .getFullYear()
+          e.year ||
+          new Date(e.date).getFullYear()
         )===year
       )
       .reduce(
-        (sum,e)=>
-          sum+Number(e.amount||0),
+        (s,e)=>s+Number(e.amount||0),
         0
       );
 
-
   document.getElementById("statElectricity")
-    .textContent=
-    money(elec);
+    .textContent=money(totalElectricity);
 
 
-  /* =====================================================
-     NEW NET INCOME
-     RENT PAID - EXPENSES - ELECTRICITY
-  ====================================================== */
+  /*
+    IMPORTANT:
+    TOTAL INCOME = TOTAL RENT - EXPENSES - ELECTRICITY
+  */
 
-  const netIncome=
-    paid-exp-elec;
+  const totalIncome=
+    totalRent-
+    totalExpenses-
+    totalElectricity;
+
+  document.getElementById("statIncome")
+    .textContent=money(totalIncome);
 
 
-  document.getElementById("statNetIncome")
-    .textContent=
-    money(netIncome);
-
-
-  /* =====================================================
-     DUE LIST
-  ====================================================== */
-
-  const list=
-    document.getElementById(
-      "dashboardDueList"
-    );
-
+  /* DUE LIST */
 
   let html="";
-
 
   rooms.forEach(room=>{
 
     const dueMonths=
-      getDueMonths(
-        room,
-        year
-      );
+      getDueMonths(room,year);
 
-
-    if(!dueMonths.length)
-      return;
-
+    if(!dueMonths.length)return;
 
     html+=`
-
-      <div
-        class="card"
-        style="margin-bottom:10px">
+      <div class="card" style="margin-bottom:10px">
 
         <b>
           Room ${esc(room.roomNo)}
         </b>
-
         —
-        ${esc(
-          room.renterName||
-          "Vacant"
-        )}
-
+        ${esc(room.renterName||"Vacant")}
 
         <p>
-
           ${dueMonths.map(m=>
             `<span class="badge due">
-              ${months[m-1]}
-              ${year}
-              —
-              ${money(room.monthlyRent)}
+              ${months[m-1]} ${year}
+              — ${money(room.monthlyRent)}
             </span>`
-          ).join(" ")}
-
+          ).join("")}
         </p>
-
 
         <b>
           Total Due:
@@ -3246,711 +1796,125 @@ function renderDashboard(){
           )}
         </b>
 
-
-        <div class="actions">
-
-          <button
-            class="warning"
-            onclick="sendDueSMS('${room.id}')">
-            Send Due SMS
-          </button>
-
-        </div>
-
-      </div>
-
-    `;
-
+      </div>`;
   });
 
-
-  list.innerHTML=
-    html||
-    `<p class="muted">
-      No rent due for ${year}.
-    </p>`;
-
+  document.getElementById("dashboardDueList")
+    .innerHTML=
+      html||
+      `<p class="muted">
+        No rent due for ${year}.
+      </p>`;
 }
 
 
 /* =========================================================
-   SMS
-========================================================= */
-
-window.sendDueSMS=function(roomId){
-
-  const room=
-    rooms.find(
-      r=>r.id===roomId
-    );
-
-
-  if(
-    !room||
-    !room.renterPhone
-  ){
-
-    toast(
-      "Renter phone number not available"
-    );
-
-    return;
-  }
-
-
-  const year=
-    masterYear;
-
-
-  const dueMonths=
-    getDueMonths(
-      room,
-      year
-    );
-
-
-  if(!dueMonths.length){
-
-    toast("No rent due");
-
-    return;
-  }
-
-
-  const monthText=
-    dueMonths
-      .map(
-        m=>months[m-1]+" "+year
-      )
-      .join(", ");
-
-
-  const amount=
-    dueMonths.length*
-    Number(room.monthlyRent||0);
-
-
-  const message=
-    "RentManager: Rent due for Room "+
-    room.roomNo+
-    ". Due month(s): "+
-    monthText+
-    ". Total due: "+
-    money(amount);
-
-
-  openSMS(
-    room.renterPhone,
-    message
-  );
-
-};
-
-
-window.sendPaidSMS=function(roomId){
-
-  const room=
-    rooms.find(
-      r=>r.id===roomId
-    );
-
-
-  if(
-    !room||
-    !room.renterPhone
-  ){
-
-    toast(
-      "Renter phone number not available"
-    );
-
-    return;
-  }
-
-
-  const latest=
-    rents
-      .filter(r=>
-        r.roomId===roomId&&
-        r.status==="paid"
-      )
-      .sort(
-        (a,b)=>
-          String(b.paidDate||"")
-          .localeCompare(
-            String(a.paidDate||"")
-          )
-      )[0];
-
-
-  if(!latest){
-
-    toast(
-      "No paid rent found"
-    );
-
-    return;
-  }
-
-
-  const message=
-    "RentManager: Rent received for Room "+
-    room.roomNo+
-    ". "+
-    (
-      latest.monthName||
-      months[(latest.month||1)-1]
-    )+
-    " "+
-    latest.year+
-    ". Amount paid: "+
-    money(latest.amount)+
-    ".";
-
-
-  openSMS(
-    room.renterPhone,
-    message
-  );
-
-};
-
-
-function openSMS(
-  phone,
-  message
-){
-
-  const clean=
-    String(phone)
-      .replace(/[^\d+]/g,"");
-
-
-  window.location.href=
-    "sms:"+
-    clean+
-    "?body="+
-    encodeURIComponent(message);
-
-}
-
-
-/* =========================================================
-   CHECKOUT
-========================================================= */
-
-window.checkoutRoom=async function(roomId){
-
-  if(currentRole!=="owner"){
-
-    toast(
-      "Owner access required"
-    );
-
-    return;
-  }
-
-
-  const room=
-    rooms.find(
-      r=>r.id===roomId
-    );
-
-
-  if(!room)
-    return;
-
-
-  const checkoutDate=
-    today();
-
-
-  if(!confirm(
-    "Checkout Room "+
-    room.roomNo+
-    "?"
-  ))
-    return;
-
-
-  try{
-
-    await addDoc(
-      collection(db,"checkouts"),
-      {
-
-        roomId:
-          room.id,
-
-        roomNo:
-          room.roomNo,
-
-        renterName:
-          room.renterName||"",
-
-        members:
-          room.members||0,
-
-        checkinDate:
-          room.checkinDate||"",
-
-        checkoutDate,
-
-        checkoutYear:
-          new Date(
-            checkoutDate
-          ).getFullYear(),
-
-        createdAt:
-          new Date().toISOString()
-
-      }
-    );
-
-
-    await updateDoc(
-      doc(
-        db,
-        "rooms",
-        room.id
-      ),
-      {
-
-        renterName:"",
-        renterPhone:"",
-        members:0,
-        monthlyRent:0,
-        deposit:0,
-        checkinDate:"",
-        status:"vacant",
-
-        updatedAt:
-          new Date().toISOString()
-
-      }
-    );
-
-
-    toast(
-      "Checkout completed"
-    );
-
-
-    await loadAll();
-
-  }catch(error){
-
-    console.error(error);
-
-    toast(
-      "Checkout failed"
-    );
-
-  }
-
-};
-
-
-/* =========================================================
-   CHECKOUT RENDER
-========================================================= */
-
-function renderCheckout(){
-
-  const tbody=
-    document.getElementById(
-      "checkoutTable"
-    );
-
-
-  if(!tbody)
-    return;
-
-
-  const year=
-    masterYear;
-
-
-  const list=
-    checkouts
-      .filter(c=>
-        Number(
-          c.checkoutYear||
-          (
-            c.checkoutDate
-            ?
-            new Date(
-              c.checkoutDate
-            ).getFullYear()
-            :
-            0
-          )
-        )===year
-      );
-
-
-  tbody.innerHTML=
-    list.length
-    ?
-    list
-      .sort(
-        (a,b)=>
-          String(
-            b.checkoutDate||""
-          ).localeCompare(
-            String(
-              a.checkoutDate||""
-            )
-          )
-      )
-      .map(c=>`
-
-        <tr>
-
-          <td>
-            ${esc(c.roomNo)}
-          </td>
-
-          <td>
-            ${esc(c.renterName)}
-          </td>
-
-          <td>
-            ${esc(c.members)}
-          </td>
-
-          <td>
-            ${dateDMY(c.checkinDate)}
-          </td>
-
-          <td>
-            ${dateDMY(c.checkoutDate)}
-          </td>
-
-          <td>
-
-            <button
-              class="danger"
-              onclick="deleteCheckout('${c.id}')">
-              Delete
-            </button>
-
-          </td>
-
-        </tr>
-
-      `).join("")
-    :
-    `<tr>
-      <td colspan="6">
-        No checkout history for ${year}
-      </td>
-    </tr>`;
-
-}
-
-
-/* =========================================================
-   DELETE CHECKOUT
-========================================================= */
-
-window.deleteCheckout=async function(id){
-
-  if(currentRole!=="owner"){
-
-    toast(
-      "Owner access required"
-    );
-
-    return;
-  }
-
-
-  if(!confirm(
-    "Delete checkout record?"
-  ))
-    return;
-
-
-  try{
-
-    await deleteDoc(
-      doc(
-        db,
-        "checkouts",
-        id
-      )
-    );
-
-
-    checkouts=
-      checkouts.filter(
-        c=>c.id!==id
-      );
-
-
-    renderCheckout();
-
-    toast(
-      "Checkout record deleted"
-    );
-
-  }catch(error){
-
-    console.error(error);
-
-    toast(
-      "Delete failed"
-    );
-
-  }
-
-};
-
-
-/* =========================================================
-   EXPENSE FORM
+   EXPENSES
 ========================================================= */
 
 window.openExpenseForm=function(){
 
-  document
-    .getElementById("expenseFormBox")
+  document.getElementById("expenseFormBox")
     .classList.remove("hidden");
 
-
-  document
-    .getElementById("expenseDate")
-    .value=today();
-
+  document.getElementById("expenseDate").value=
+    today();
 };
-
 
 window.closeExpenseForm=function(){
 
-  document
-    .getElementById("expenseFormBox")
+  document.getElementById("expenseFormBox")
     .classList.add("hidden");
-
 };
-
-
-/* =========================================================
-   SAVE EXPENSE
-========================================================= */
 
 window.saveExpense=async function(){
 
   const date=
-    document
-      .getElementById("expenseDate")
-      .value;
-
+    document.getElementById("expenseDate").value;
 
   const description=
-    document
-      .getElementById(
-        "expenseDescription"
-      )
-      .value;
-
+    document.getElementById("expenseDescription").value;
 
   const amount=
     Number(
-      document
-        .getElementById(
-          "expenseAmount"
-        )
-        .value||0
+      document.getElementById("expenseAmount").value||0
     );
-
 
   if(!date||!amount){
-
-    toast(
-      "Enter date and amount"
-    );
-
+    toast("Enter date and amount");
     return;
   }
 
+  await addDoc(
+    collection(db,"expenses"),
+    {
+      date,
+      year:new Date(date).getFullYear(),
+      description,
+      amount,
+      createdAt:new Date().toISOString()
+    }
+  );
 
-  try{
+  closeExpenseForm();
+  await loadAll();
 
-    await addDoc(
-      collection(
-        db,
-        "expenses"
-      ),
-      {
-
-        date,
-
-        year:
-          new Date(
-            date
-          ).getFullYear(),
-
-        description,
-
-        amount,
-
-        createdAt:
-          new Date().toISOString()
-
-      }
-    );
-
-
-    closeExpenseForm();
-
-    await loadAll();
-
-    toast(
-      "Expense saved"
-    );
-
-  }catch(error){
-
-    console.error(error);
-
-    toast(
-      "Could not save expense"
-    );
-
-  }
-
+  toast("Expense saved");
 };
 
-
-/* =========================================================
-   EXPENSE RENDER
-========================================================= */
 
 function renderExpenses(){
 
   const year=
-    masterYear;
-
+    Number(document.getElementById("expenseYear")?.value)
+    ||currentYear;
 
   const tbody=
-    document.getElementById(
-      "expenseTable"
-    );
+    document.getElementById("expenseTable");
 
-
-  if(!tbody)
-    return;
-
+  if(!tbody)return;
 
   const list=
     expenses.filter(e=>
-      Number(
-        e.year||
-        new Date(e.date)
-          .getFullYear()
-      )===year
+      Number(e.year||new Date(e.date).getFullYear())
+      ===year
     );
-
 
   tbody.innerHTML=
     list.length
     ?
     list.map(e=>`
-
       <tr>
-
+        <td>${dateDMY(e.date)}</td>
+        <td>${esc(e.description)}</td>
+        <td>${money(e.amount)}</td>
         <td>
-          ${dateDMY(e.date)}
-        </td>
-
-        <td>
-          ${esc(e.description)}
-        </td>
-
-        <td>
-          ${money(e.amount)}
-        </td>
-
-        <td>
-
-          <button
-            class="danger"
-            onclick="deleteExpense('${e.id}')">
+          <button class="danger"
+                  onclick="deleteExpense('${e.id}')">
             Delete
           </button>
-
         </td>
-
       </tr>
-
     `).join("")
     :
-    `<tr>
-      <td colspan="4">
-        No expenses for ${year}
-      </td>
-    </tr>`;
-
+    `<tr><td colspan="4">
+      No expenses for ${year}
+    </td></tr>`;
 }
 
 
-/* =========================================================
-   DELETE EXPENSE
-========================================================= */
-
 window.deleteExpense=async function(id){
 
-  if(currentRole!=="owner"){
+  if(!confirm("Delete expense?"))return;
 
-    toast(
-      "Owner access required"
-    );
+  await deleteDoc(doc(db,"expenses",id));
 
-    return;
-  }
+  expenses=expenses.filter(e=>e.id!==id);
 
+  renderExpenses();
+  renderDashboard();
 
-  if(!confirm(
-    "Delete expense?"
-  ))
-    return;
-
-
-  try{
-
-    await deleteDoc(
-      doc(
-        db,
-        "expenses",
-        id
-      )
-    );
-
-
-    expenses=
-      expenses.filter(
-        e=>e.id!==id
-      );
-
-
-    renderExpenses();
-    renderDashboard();
-
-    toast(
-      "Expense deleted"
-    );
-
-  }catch(error){
-
-    console.error(error);
-
-    toast(
-      "Delete failed"
-    );
-
-  }
-
+  toast("Expense deleted");
 };
 
 
@@ -3960,501 +1924,320 @@ window.deleteExpense=async function(id){
 
 window.openElectricForm=function(){
 
-  document
-    .getElementById(
-      "electricFormBox"
-    )
+  document.getElementById("electricFormBox")
     .classList.remove("hidden");
 
-
-  document
-    .getElementById(
-      "electricDate"
-    )
-    .value=today();
-
+  document.getElementById("electricDate").value=
+    today();
 };
-
 
 window.closeElectricForm=function(){
 
-  document
-    .getElementById(
-      "electricFormBox"
-    )
+  document.getElementById("electricFormBox")
     .classList.add("hidden");
-
 };
-
 
 window.saveElectricity=async function(){
 
   const date=
-    document
-      .getElementById(
-        "electricDate"
-      )
-      .value;
-
+    document.getElementById("electricDate").value;
 
   const description=
-    document
-      .getElementById(
-        "electricDescription"
-      )
-      .value;
-
+    document.getElementById("electricDescription").value;
 
   const amount=
     Number(
-      document
-        .getElementById(
-          "electricAmount"
-        )
-        .value||0
+      document.getElementById("electricAmount").value||0
     );
-
 
   if(!date||!amount){
-
-    toast(
-      "Enter date and amount"
-    );
-
+    toast("Enter date and amount");
     return;
   }
 
+  await addDoc(
+    collection(db,"electricity"),
+    {
+      date,
+      year:new Date(date).getFullYear(),
+      description,
+      amount,
+      createdAt:new Date().toISOString()
+    }
+  );
 
-  try{
+  closeElectricForm();
+  await loadAll();
 
-    await addDoc(
-      collection(
-        db,
-        "electricity"
-      ),
-      {
-
-        date,
-
-        year:
-          new Date(
-            date
-          ).getFullYear(),
-
-        description,
-
-        amount,
-
-        createdAt:
-          new Date().toISOString()
-
-      }
-    );
-
-
-    closeElectricForm();
-
-    await loadAll();
-
-    toast(
-      "Electricity saved"
-    );
-
-  }catch(error){
-
-    console.error(error);
-
-    toast(
-      "Could not save electricity"
-    );
-
-  }
-
+  toast("Electricity saved");
 };
 
-
-/* =========================================================
-   ELECTRICITY RENDER
-========================================================= */
 
 function renderElectricity(){
 
   const year=
-    masterYear;
-
+    Number(document.getElementById("electricYear")?.value)
+    ||currentYear;
 
   const tbody=
-    document.getElementById(
-      "electricTable"
-    );
+    document.getElementById("electricTable");
 
-
-  if(!tbody)
-    return;
-
+  if(!tbody)return;
 
   const list=
     electricity.filter(e=>
-      Number(
-        e.year||
-        new Date(e.date)
-          .getFullYear()
-      )===year
+      Number(e.year||new Date(e.date).getFullYear())
+      ===year
     );
-
 
   tbody.innerHTML=
     list.length
     ?
     list.map(e=>`
-
       <tr>
-
+        <td>${dateDMY(e.date)}</td>
+        <td>${esc(e.description)}</td>
+        <td>${money(e.amount)}</td>
         <td>
-          ${dateDMY(e.date)}
-        </td>
-
-        <td>
-          ${esc(e.description)}
-        </td>
-
-        <td>
-          ${money(e.amount)}
-        </td>
-
-        <td>
-
-          <button
-            class="danger"
-            onclick="deleteElectricity('${e.id}')">
+          <button class="danger"
+                  onclick="deleteElectricity('${e.id}')">
             Delete
           </button>
-
         </td>
-
       </tr>
-
     `).join("")
     :
-    `<tr>
-      <td colspan="4">
-        No electricity records for ${year}
-      </td>
-    </tr>`;
-
+    `<tr><td colspan="4">
+      No electricity records for ${year}
+    </td></tr>`;
 }
 
 
-/* =========================================================
-   DELETE ELECTRICITY
-========================================================= */
-
 window.deleteElectricity=async function(id){
 
-  if(currentRole!=="owner"){
+  if(!confirm("Delete electricity record?"))return;
 
-    toast(
-      "Owner access required"
-    );
+  await deleteDoc(
+    doc(db,"electricity",id)
+  );
 
-    return;
-  }
+  electricity=
+    electricity.filter(e=>e.id!==id);
 
+  renderElectricity();
+  renderDashboard();
 
-  if(!confirm(
-    "Delete electricity record?"
-  ))
-    return;
-
-
-  try{
-
-    await deleteDoc(
-      doc(
-        db,
-        "electricity",
-        id
-      )
-    );
-
-
-    electricity=
-      electricity.filter(
-        e=>e.id!==id
-      );
-
-
-    renderElectricity();
-    renderDashboard();
-
-    toast(
-      "Electricity record deleted"
-    );
-
-  }catch(error){
-
-    console.error(error);
-
-    toast(
-      "Delete failed"
-    );
-
-  }
-
+  toast("Electricity deleted");
 };
 
 
 /* =========================================================
-   RENTAL ACCOUNT
+   CHECKOUT
+========================================================= */
+
+window.checkoutRoom=async function(roomId){
+
+  const room=
+    rooms.find(r=>r.id===roomId);
+
+  if(!room)return;
+
+  if(!confirm(
+    "Checkout Room "+room.roomNo+"?"
+  ))return;
+
+  await addDoc(
+    collection(db,"checkouts"),
+    {
+      roomId:room.id,
+      roomNo:room.roomNo,
+      renterName:room.renterName||"",
+      members:room.members||0,
+      checkinDate:room.checkinDate||"",
+      checkoutDate:today(),
+      createdAt:new Date().toISOString()
+    }
+  );
+
+  await updateDoc(
+    doc(db,"rooms",room.id),
+    {
+      renterName:"",
+      renterPhone:"",
+      members:0,
+      monthlyRent:0,
+      deposit:0,
+      checkinDate:"",
+      updatedAt:new Date().toISOString()
+    }
+  );
+
+  await loadAll();
+
+  toast("Checkout completed");
+};
+
+
+function renderCheckout(){
+
+  const tbody=
+    document.getElementById("checkoutTable");
+
+  if(!tbody)return;
+
+  tbody.innerHTML=
+    checkouts.map(c=>`
+      <tr>
+        <td>${esc(c.roomNo)}</td>
+        <td>${esc(c.renterName)}</td>
+        <td>${c.members||0}</td>
+        <td>${dateDMY(c.checkinDate)}</td>
+        <td>${dateDMY(c.checkoutDate)}</td>
+        <td>
+          <button class="danger"
+                  onclick="deleteCheckout('${c.id}')">
+            Delete
+          </button>
+        </td>
+      </tr>
+    `).join("");
+}
+
+
+window.deleteCheckout=async function(id){
+
+  if(!confirm("Delete checkout record?"))return;
+
+  await deleteDoc(
+    doc(db,"checkouts",id)
+  );
+
+  checkouts=
+    checkouts.filter(c=>c.id!==id);
+
+  renderCheckout();
+
+  toast("Checkout deleted");
+};
+
+
+/* =========================================================
+   RENTAL ACCOUNTS
 ========================================================= */
 
 window.createRentalAccount=async function(){
 
   if(currentRole!=="owner"){
-
-    toast(
-      "Owner access required"
-    );
-
+    toast("Owner access required");
     return;
   }
 
-
-  const rentalId=
-    document
-      .getElementById(
-        "accountRentalId"
-      )
-      .value
-      .trim();
-
+  const loginId=
+    document.getElementById("accountLoginId")
+      .value.trim()
+      .toLowerCase();
 
   const password=
-    document
-      .getElementById(
-        "accountPassword"
-      )
+    document.getElementById("accountPassword")
       .value;
-
 
   const roomId=
-    document
-      .getElementById(
-        "accountRoom"
-      )
-      .value;
+    document.getElementById("accountRoom").value;
 
+  if(!loginId||!password||!roomId){
 
-  const message=
-    document
-      .getElementById(
-        "accountMessage"
-      );
-
-
-  if(
-    !rentalId||
-    !password||
-    !roomId
-  ){
-
-    message.textContent=
-      "Fill all rental account fields.";
+    toast(
+      "Enter Login ID, Password and Room"
+    );
 
     return;
   }
 
-
-  const existing=
-    renterAccounts.find(a=>
-      String(a.rentalId||"")
-        .toLowerCase()===
-      rentalId.toLowerCase()
+  const alreadyExists=
+    renterAccounts.some(a=>
+      String(a.loginId||"").toLowerCase()
+      ===loginId
     );
 
+  if(alreadyExists){
 
-  if(existing){
-
-    message.textContent=
-      "This Rental ID already exists.";
-
+    toast("This Login ID already exists");
     return;
   }
-
-
-  const hiddenEmail=
-    rentalFirebaseEmail(
-      rentalId
-    );
-
-
-  let secondaryApp=null;
-
 
   try{
 
     /*
-      Secondary Firebase app prevents
-      owner from being logged out.
+      Firebase Auth requires an email internally.
+      This is NOT shown to the renter and is NOT Gmail.
+
+      Password is handled securely by Firebase Authentication.
+      We do NOT save the password in Firestore.
     */
 
-    secondaryApp=
-      initializeApp(
-        firebaseConfig,
-        "renterCreate_"+Date.now()
-      );
-
-
-    const secondaryAuth=
-      getAuth(
-        secondaryApp
-      );
-
+    const authEmail=
+      internalAuthEmail(loginId);
 
     const result=
       await createUserWithEmailAndPassword(
-        secondaryAuth,
-        hiddenEmail,
+        auth,
+        authEmail,
         password
       );
 
-
-    const uid=
-      result.user.uid;
-
+    const uid=result.user.uid;
 
     await setDoc(
-      doc(
-        db,
-        "renterAccounts",
-        uid
-      ),
+      doc(db,"renterAccounts",uid),
       {
-
         uid,
-
-        rentalId,
-
+        loginId,
+        authEmail,
         roomId,
-
-        createdAt:
-          new Date().toISOString()
-
+        createdAt:new Date().toISOString()
       }
     );
 
-
-    const room=
-      rooms.find(
-        r=>r.id===roomId
-      );
-
-
-    if(room){
-
-      await updateDoc(
-        doc(
-          db,
-          "rooms",
-          roomId
-        ),
-        {
-
-          renterUid:uid,
-
-          rentalId,
-
-          updatedAt:
-            new Date().toISOString()
-
-        }
-      );
-
-    }
-
-
-    await signOut(
-      secondaryAuth
+    await updateDoc(
+      doc(db,"rooms",roomId),
+      {
+        renterUid:uid,
+        updatedAt:new Date().toISOString()
+      }
     );
 
+    /*
+      Firebase switches to newly-created user.
+      Sign out so owner can login again.
+    */
 
-    await deleteApp(
-      secondaryApp
+    await signOut(auth);
+
+    alert(
+      "Rental Account Created Successfully!\n\n"+
+      "Login ID: "+loginId+
+      "\n\nPassword: Your created password"
     );
 
-
-    secondaryApp=null;
-
-
-    message.textContent=
-      "Rental account created successfully.";
-
-
-    document
-      .getElementById(
-        "accountRentalId"
-      )
-      .value="";
-
-
-    document
-      .getElementById(
-        "accountPassword"
-      )
-      .value="";
-
-
-    await loadAll();
-
-
-    toast(
-      "Rental account created"
-    );
-
+    location.reload();
 
   }catch(error){
 
     console.error(error);
 
-
-    if(secondaryApp){
-
-      try{
-
-        await deleteApp(
-          secondaryApp
-        );
-
-      }catch(e){}
-
-    }
-
-
-    message.textContent=
-      error.message||
-      error.code||
-      "Could not create account.";
-
+    document.getElementById("accountMessage")
+      .textContent=
+      error.message||error.code;
   }
-
 };
 
-
-/* =========================================================
-   RENDER ACCOUNTS
-========================================================= */
 
 function renderAccounts(){
 
   const tbody=
-    document.getElementById(
-      "accountTable"
-    );
+    document.getElementById("accountTable");
 
-
-  if(!tbody)
-    return;
-
+  if(!tbody)return;
 
   tbody.innerHTML=
     renterAccounts.length
@@ -4462,28 +2245,19 @@ function renderAccounts(){
     renterAccounts.map(a=>{
 
       const room=
-        rooms.find(
-          r=>r.id===a.roomId
-        );
-
+        rooms.find(r=>r.id===a.roomId);
 
       return `
-
         <tr>
 
           <td>
-            ${esc(a.rentalId||"-")}
+            <b>${esc(a.loginId||"-")}</b>
           </td>
 
           <td>
-            ${
-              room
-              ?
-              "Room "+
-              esc(room.roomNo)
-              :
-              "Not linked"
-            }
+            ${room
+              ?"Room "+esc(room.roomNo)
+              :"Not linked"}
           </td>
 
           <td class="small">
@@ -4491,17 +2265,13 @@ function renderAccounts(){
           </td>
 
           <td>
-
-            <button
-              class="danger"
-              onclick="deleteAccount('${a.id}')">
+            <button class="danger"
+                    onclick="deleteAccount('${a.id}')">
               Delete
             </button>
-
           </td>
 
         </tr>
-
       `;
 
     }).join("")
@@ -4511,72 +2281,30 @@ function renderAccounts(){
         No rental accounts
       </td>
     </tr>`;
-
 }
 
 
-/* =========================================================
-   DELETE ACCOUNT RECORD
-========================================================= */
-
 window.deleteAccount=async function(id){
-
-  if(currentRole!=="owner"){
-
-    toast(
-      "Owner access required"
-    );
-
-    return;
-  }
-
 
   if(!confirm(
     "Delete this rental account record?"
-  ))
-    return;
+  ))return;
 
+  await deleteDoc(
+    doc(db,"renterAccounts",id)
+  );
 
-  try{
+  renterAccounts=
+    renterAccounts.filter(a=>a.id!==id);
 
-    await deleteDoc(
-      doc(
-        db,
-        "renterAccounts",
-        id
-      )
-    );
+  renderAccounts();
 
-
-    renterAccounts=
-      renterAccounts.filter(
-        a=>a.id!==id
-      );
-
-
-    renderAccounts();
-
-
-    toast(
-      "Rental account record deleted"
-    );
-
-
-  }catch(error){
-
-    console.error(error);
-
-    toast(
-      "Delete failed"
-    );
-
-  }
-
+  toast("Rental account record deleted");
 };
 
 
 /* =========================================================
-   RENTER ROOM
+   RENTER DASHBOARD
 ========================================================= */
 
 function getMyRoom(){
@@ -4584,58 +2312,24 @@ function getMyRoom(){
   if(!window.myRenterAccount)
     return null;
 
-
   return rooms.find(
-    r=>
-      r.id===
-      window.myRenterAccount.roomId
+    r=>r.id===window.myRenterAccount.roomId
   );
-
 }
 
 
-/* =========================================================
-   RENTER DASHBOARD
-========================================================= */
-
 function renderRenterDashboard(){
 
-  const room=
-    getMyRoom();
+  const room=getMyRoom();
 
-
-  if(!room){
-
-    document
-      .getElementById(
-        "myRoomDetails"
-      )
-      .innerHTML=
-      `<div class="card">
-        Your room is not linked to this account.
-      </div>`;
-
-    return;
-  }
-
+  if(!room)return;
 
   const year=
-    Number(
-      document
-        .getElementById(
-          "renterYear"
-        )
-        ?.value
-    )||
-    currentYear;
+    Number(document.getElementById("renterYear")?.value)
+    ||currentYear;
 
-
-  document
-    .getElementById(
-      "myRoomDetails"
-    )
+  document.getElementById("myRoomDetails")
     .innerHTML=`
-
       <div class="card">
 
         <h3>
@@ -4649,11 +2343,11 @@ function renderRenterDashboard(){
 
         <p>
           <b>Members:</b>
-          ${esc(room.members)}
+          ${room.members||0}
         </p>
 
         <p>
-          <b>Check-in Date:</b>
+          <b>Check-in:</b>
           ${dateDMY(room.checkinDate)}
         </p>
 
@@ -4668,210 +2362,141 @@ function renderRenterDashboard(){
         </p>
 
       </div>
-
     `;
 
-
-  document
-    .getElementById(
-      "myMonthlyRent"
-    )
-    .textContent=
-    money(room.monthlyRent);
-
+  document.getElementById("myMonthlyRent")
+    .textContent=money(room.monthlyRent);
 
   const due=
-    calculateRoomDue(
-      room,
-      year
-    );
+    calculateRoomDue(room,year);
 
+  document.getElementById("myDue")
+    .textContent=money(due);
 
-  document
-    .getElementById(
-      "myDue"
-    )
-    .textContent=
-    money(due);
+  document.getElementById("myTotalDue")
+    .textContent=money(due);
 
-
-  document
-    .getElementById(
-      "myTotalDue"
-    )
-    .textContent=
-    money(due);
-
-
-  document
-    .getElementById(
-      "myDeposit"
-    )
-    .textContent=
-    money(room.deposit);
-
+  document.getElementById("myDeposit")
+    .textContent=money(room.deposit);
 
   const dueMonths=
-    getDueMonths(
-      room,
-      year
-    );
+    getDueMonths(room,year);
 
-
-  document
-    .getElementById(
-      "myDueMonths"
-    )
+  document.getElementById("myDueMonths")
     .innerHTML=
-    dueMonths.length
-    ?
-    dueMonths.map(m=>`
-
-      <div
-        class="card"
-        style="margin-bottom:8px">
-
-        <span class="badge due">
-          ${months[m-1]}
-          ${year}
-        </span>
-
-        <b>
-          Rent Due:
-          ${money(room.monthlyRent)}
-        </b>
-
-      </div>
-
-    `).join("")
-    :
-    `<p class="muted">
-      No rent due for ${year}.
-    </p>`;
-
+      dueMonths.length
+      ?
+      dueMonths.map(m=>`
+        <div class="card" style="margin-bottom:8px">
+          <span class="badge due">
+            ${months[m-1]} ${year}
+          </span>
+          <b>
+            Rent Due:
+            ${money(room.monthlyRent)}
+          </b>
+        </div>
+      `).join("")
+      :
+      `<p class="muted">
+        No rent due for ${year}.
+      </p>`;
 }
 
 
-/* =========================================================
-   RENTER HISTORY
-========================================================= */
-
 function renderRenterHistory(){
 
-  const room=
-    getMyRoom();
-
+  const room=getMyRoom();
 
   const tbody=
-    document.getElementById(
-      "renterHistoryTable"
-    );
+    document.getElementById("renterHistoryTable");
 
-
-  if(!tbody||!room)
-    return;
-
+  if(!tbody||!room)return;
 
   const year=
     Number(
-      document
-        .getElementById(
-          "renterHistoryYear"
-        )
-        ?.value
-    )||
-    currentYear;
-
+      document.getElementById("renterHistoryYear")?.value
+    )||currentYear;
 
   const list=
     rents.filter(r=>
-      r.roomId===room.id&&
+      r.roomId===room.id &&
       Number(r.year)===year
     );
-
 
   tbody.innerHTML=
     list.length
     ?
-    list
-      .sort(
-        (a,b)=>
-          Number(a.month||0)-
-          Number(b.month||0)
-      )
-      .map(r=>`
-
-        <tr>
-
-          <td>
-            ${esc(
-              r.monthName||
-              months[(r.month||1)-1]
-            )}
-          </td>
-
-          <td>
-            ${r.year}
-          </td>
-
-          <td>
-            ${money(r.amount)}
-          </td>
-
-          <td>
-
-            <span class="badge paid">
-              ${esc(
-                r.status||"paid"
-              )}
-            </span>
-
-          </td>
-
-          <td>
-            ${dateDMY(r.paidDate)}
-          </td>
-
-          <td>
-            ${esc(
-              r.paymentMethod||"-"
-            )}
-          </td>
-
-        </tr>
-
-      `).join("")
+    list.map(r=>`
+      <tr>
+        <td>${esc(r.monthName)}</td>
+        <td>${r.year}</td>
+        <td>${money(r.amount)}</td>
+        <td>
+          <span class="badge paid">
+            Total Rent
+          </span>
+        </td>
+        <td>${dateDMY(r.paidDate)}</td>
+        <td>${esc(r.paymentMethod)}</td>
+      </tr>
+    `).join("")
     :
     `<tr>
       <td colspan="6">
         No payment history for ${year}
       </td>
     </tr>`;
-
 }
 
 
 /* =========================================================
-   SAVE / REFRESH
+   SMS
 ========================================================= */
 
-window.saveAllData=function(){
+window.sendDueSMS=function(roomId){
 
-  toast(
-    "All Firebase data is already saved."
-  );
+  const room=
+    rooms.find(r=>r.id===roomId);
 
-};
+  if(!room||!room.renterPhone){
 
+    toast("Phone number not available");
+    return;
+  }
 
-window.refreshAll=async function(){
+  const year=
+    Number(
+      document.getElementById("dashboardYear").value
+    );
 
-  await loadAll();
+  const dueMonths=
+    getDueMonths(room,year);
 
-  toast(
-    "Data refreshed"
-  );
+  if(!dueMonths.length){
 
+    toast("No rent due");
+    return;
+  }
+
+  const amount=
+    dueMonths.length*
+    Number(room.monthlyRent||0);
+
+  const message=
+    "RentManager: Rent due for Room "+
+    room.roomNo+
+    ". Total due: "+
+    money(amount);
+
+  const phone=
+    String(room.renterPhone)
+      .replace(/[^\d+]/g,"");
+
+  window.location.href=
+    "sms:"+phone+
+    "?body="+
+    encodeURIComponent(message);
 };
 
 
@@ -4881,32 +2506,25 @@ window.refreshAll=async function(){
 
 function renderAll(){
 
-  /*
-    Do not reset masterYear from individual selectors.
-    Dashboard remains the master year.
-  */
-
-  setAllOwnerYears(
-    masterYear
-  );
-
+  populateYears();
 
   renderDashboard();
-
   renderRooms();
+  renderRentHistory();
+  renderExpenses();
+  renderElectricity();
+  renderCheckout();
+  renderAccounts();
+  renderRenterDashboard();
+  renderRenterHistory();
 
 
   const rentRoom=
-    document.getElementById(
-      "rentRoom"
-    );
-
+    document.getElementById("rentRoom");
 
   if(rentRoom){
 
-    const old=
-      rentRoom.value;
-
+    const old=rentRoom.value;
 
     rentRoom.innerHTML=
       `<option value="">
@@ -4918,17 +2536,12 @@ function renderAll(){
         </option>`
       ).join("");
 
-
     rentRoom.value=old;
-
   }
 
 
   const accountRoom=
-    document.getElementById(
-      "accountRoom"
-    );
-
+    document.getElementById("accountRoom");
 
   if(accountRoom){
 
@@ -4938,25 +2551,27 @@ function renderAll(){
           Room ${esc(r.roomNo)}
         </option>`
       ).join("");
-
   }
-
-
-  renderRentHistory();
-
-  renderExpenses();
-
-  renderElectricity();
-
-  renderCheckout();
-
-  renderAccounts();
-
-  renderRenterDashboard();
-
-  renderRenterHistory();
-
 }
+
+
+/* =========================================================
+   SAVE / REFRESH
+========================================================= */
+
+window.saveAllData=function(){
+
+  toast(
+    "All Firebase data is already saved automatically."
+  );
+};
+
+window.refreshAll=async function(){
+
+  await loadAll();
+
+  toast("Data refreshed");
+};
 
 
 /* =========================================================
@@ -4965,26 +2580,14 @@ function renderAll(){
 
 populateYears();
 
+document.getElementById("payYear").value=
+  currentYear;
 
-document
-  .getElementById("payYear")
-  .value=
-  masterYear;
-
-
-document
-  .getElementById("expenseDate")
-  .value=
+document.getElementById("expenseDate").value=
   today();
 
-
-document
-  .getElementById("electricDate")
-  .value=
+document.getElementById("electricDate").value=
   today();
-
-
-changeLoginType();
 
 </script>
 
